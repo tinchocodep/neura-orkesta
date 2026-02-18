@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-blue: #4169E1;
+  --brand-blue-light: #6B8FFF;
+  --brand-blue-dark: #2952CC;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #FFFFFF;
+  color: #1A1A1A;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent scroll above viewport */
+html,
+body {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8F9FA;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--brand-blue);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-blue-dark);
+}
+
+@layer components {
+
+  /* Gradient Text */
+  .gradient-text {
+    background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Button Styles */
+  .btn-primary {
+    @apply px-8 py-4 text-white font-semibold rounded-lg;
+    @apply transition-all duration-300;
+    @apply transform hover:scale-105;
+    background-color: var(--brand-blue);
+    box-shadow: 0 4px 20px rgba(65, 105, 225, 0.15);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--brand-blue-dark);
+    box-shadow: 0 8px 30px rgba(65, 105, 225, 0.2);
+  }
+
+  /* Card Styles */
+  .card {
+    @apply bg-white rounded-2xl;
+    @apply border border-gray-100;
+    @apply transition-all duration-300;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  .card-hover {
+    @apply hover:transform hover:scale-105;
+  }
+
+  .card-hover:hover {
+    box-shadow: 0 4px 20px rgba(65, 105, 225, 0.15);
+    border-color: rgba(65, 105, 225, 0.2);
+  }
+
+  /* Section Spacing */
+  .section-padding {
+    @apply py-20 px-6 md:px-12 lg:px-24;
+  }
+
+  /* Accent Line */
+  .accent-line {
+    @apply h-1 w-20 rounded-full;
+    background: linear-gradient(to right, var(--brand-blue), var(--brand-blue-light));
+  }
+}

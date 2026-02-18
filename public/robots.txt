@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://neuracall.com/sitemap.xml
