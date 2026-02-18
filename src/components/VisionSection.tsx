@@ -65,7 +65,7 @@ export default function VisionSection() {
                                 <p className="text-brand-blue font-bold text-xs tracking-widest uppercase">Nuestra Visión</p>
                             </div>
                             <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 leading-snug">
-                                El Sueño — A dónde vamos
+                                Hacia dónde construimos
                             </h3>
                             <p className="text-gray-600 text-base leading-relaxed">
                                 "Ser el sistema operativo estándar de las empresas en crecimiento, creando un futuro donde la carga manual de datos sea obsoleta y el talento humano se dedique exclusivamente a la <strong className="text-gray-900">creatividad y la estrategia</strong>."
@@ -90,7 +90,7 @@ export default function VisionSection() {
                                 <p className="text-brand-blue font-bold text-xs tracking-widest uppercase">Nuestra Misión</p>
                             </div>
                             <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 leading-snug">
-                                Lo que hacemos todos los días
+                                Nuestra razón de ser
                             </h3>
                             <p className="text-gray-600 text-base leading-relaxed">
                                 "Liberar a las PyMEs de la parálisis operativa, automatizando lo ordinario mediante una arquitectura tecnológica <strong className="text-gray-900">modular y accesible</strong> que transforma el caos manual en eficiencia autónoma inmediata."
