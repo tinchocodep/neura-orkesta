@@ -39,7 +39,7 @@ const values = [
         number: '05',
         icon: Heart,
         title: 'Empatía con el Hacedor',
-        description: 'Diseñamos pensando en el que está en la trinchera (el chofer, el vendedor, el dueño), eliminando fricción para que su trabajo fluya, no para complicarlo.',
+        description: 'Diseñamos pensando en el que está en el día a día (el chofer, el vendedor, el dueño), eliminando fricción para que su trabajo fluya, no para complicarlo.',
         color: 'from-rose-500 to-pink-500',
         bgColor: 'bg-rose-500/10',
     },
@@ -123,7 +123,7 @@ export default function ValuesSection() {
                     className="mt-16 bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-8 md:p-12"
                 >
                     <p className="text-2xl md:text-3xl font-semibold text-white max-w-3xl leading-relaxed">
-                        Trabajamos con el mandato innegociable de <span className="text-brand-blue">eliminar la esclavitud operativa</span> y liberar el talento humano.
+                        Trabajamos con el mandato innegociable de <span className="text-brand-blue">liberar a tu equipo del trabajo repetitivo</span> y potenciar el talento humano.
                     </p>
                 </motion.div>
             </div>
