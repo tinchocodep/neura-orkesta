@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import {
-    Users, TrendingUp, Wallet, Package, HardHat, Database,
+    Users, TrendingUp, Wallet, Package, Plug, Database,
     LayoutDashboard
 } from 'lucide-react';
 
@@ -42,13 +42,13 @@ const categories = [
         items: ['Legajo Digital', 'Asistencia', 'Novedades', 'Liquidación Simple'],
     },
     {
-        title: 'Verticales',
-        subtitle: 'Agro & Construcción',
-        icon: HardHat,
+        title: 'Integraciones',
+        subtitle: 'Conectá todo',
+        icon: Plug,
         color: '#f97316',
         gradient: 'from-orange-500 to-amber-500',
         span: 'md:col-span-2',
-        items: ['Gestión de Lotes', 'Territorio', 'Monitoreo Satelital', 'Silobolsa', 'Gestión de Obras', 'Acopio', 'Certificación'],
+        items: ['WhatsApp Bot', 'Email Automático', 'Facturación AFIP', 'Webhooks', 'API Abierta', 'Reportes Custom', 'Alertas'],
     },
     {
         title: 'Infraestructura',
