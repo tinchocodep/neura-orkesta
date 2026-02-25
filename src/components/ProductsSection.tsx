@@ -123,15 +123,13 @@ export default function ProductsSection() {
                                     <motion.div
                                         whileHover={{ scale: 1.03 }}
                                         transition={{ type: 'spring', stiffness: 200 }}
-                                        className={`relative rounded-3xl overflow-hidden ${product.bgLight} p-8 aspect-square flex items-center justify-center`}
+                                        className="relative aspect-square flex items-center justify-center"
                                     >
                                         <img
                                             src={product.image}
                                             alt={product.name}
-                                            className="w-full h-full object-contain drop-shadow-xl"
+                                            className="w-full h-full object-contain drop-shadow-2xl"
                                         />
-                                        {/* Subtle glow */}
-                                        <div className={`absolute inset-0 bg-gradient-to-br ${product.color} opacity-5 rounded-3xl pointer-events-none`} />
                                     </motion.div>
                                 </div>
 

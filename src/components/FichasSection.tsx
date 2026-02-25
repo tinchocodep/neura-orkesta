@@ -184,9 +184,14 @@ export default function FichasSection() {
                     <p className="text-gray-400 text-lg mb-6">
                         Cada área tiene sus propios módulos. <span className="text-white font-semibold">Activás solo lo que necesitás.</span>
                     </p>
-                    <button className="btn-primary text-base px-8 py-4">
+                    <a
+                        href="https://wa.me/5492622567533?text=Hola%21%20Quiero%20conocer%20la%20propuesta%20completa%20de%20m%C3%B3dulos%20de%20Neura%20Orkesta%20%F0%9F%93%8B"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-primary text-base px-8 py-4 inline-block"
+                    >
                         Quiero ver la propuesta completa
-                    </button>
+                    </a>
                 </motion.div>
 
             </div>

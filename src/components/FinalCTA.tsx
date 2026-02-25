@@ -52,14 +52,17 @@ export default function FinalCTA() {
                         transition={{ delay: 0.5 }}
                         className="flex flex-col sm:flex-row gap-4"
                     >
-                        <motion.button
+                        <motion.a
+                            href="https://wa.me/5492622567533?text=Hola%21%20Me%20interesa%20Neura%20Orkesta%2C%20quisiera%20agendar%20una%20demo%20%F0%9F%9A%80"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.97 }}
                             className="group px-8 py-4 bg-brand-blue text-white font-bold text-lg rounded-xl flex items-center gap-3 hover:bg-brand-blue-dark transition-colors"
                         >
                             Agendar Demo
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                        </motion.button>
+                        </motion.a>
 
                     </motion.div>
                 </div>
