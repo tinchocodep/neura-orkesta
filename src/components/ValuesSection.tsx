@@ -13,7 +13,7 @@ const values = [
     {
         number: '02',
         icon: Clock,
-        title: 'Obsesión por la Eficiencia',
+        title: 'Pasión por la Eficiencia',
         description: 'No toleramos el desperdicio de tiempo humano. Si una tarea se puede automatizar, es nuestro mandato hacerlo. Medimos nuestro éxito en horas-hombre liberadas.',
         color: 'from-blue-500 to-cyan-500',
         bgColor: 'bg-blue-500/10',
@@ -21,8 +21,7 @@ const values = [
     {
         number: '03',
         icon: Puzzle,
-        title: 'Flexibilidad Modular',
-        subtitle: '"Fichas"',
+        title: 'Flexibilidad Infinita',
         description: 'Creemos en crecer con el cliente. No imponemos estructuras rígidas; ofrecemos un ecosistema vivo que se adapta a la madurez de cada empresa.',
         color: 'from-violet-500 to-purple-500',
         bgColor: 'bg-violet-500/10',
@@ -30,7 +29,7 @@ const values = [
     {
         number: '04',
         icon: Shield,
-        title: 'Verdad Operativa',
+        title: 'Resultados Reales',
         description: 'No vendemos humo tecnológico ni palabras de moda. Entregamos herramientas que resuelven dolores reales (caja, stock, logística) desde el primer minuto.',
         color: 'from-emerald-500 to-green-500',
         bgColor: 'bg-emerald-500/10',
@@ -38,8 +37,8 @@ const values = [
     {
         number: '05',
         icon: Heart,
-        title: 'Empatía con el Hacedor',
-        description: 'Diseñamos pensando en el que está en el día a día (el chofer, el vendedor, el dueño), eliminando fricción para que su trabajo fluya, no para complicarlo.',
+        title: 'Somos Hacedores',
+        description: 'Diseñamos pensando en el que está en el día a día (el chofer, el vendedor, el dueño). Nosotros también construimos — entendemos tu dolor porque lo vivimos.',
         color: 'from-rose-500 to-pink-500',
         bgColor: 'bg-rose-500/10',
     },
@@ -104,9 +103,6 @@ export default function ValuesSection() {
                                 <div>
                                     <h3 className="text-xl md:text-2xl font-bold text-text-primary mb-1.5">
                                         {value.title}
-                                        {value.subtitle && (
-                                            <span className="text-brand-blue ml-2 text-lg font-semibold">{value.subtitle}</span>
-                                        )}
                                     </h3>
                                     <p className="text-text-secondary text-base md:text-lg leading-relaxed">{value.description}</p>
                                 </div>

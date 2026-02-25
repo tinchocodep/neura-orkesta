@@ -10,7 +10,7 @@ export default function Footer() {
                     <div className="max-w-md">
                         <h3 className="text-2xl font-display font-bold mb-4">NEURACALL</h3>
                         <p className="text-gray-400 mb-6 max-w-md">
-                            Neuracall Orkesta - El sistema operativo que tu empresa necesita para operar en tiempo real.
+                            Neuracall Orkesta - El motor de operaciones que tu empresa necesita para operar en tiempo real.
                         </p>
                         <div className="flex gap-4">
                             <motion.a

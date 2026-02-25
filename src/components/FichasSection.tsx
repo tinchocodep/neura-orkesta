@@ -74,7 +74,7 @@ export default function FichasSection() {
                         viewport={{ once: true }}
                         className="text-brand-blue font-semibold text-sm tracking-widest uppercase mb-4"
                     >
-                        Arquitectura de Negocio
+                        Propuesta Comercial
                     </motion.p>
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
@@ -83,17 +83,26 @@ export default function FichasSection() {
                         transition={{ delay: 0.1 }}
                         className="text-5xl md:text-7xl font-display font-bold text-white leading-tight mb-6"
                     >
-                        El Marketplace de <br />
-                        <span className="gradient-text">Fichas</span>
+                        Armá tu empresa <br />
+                        <span className="gradient-text">módulo a módulo.</span>
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="text-xl text-gray-400 max-w-2xl"
+                        className="text-xl text-gray-400 max-w-2xl mb-4"
                     >
-                        Empezás con el Tablero Base y agregás lo que necesitás. Sin paquetes cerrados.
+                        Neura Orkesta no es un software que se compra completo. Es una plataforma que se <span className="text-white font-semibold">construye con vos</span>: empezás con el Tablero Base y activás las fichas que tu operación necesita.
+                    </motion.p>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.3 }}
+                        className="text-base text-gray-500 max-w-2xl"
+                    >
+                        Sin paquetes cerrados. Sin funciones que no usás. Solo pagás por lo que activás.
                     </motion.p>
                 </div>
 
@@ -141,54 +150,44 @@ export default function FichasSection() {
                                 style={{ backgroundColor: cat.color }}
                             />
 
-                            {/* Header */}
-                            <div className="relative z-10 flex items-start justify-between mb-5">
-                                <div>
+                            <div className="relative z-10 flex items-center justify-between">
+                                <div className="flex items-center gap-4">
                                     <div
-                                        className="w-10 h-10 rounded-xl flex items-center justify-center mb-3"
+                                        className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                                         style={{ backgroundColor: cat.color + '25' }}
                                     >
                                         <cat.icon className="w-5 h-5" style={{ color: cat.color }} />
                                     </div>
-                                    <h3 className="text-xl font-bold text-white">{cat.title}</h3>
-                                    <p className="text-sm font-medium" style={{ color: cat.color }}>{cat.subtitle}</p>
+                                    <div>
+                                        <h3 className="text-lg font-bold text-white">{cat.title}</h3>
+                                        <p className="text-sm font-medium" style={{ color: cat.color }}>{cat.subtitle}</p>
+                                    </div>
                                 </div>
                                 <span
-                                    className="text-xs font-bold px-2.5 py-1 rounded-full"
+                                    className="text-xs font-bold px-3 py-1.5 rounded-full flex-shrink-0"
                                     style={{ backgroundColor: cat.color + '20', color: cat.color }}
                                 >
-                                    {cat.items.length} fichas
+                                    +{cat.items.length} módulos
                                 </span>
-                            </div>
-
-                            {/* Chips */}
-                            <div className="relative z-10 flex flex-wrap gap-2">
-                                {cat.items.map((item, i) => (
-                                    <span
-                                        key={i}
-                                        className="text-xs font-medium px-3 py-1.5 rounded-full text-white/80 transition-all group-hover:text-white"
-                                        style={{ backgroundColor: cat.color + '18', border: `1px solid ${cat.color}30` }}
-                                    >
-                                        {item}
-                                    </span>
-                                ))}
                             </div>
                         </motion.div>
                     ))}
                 </div>
 
                 {/* Bottom note */}
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mt-12 text-center text-gray-600 text-sm"
+                    className="mt-12 text-center"
                 >
-                    ¿No encontrás lo que necesitás?{' '}
-                    <span className="text-brand-blue font-semibold cursor-pointer hover:underline">
-                        Hablemos — construimos fichas a medida.
-                    </span>
-                </motion.p>
+                    <p className="text-gray-400 text-lg mb-6">
+                        Cada área tiene sus propios módulos. <span className="text-white font-semibold">Activás solo lo que necesitás.</span>
+                    </p>
+                    <button className="btn-primary text-base px-8 py-4">
+                        Quiero ver la propuesta completa
+                    </button>
+                </motion.div>
 
             </div>
         </section>

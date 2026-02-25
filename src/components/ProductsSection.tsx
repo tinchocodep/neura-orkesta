@@ -18,18 +18,18 @@ const products = [
         includes: [
             'Drop Zone universal para cualquier formato',
             'Cognición AI que entiende contexto',
-            'Inyección limpia a tu sistema',
+            'Inyección limpia a tu plataforma',
             'Pipeline automático sin intervención manual',
             'Soporte multi-fuente: PDF, Excel, WhatsApp, email',
         ],
-        detail: 'Neura Sync es el punto de entrada de datos de tu empresa. Cualquier documento, mensaje o archivo que llegue a tu negocio es procesado, interpretado y cargado automáticamente en el sistema. Cero tipeo manual.',
+        detail: 'Neura Sync es el punto de entrada de datos de tu empresa. Cualquier documento, mensaje o archivo que llegue a tu negocio es procesado, interpretado y cargado automáticamente en la plataforma. Cero tipeo manual.',
     },
     {
         id: 'core',
         image: '/neura_core.png',
         name: 'Neura Core',
         tagline: 'Motor Operativo',
-        alias: 'El Piloto Automático',
+        alias: 'El Corazón',
         pitch: 'CRM, Tesorería, Compras y Logística integrados. Cada acción genera automáticamente los registros derivados.',
         color: 'from-purple-500 to-purple-600',
         textColor: 'text-purple-500',
@@ -50,21 +50,21 @@ const products = [
         image: '/neura_insight.png',
         name: 'Neura Insight',
         tagline: 'Motor de Decisión',
-        alias: 'El Tablero de Control',
-        pitch: 'Preguntale a tu empresa "¿por qué bajaron las ventas?" y recibí una respuesta con contexto real.',
+        alias: 'El Cerebro',
+        pitch: 'Hablále a tu empresa como si fuera una persona. Pregúntale por qué y recibí una respuesta con inteligencia real.',
         color: 'from-orange-500 to-orange-600',
         textColor: 'text-orange-500',
         bgLight: 'bg-orange-50',
         accentBg: 'bg-orange-500',
         pill: 'bg-orange-100 text-orange-600',
         includes: [
-            'SQL + LLM para análisis profundo',
-            'Responde "¿Por qué?" con contexto',
-            'Dashboards ejecutivos en tiempo real',
-            'Alertas inteligentes proactivas',
-            'Exportación a cualquier formato',
+            'Análisis conversacional sobre tus datos reales',
+            'Responde "¿Por qué?" con contexto e historial',
+            'Visualización predictiva en tiempo real',
+            'Señales proactivas antes de que el problema explote',
+            'Exportación instantánea a cualquier formato',
         ],
-        detail: 'Neura Insight convierte tus datos en decisiones. Combina SQL con modelos de lenguaje para que puedas preguntarle a tu empresa "¿por qué bajaron las ventas este mes?" y recibir una respuesta con contexto real.',
+        detail: 'Neura Insight le da conciencia a tu operación. Podelé preguntar cualquier cosa, como si tuvieras un analista de datos disponible 24/7 que conoce cada movimiento de tu empresa y te responde en segundos.',
     },
 ];
 
@@ -192,7 +192,7 @@ export default function ProductsSection() {
                         <p className="text-sm font-bold text-brand-blue uppercase tracking-widest mb-2">Juntos forman</p>
                         <p className="text-4xl font-display font-bold text-text-primary mb-3">Neura Orkesta</p>
                         <p className="text-text-secondary max-w-md mx-auto">
-                            El sistema operativo completo para tu empresa. Ingesta + Operación + Decisión, todo integrado.
+                            El motor de operaciones completo para tu empresa. Ingesta + Operación + Decisión, todo integrado.
                         </p>
                     </div>
                 </motion.div>

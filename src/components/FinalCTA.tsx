@@ -61,13 +61,6 @@ export default function FinalCTA() {
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </motion.button>
 
-                        <motion.button
-                            whileHover={{ scale: 1.03 }}
-                            whileTap={{ scale: 0.97 }}
-                            className="px-8 py-4 text-white font-bold text-lg rounded-xl border border-white/20 hover:border-white/40 transition-colors"
-                        >
-                            Ver Fichas
-                        </motion.button>
                     </motion.div>
                 </div>
 

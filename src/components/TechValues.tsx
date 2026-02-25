@@ -5,7 +5,7 @@ const features = [
     {
         icon: FileText,
         title: 'Neura Sync',
-        description: 'Subís un PDF o Excel y el sistema lo entiende solo. Chau data entry manual.',
+        description: 'Subís un PDF o Excel y Neura Orkesta lo interpreta solo. Chau data entry manual.',
         gradient: 'from-blue-500 to-blue-600',
     },
     {
@@ -23,7 +23,7 @@ const features = [
     {
         icon: Cpu,
         title: 'API Abierta',
-        description: 'Conectá con cualquier sistema. Mercado Libre, WhatsApp, tu ERP legacy.',
+        description: 'Conectá con cualquier plataforma. Mercado Libre, WhatsApp, tu ERP legacy.',
         gradient: 'from-green-500 to-green-600',
     },
     {

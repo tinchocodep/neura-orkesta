@@ -1,10 +1,6 @@
 import { motion } from 'framer-motion';
 
-const stats = [
-    { value: '40%', label: 'Pérdida de rentabilidad por ineficiencia' },
-    { value: '15h', label: 'Desperdiciadas por semana en carga manual' },
-    { value: '0', label: 'Visibilidad en tiempo real' },
-];
+
 
 export default function ProblemSection() {
     return (
@@ -39,21 +35,7 @@ export default function ProblemSection() {
                     className="h-px w-full bg-gradient-to-r from-red-500 to-transparent mb-16"
                 />
 
-                {/* Stats — horizontal, no boxes */}
-                <div className="grid md:grid-cols-3 gap-12 mb-16">
-                    {stats.map((stat, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.15 }}
-                        >
-                            <p className="text-6xl md:text-7xl font-display font-bold text-red-400 mb-3">{stat.value}</p>
-                            <p className="text-white/60 text-lg">{stat.label}</p>
-                        </motion.div>
-                    ))}
-                </div>
+
 
                 <motion.p
                     initial={{ opacity: 0 }}
@@ -62,7 +44,7 @@ export default function ProblemSection() {
                     transition={{ delay: 0.5 }}
                     className="text-xl md:text-2xl text-white/50 max-w-3xl"
                 >
-                    PyMEs pierden rentabilidad y queman talento calificado en tareas repetitivas que no aportan valor.
+                    Las empresas enfrentan cada día más dificultad para conseguir personas dispuestas a hacer tareas repetitivas — y las que las hacen, <span className="text-white/80">desperdician su talento</span> en trabajo que podría automatizarse.
                 </motion.p>
             </div>
         </section>

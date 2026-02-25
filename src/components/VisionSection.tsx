@@ -34,7 +34,7 @@ export default function VisionSection() {
                     transition={{ delay: 0.2 }}
                     className="text-xl md:text-2xl text-gray-600 max-w-3xl leading-relaxed mb-16"
                 >
-                    Imaginá que Neura Orkesta es una capa invisible que le ponemos arriba a tu empresa. Vos seguís trabajando, pero nadie tiene que cargar datos a mano nunca más. Todo lo que pasa en la calle, en el depósito o en la venta, <strong>se anota solo en el sistema.</strong>
+                    Imaginá que Neura Orkesta es una capa invisible que envuelve toda tu empresa. Tu equipo sigue operando como siempre, pero nadie tiene que cargar datos a mano nunca más. Todo lo que pasa en la calle, en el depósito o en la venta, <strong>queda sincronizado en tiempo real.</strong>
                 </motion.p>
 
                 <motion.div
@@ -68,7 +68,7 @@ export default function VisionSection() {
                                 Hacia dónde construimos
                             </h3>
                             <p className="text-gray-600 text-base leading-relaxed">
-                                "Ser el sistema operativo estándar de las empresas en crecimiento, creando un futuro donde la carga manual de datos sea obsoleta y el talento humano se dedique exclusivamente a la <strong className="text-gray-900">creatividad y la estrategia</strong>."
+                                "Ser el motor de operaciones estándar de las empresas en crecimiento, creando un futuro donde la carga manual de datos sea obsoleta y el talento humano se dedique exclusivamente a la <strong className="text-gray-900">creatividad y la estrategia</strong>."
                             </p>
                         </div>
                     </motion.div>

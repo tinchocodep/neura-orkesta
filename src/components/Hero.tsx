@@ -49,7 +49,7 @@ export default function Hero() {
                             transition={{ delay: 0.4, duration: 0.8 }}
                             className="text-xl md:text-2xl text-text-secondary leading-relaxed"
                         >
-                            No somos un software más. Somos el <span className="text-brand-blue font-semibold">sistema operativo</span> que elimina el trabajo manual.
+                            No somos un software más. Somos el <span className="text-brand-blue font-semibold">motor de operaciones</span> que elimina el trabajo manual.
                             <br />
                             <span className="font-semibold text-text-primary">Empezá con lo básico, escalá al control total.</span>
                         </motion.p>

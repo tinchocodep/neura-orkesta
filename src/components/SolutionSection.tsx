@@ -4,21 +4,21 @@ import { useRef } from 'react';
 const pillars = [
     {
         number: '01',
-        title: 'Sistema Operativo Modular',
+        title: 'Arquitectura Modular',
         description: 'Arquitectura componentizada que escala con tu negocio. Activás solo lo que necesitás, cuando lo necesitás.',
         detail: 'Cada módulo es independiente pero habla con el resto. No hay silos.',
     },
     {
         number: '02',
         title: 'IA que elimina el input manual',
-        description: 'Automatización cognitiva para liberarte de la carga de datos. El sistema aprende el contexto de tu empresa.',
+        description: 'Automatización cognitiva para liberarte de la carga de datos. Neura Orkesta aprende el contexto de tu empresa.',
         detail: 'Cero tipeo. Cero doble carga. El dato entra una sola vez.',
     },
     {
         number: '03',
         title: 'Desafío 24hs',
         description: 'Despliegue inmediato, operativo en un día. Sin implementaciones eternas ni consultoras intermedias.',
-        detail: 'Mañana ya estás operando con el sistema.',
+        detail: 'Mañana ya estás operando con Neura Orkesta.',
     },
 ];
 
@@ -49,7 +49,7 @@ export default function SolutionSection() {
                     transition={{ delay: 0.1 }}
                     className="text-5xl md:text-7xl font-display font-bold text-text-primary leading-tight mb-20"
                 >
-                    Un <span className="gradient-text">Sistema Operativo</span><br />para tu empresa
+                    El <span className="gradient-text">Motor de Operaciones</span><br />de tu empresa
                 </motion.h2>
 
                 {/* Timeline */}
@@ -108,7 +108,7 @@ export default function SolutionSection() {
                     transition={{ delay: 0.5 }}
                     className="mt-20 flex flex-col md:flex-row md:items-center gap-2"
                 >
-                    <span className="text-brand-blue font-bold text-xl">Modelo de Fichas →</span>
+                    <span className="text-brand-blue font-bold text-xl">Propuesta Modular →</span>
                     <p className="text-text-secondary text-lg">
                         No comprás más software, comprás más capacidad. Escalá activando solo lo que necesitás.
                     </p>
