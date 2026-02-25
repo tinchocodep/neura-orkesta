@@ -41,13 +41,9 @@ export default function Footer() {
                 {/* Bottom */}
                 <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-gray-400 text-sm">
-                        © 2026 NEURACALL S.A. Todos los derechos reservados.
+                        © 2025 NEURACALL S.A. Todos los derechos reservados.
                     </p>
-                    <div className="flex gap-6 text-sm text-gray-400">
-                        <a href="#" className="hover:text-white transition-colors">Privacidad</a>
-                        <a href="#" className="hover:text-white transition-colors">Términos</a>
-                        <a href="#" className="hover:text-white transition-colors">Cookies</a>
-                    </div>
+
                 </div>
             </div>
         </footer>

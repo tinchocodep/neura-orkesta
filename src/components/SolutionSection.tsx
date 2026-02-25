@@ -4,13 +4,13 @@ import { useRef } from 'react';
 const pillars = [
     {
         number: '01',
-        title: 'Arquitectura Modular',
-        description: 'Arquitectura componentizada que escala con tu negocio. Activás solo lo que necesitás, cuando lo necesitás.',
+        title: 'Motor Modular',
+        description: 'Una plataforma componentizada que escala con tu negocio. Activás solo lo que necesitás, cuando lo necesitás.',
         detail: 'Cada módulo es independiente pero habla con el resto. No hay silos.',
     },
     {
         number: '02',
-        title: 'IA que elimina el input manual',
+        title: 'IA que elimina la carga manual',
         description: 'Automatización cognitiva para liberarte de la carga de datos. Neura Orkesta aprende el contexto de tu empresa.',
         detail: 'Cero tipeo. Cero doble carga. El dato entra una sola vez.',
     },
