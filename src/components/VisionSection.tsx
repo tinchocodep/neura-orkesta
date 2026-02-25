@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { Eye, Rocket } from 'lucide-react';
 
 export default function VisionSection() {
     return (
@@ -58,12 +57,7 @@ export default function VisionSection() {
                     >
                         <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/10 to-blue-500/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500 opacity-0 group-hover:opacity-100" />
                         <div className="relative bg-gray-50 border border-gray-100 rounded-2xl p-8 hover:border-brand-blue/30 transition-all duration-300">
-                            <div className="flex items-center gap-3 mb-5">
-                                <div className="w-10 h-10 bg-brand-blue/10 rounded-xl flex items-center justify-center">
-                                    <Eye className="w-5 h-5 text-brand-blue" />
-                                </div>
-                                <p className="text-brand-blue font-bold text-xs tracking-widest uppercase">Nuestra Visión</p>
-                            </div>
+                            <h3 className="text-xl font-bold text-gray-900 mb-5">Hacia dónde vamos</h3>
 
                             <p className="text-gray-600 text-base leading-relaxed">
                                 "Ser el motor de operaciones estándar de las empresas en crecimiento, creando un futuro donde la carga manual de datos sea obsoleta y el talento humano se dedique exclusivamente a la <strong className="text-gray-900">creatividad y la estrategia</strong>."
@@ -81,12 +75,7 @@ export default function VisionSection() {
                     >
                         <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/10 to-blue-500/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500 opacity-0 group-hover:opacity-100" />
                         <div className="relative bg-gray-50 border border-gray-100 rounded-2xl p-8 hover:border-brand-blue/30 transition-all duration-300">
-                            <div className="flex items-center gap-3 mb-5">
-                                <div className="w-10 h-10 bg-brand-blue/10 rounded-xl flex items-center justify-center">
-                                    <Rocket className="w-5 h-5 text-brand-blue" />
-                                </div>
-                                <p className="text-brand-blue font-bold text-xs tracking-widest uppercase">Nuestra Misión</p>
-                            </div>
+                            <h3 className="text-xl font-bold text-gray-900 mb-5">Por qué existimos</h3>
 
                             <p className="text-gray-600 text-base leading-relaxed">
                                 "Liberar a las PyMEs de la parálisis operativa, automatizando lo ordinario mediante una arquitectura tecnológica <strong className="text-gray-900">modular y accesible</strong> que transforma el caos manual en eficiencia autónoma inmediata."
