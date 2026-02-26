@@ -695,36 +695,62 @@
                 touch-action: none;
             }
 
+            /* slides scrollables en mobile */
+            .slide {
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
             .inner {
-                padding: 52px 22px 80px;
+                padding: 48px 20px 90px;
                 justify-content: flex-start;
-                padding-top: 52px;
+                min-height: 100%;
+                height: auto;
+            }
+
+            .two-col {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 48px 20px 90px;
+                align-content: start;
+                height: auto;
+                min-height: 100%;
+            }
+
+            .two-col .img-panel {
+                order: -1;
+            }
+
+            .img-panel img {
+                max-height: 32vh;
             }
 
             .sn {
-                top: 16px;
-                right: 18px;
+                top: 14px;
+                right: 16px;
                 font-size: 10px;
             }
 
             h1 {
-                font-size: clamp(38px, 12vw, 60px);
+                font-size: clamp(36px, 11vw, 58px);
             }
 
             h2 {
-                font-size: clamp(26px, 8vw, 40px);
+                font-size: clamp(24px, 7.5vw, 38px);
             }
 
             .lead {
-                font-size: 14px;
-                margin-top: 10px;
+                font-size: 13px;
+                margin-top: 8px;
                 max-width: 100%;
             }
 
             .cover-footer {
-                left: 22px;
-                right: 22px;
-                bottom: 68px;
+                position: relative;
+                bottom: auto;
+                left: auto;
+                right: auto;
+                margin-top: 32px;
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 3px;
@@ -737,42 +763,16 @@
             }
 
             .pain-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr !important;
                 gap: 10px;
-                margin-top: 18px;
+                margin-top: 16px;
             }
 
             .pain-card {
                 padding: 16px;
-                display: flex;
-                gap: 12px;
-                align-items: flex-start;
             }
 
-            .pain-icon {
-                font-size: 20px;
-                flex-shrink: 0;
-                margin-bottom: 0;
-            }
 
-            .pain-card>div {
-                flex: 1;
-            }
-
-            .two-col {
-                grid-template-columns: 1fr;
-                gap: 20px;
-                padding: 52px 22px 80px;
-                align-content: start;
-            }
-
-            .two-col .img-panel {
-                order: -1;
-            }
-
-            .img-panel img {
-                max-height: 35vh;
-            }
 
             .motors {
                 gap: 9px;
@@ -952,7 +952,8 @@
                     <div class="eyebrow">El problema</div>
                     <h2>El dato entra<br><span class="blue-grad">dos veces.</span></h2>
                     <p class="lead">El equipo registra lo que pasa en crudo. Luego alguien lo reformatea para el ERP.
-                        <strong style="color:var(--ink-2)">Con errores. Siempre.</strong></p>
+                        <strong style="color:var(--ink-2)">Con errores. Siempre.</strong>
+                    </p>
                 </div>
                 <div class="col">
                     <div class="pain-grid" style="grid-template-columns:1fr 1fr; margin-top:0; gap:14px;">
