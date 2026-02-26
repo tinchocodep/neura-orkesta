@@ -5,7 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Neura Orkesta — Desafío 24hs</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap"
         rel="stylesheet" />
     <style>
         *,
@@ -18,21 +19,28 @@
 
         :root {
             --blue: #2563eb;
-            --blue-light: #3b82f6;
-            --dark: #0f172a;
+            --blue-d: #1d4ed8;
+            --blue-l: #3b82f6;
+            --ink: #0f172a;
+            --ink-2: #334155;
+            --ink-3: #64748b;
+            --ink-4: #94a3b8;
+            --surface: #ffffff;
+            --bg: #f8fafc;
+            --border: #e2e8f0;
+            --amber: #f59e0b;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #f8fafc;
-            color: #0f172a;
+            background: var(--bg);
+            color: var(--ink);
             height: 100dvh;
             overflow: hidden;
             -webkit-font-smoothing: antialiased;
-            touch-action: pan-y;
         }
 
-        /* ── Deck ── */
+        /* ── deck ── */
         #deck {
             width: 100%;
             height: 100dvh;
@@ -43,8 +51,8 @@
             position: absolute;
             inset: 0;
             opacity: 0;
-            transform: translateX(60px);
-            transition: opacity .4s cubic-bezier(.4, 0, .2, 1), transform .4s cubic-bezier(.4, 0, .2, 1);
+            transform: translateX(56px);
+            transition: opacity .38s cubic-bezier(.4, 0, .2, 1), transform .38s cubic-bezier(.4, 0, .2, 1);
             pointer-events: none;
             overflow: hidden;
         }
@@ -57,11 +65,11 @@
 
         .slide.exit {
             opacity: 0;
-            transform: translateX(-60px);
+            transform: translateX(-56px);
         }
 
-        /* shared layout */
-        .slide-inner {
+        /* ── shared layout ── */
+        .inner {
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -71,36 +79,72 @@
             z-index: 2;
         }
 
-        /* backgrounds */
-        .bg-cover {
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 60%, #eff6ff 100%);
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            height: 100%;
+            padding: 56px 80px;
+            position: relative;
+            z-index: 2;
         }
 
-        .bg-dark {
+        .col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* ── backgrounds ── */
+        /* Hero slides: bold blue */
+        .hero {
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #1d4ed8 100%);
+            color: #fff;
+        }
+
+        /* Content slides: white */
+        .white {
             background: #ffffff;
         }
 
-        .bg-darker {
+        /* Tinted: very subtle */
+        .tinted {
             background: #f8fafc;
         }
 
-        .bg-problem {
-            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 60%, #fff7ed 100%);
+        /* Problem: warm */
+        .warm {
+            background: #fffbf5;
         }
 
-        .bg-split {
-            background: #f1f5f9;
+        /* ── hero typography ── */
+        .hero .eyebrow {
+            color: rgba(255, 255, 255, .7);
         }
 
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(120px);
-            pointer-events: none;
-            z-index: 1;
+        .hero .eyebrow::before {
+            background: rgba(255, 255, 255, .5);
         }
 
-        /* typography */
+        .hero h1,
+        .hero h2 {
+            color: #fff;
+        }
+
+        .hero .lead {
+            color: rgba(255, 255, 255, .65);
+        }
+
+        .hero .sn {
+            color: rgba(255, 255, 255, .2);
+        }
+
+        .hero .cover-logo-text {
+            color: rgba(255, 255, 255, .45);
+        }
+
+        /* ── eyebrow ── */
         .eyebrow {
             font-size: 11px;
             font-weight: 700;
@@ -115,46 +159,51 @@
 
         .eyebrow::before {
             content: '';
-            display: inline-block;
             width: 18px;
             height: 2px;
-            background: var(--blue);
+            background: currentColor;
             border-radius: 2px;
             flex-shrink: 0;
         }
 
+        /* ── headings ── */
         h1 {
-            font-size: clamp(44px, 10vw, 96px);
+            font-size: clamp(48px, 10vw, 96px);
             font-weight: 900;
             line-height: 1.0;
-            letter-spacing: -.02em;
-            color: #0f172a;
+            letter-spacing: -.03em;
         }
 
         h2 {
-            font-size: clamp(28px, 6vw, 62px);
+            font-size: clamp(28px, 5.5vw, 58px);
             font-weight: 800;
             line-height: 1.1;
-            letter-spacing: -.02em;
-            color: #0f172a;
+            letter-spacing: -.025em;
         }
 
         h3 {
-            font-size: clamp(17px, 3vw, 26px);
+            font-size: clamp(16px, 2.5vw, 24px);
             font-weight: 700;
-            color: #0f172a;
         }
 
         .lead {
-            font-size: clamp(14px, 2vw, 19px);
-            color: #64748b;
+            font-size: clamp(14px, 1.8vw, 18px);
+            color: var(--ink-3);
             line-height: 1.75;
-            max-width: 600px;
+            max-width: 580px;
             margin-top: 16px;
         }
 
         .grad {
-            background: linear-gradient(100deg, var(--blue), var(--blue-light));
+            background: linear-gradient(120deg, #fff 30%, rgba(255, 255, 255, .7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* on light bg, grad is blue */
+        .blue-grad {
+            background: linear-gradient(120deg, var(--blue) 0%, var(--blue-l) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -166,12 +215,12 @@
             right: 40px;
             font-size: 11px;
             font-weight: 600;
-            color: #cbd5e1;
+            color: var(--ink-4);
             letter-spacing: .12em;
             z-index: 3;
         }
 
-        /* ── slide 1: cover ── */
+        /* ── cover / hero elements ── */
         .cover-logo {
             display: flex;
             align-items: center;
@@ -187,7 +236,7 @@
         .cover-logo-text {
             font-size: 12px;
             font-weight: 700;
-            color: #94a3b8;
+            color: var(--ink-4);
             letter-spacing: .1em;
             text-transform: uppercase;
         }
@@ -197,21 +246,21 @@
             align-items: center;
             gap: 8px;
             padding: 6px 14px;
-            background: rgba(37, 99, 235, .08);
-            border: 1px solid rgba(37, 99, 235, .2);
             border-radius: 999px;
+            background: rgba(255, 255, 255, .15);
+            border: 1px solid rgba(255, 255, 255, .3);
             font-size: 11px;
             font-weight: 700;
-            color: var(--blue);
+            color: #fff;
             letter-spacing: .1em;
             text-transform: uppercase;
             margin-bottom: 24px;
         }
 
-        .cover-badge span {
+        .cover-badge-dot {
             width: 6px;
             height: 6px;
-            background: var(--blue);
+            background: #fff;
             border-radius: 50%;
             animation: pulse 2s infinite;
         }
@@ -225,83 +274,93 @@
             }
 
             50% {
-                opacity: .5;
-                transform: scale(.8)
+                opacity: .4;
+                transform: scale(.75)
             }
         }
 
         .cover-footer {
             position: absolute;
-            bottom: 60px;
+            bottom: 48px;
             left: 80px;
             right: 80px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-size: 11px;
-            color: #94a3b8;
             font-weight: 500;
+            color: rgba(255, 255, 255, .35);
         }
 
         .cover-tags {
             display: flex;
-            gap: 16px;
+            gap: 18px;
         }
 
-        /* ── slide 2: pain ── */
+        /* ── section label ── */
+        .section-label {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: #f1f5f9;
+            color: var(--ink-3);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        /* ── pain cards ── */
         .pain-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
+            gap: 16px;
             margin-top: 28px;
         }
 
         .pain-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 14px;
-            padding: 20px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .06), 0 4px 12px rgba(0, 0, 0, .04);
+            transition: box-shadow .2s, transform .2s;
         }
 
-        .pain-num {
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: .15em;
-            color: #f59e0b;
-            margin-bottom: 10px;
-            text-transform: uppercase;
+        .pain-card:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .1);
+            transform: translateY(-2px);
+        }
+
+        .pain-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
         }
 
         .pain-card h4 {
             font-size: 14px;
             font-weight: 700;
+            color: var(--ink);
             margin-bottom: 6px;
-            color: #0f172a;
         }
 
         .pain-card p {
-            font-size: 12px;
-            color: #64748b;
+            font-size: 13px;
+            color: var(--ink-3);
             line-height: 1.6;
         }
 
-        /* ── slides 3 & 5: split ── */
-        .split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 56px;
-            align-items: center;
-            height: 100%;
-            padding: 56px 80px;
+        .pain-accent {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--amber);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
         }
 
-        .split-left {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
+        /* ── image panel ── */
         .img-panel {
             position: relative;
             display: flex;
@@ -311,102 +370,101 @@
 
         .img-panel img {
             width: 100%;
-            max-height: 70vh;
+            max-height: 68vh;
             object-fit: contain;
-            border-radius: 18px;
-            box-shadow: 0 32px 100px rgba(0, 0, 0, .6);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .12), 0 4px 16px rgba(0, 0, 0, .08);
         }
 
-        .img-glow {
-            position: absolute;
-            inset: -40px;
-            background: radial-gradient(ellipse at center, rgba(59, 130, 246, .15), transparent 70%);
-            pointer-events: none;
-        }
-
-        /* ── slide 4: motors ── */
+        /* ── motors ── */
         .motors {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-top: 28px;
+            margin-top: 24px;
         }
 
-        .motor-row {
+        .motor-card {
             display: grid;
-            grid-template-columns: 44px 130px 1fr 110px;
+            grid-template-columns: 52px 1fr auto;
             align-items: center;
             gap: 18px;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 13px;
-            padding: 16px 22px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
-            transition: border-color .2s, box-shadow .2s;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 22px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+            transition: box-shadow .2s, border-color .2s;
         }
 
-        .motor-row:hover {
-            border-color: var(--blue);
-            box-shadow: 0 4px 16px rgba(37, 99, 235, .1);
+        .motor-card:hover {
+            box-shadow: 0 4px 20px rgba(37, 99, 235, .12);
+            border-color: #93c5fd;
         }
 
         .motor-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: #eff6ff;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
         .motor-icon img {
-            width: 26px;
-            height: 26px;
+            width: 28px;
+            height: 28px;
             object-fit: contain;
         }
 
+        .motor-body {
+            min-width: 0;
+        }
+
         .motor-name {
-            font-weight: 800;
             font-size: 16px;
-            color: #0f172a;
+            font-weight: 800;
+            color: var(--ink);
         }
 
         .motor-desc {
             font-size: 12px;
-            color: #64748b;
-            line-height: 1.55;
+            color: var(--ink-3);
+            line-height: 1.5;
+            margin-top: 2px;
         }
 
         .motor-alias {
             font-size: 11px;
             font-weight: 700;
             color: var(--blue);
-            text-align: right;
+            white-space: nowrap;
         }
 
-        /* ── slide 6: timeline ── */
+        /* ── timeline ── */
         .timeline {
             display: flex;
             flex-direction: column;
-            margin-top: 32px;
-            max-width: 520px;
+            margin-top: 28px;
+            max-width: 500px;
         }
 
-        .tl-item {
+        .tl {
             display: flex;
-            gap: 18px;
+            gap: 16px;
             position: relative;
         }
 
-        .tl-item:not(:last-child)::after {
+        .tl:not(:last-child)::after {
             content: '';
             position: absolute;
             left: 19px;
             top: 42px;
-            bottom: -16px;
+            bottom: -14px;
             width: 2px;
-            background: rgba(59, 130, 246, .22);
+            background: #e2e8f0;
         }
 
         .tl-dot {
@@ -415,36 +473,39 @@
             border-radius: 50%;
             flex-shrink: 0;
             margin-top: 2px;
-            background: linear-gradient(135deg, var(--blue), var(--blue-light));
+            background: var(--blue);
+            color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 900;
             font-size: 14px;
-            box-shadow: 0 0 20px rgba(59, 130, 246, .4);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, .3);
         }
 
-        .tl-content {
+        .tl-body {
             padding-bottom: 22px;
         }
 
-        .tl-content strong {
+        .tl-body strong {
             font-size: 15px;
+            font-weight: 700;
+            color: var(--ink);
             display: block;
             margin-bottom: 3px;
         }
 
-        .tl-content span {
-            font-size: 12px;
-            color: rgba(255, 255, 255, .38);
+        .tl-body span {
+            font-size: 13px;
+            color: var(--ink-3);
         }
 
-        /* ── slide 7: levels ── */
+        /* ── levels ── */
         .level-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 18px;
-            margin-top: 28px;
+            gap: 16px;
+            margin-top: 24px;
         }
 
         .level-card {
@@ -453,70 +514,71 @@
         }
 
         .level-card.l1 {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, .05);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
         }
 
         .level-card.l2 {
-            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
             border: 1px solid #93c5fd;
         }
 
         .level-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
             font-size: 9px;
             font-weight: 800;
             letter-spacing: .14em;
             text-transform: uppercase;
-            padding: 4px 10px;
-            border-radius: 999px;
-            display: inline-block;
             margin-bottom: 12px;
         }
 
         .l1 .level-badge {
             background: #f1f5f9;
-            color: #64748b;
+            color: var(--ink-3);
         }
 
         .l2 .level-badge {
-            background: rgba(37, 99, 235, .12);
+            background: rgba(37, 99, 235, .1);
             color: var(--blue);
         }
 
         .level-card h3 {
             font-size: 17px;
             margin-bottom: 8px;
-            color: #0f172a;
+            color: var(--ink);
         }
 
         .level-card p {
-            font-size: 12px;
-            color: #64748b;
+            font-size: 13px;
+            color: var(--ink-3);
             line-height: 1.65;
         }
 
-        /* ── slide 8: cta ── */
-        .cta-box {
-            max-width: 620px;
-            border: 1px solid #93c5fd;
+        /* ── CTA slide ── */
+        .cta-card {
+            max-width: 600px;
+            margin-top: 28px;
+            background: rgba(255, 255, 255, .12);
+            border: 1px solid rgba(255, 255, 255, .25);
             border-radius: 24px;
             padding: 44px 52px;
-            background: #eff6ff;
-            margin-top: 28px;
+            backdrop-filter: blur(12px);
         }
 
         .cta-big {
             font-size: clamp(28px, 5vw, 52px);
             font-weight: 900;
             line-height: 1.1;
-            margin-bottom: 14px;
-            color: #0f172a;
+            margin-bottom: 12px;
+            color: #fff;
         }
 
         .cta-sub {
             font-size: 14px;
-            color: #64748b;
+            color: rgba(255, 255, 255, .6);
             line-height: 1.7;
         }
 
@@ -525,20 +587,21 @@
             align-items: center;
             gap: 8px;
             margin-top: 24px;
-            padding: 14px 30px;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            color: #fff;
+            padding: 15px 32px;
+            background: #fff;
+            color: var(--blue);
             font-size: 14px;
             font-weight: 800;
             border-radius: 12px;
             text-decoration: none;
-            box-shadow: 0 8px 28px rgba(59, 130, 246, .35);
+            letter-spacing: .01em;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .2);
             transition: transform .2s, box-shadow .2s;
         }
 
         .cta-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 36px rgba(59, 130, 246, .5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, .25);
         }
 
         .trust {
@@ -546,14 +609,12 @@
             display: flex;
             gap: 18px;
             flex-wrap: wrap;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 600;
-            color: #94a3b8;
+            color: rgba(255, 255, 255, .4);
         }
 
-        /* ══════════════════════════════════
-     NAV
-  ══════════════════════════════════ */
+        /* ── nav ── */
         #nav {
             position: fixed;
             bottom: 28px;
@@ -562,39 +623,47 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            z-index: 200;
+            z-index: 300;
         }
 
         .nav-btn {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border: 1px solid #e2e8f0;
-            background: #ffffff;
-            color: #334155;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--ink-2);
             font-size: 16px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
-            transition: background .2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .09);
+            transition: box-shadow .2s;
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* override when on hero slides */
+        .hero-nav .nav-btn {
+            background: rgba(255, 255, 255, .15);
+            border-color: rgba(255, 255, 255, .25);
+            color: #fff;
+        }
+
         .nav-btn:active {
-            background: #f1f5f9;
+            transform: scale(.94);
         }
 
         #counter {
             font-size: 11px;
-            color: #94a3b8;
+            color: var(--ink-4);
             min-width: 40px;
             text-align: center;
             font-weight: 700;
             letter-spacing: .08em;
         }
 
+        /* dots */
         #dots {
             position: fixed;
             right: 22px;
@@ -603,14 +672,14 @@
             display: flex;
             flex-direction: column;
             gap: 7px;
-            z-index: 200;
+            z-index: 300;
         }
 
         .dot {
             width: 5px;
             height: 5px;
             border-radius: 3px;
-            background: #cbd5e1;
+            background: var(--border);
             cursor: pointer;
             transition: all .3s;
         }
@@ -620,23 +689,22 @@
             height: 18px;
         }
 
-        /* ══════════════════════════════════
-     MOBILE  (≤ 640px)
-  ══════════════════════════════════ */
-        @media (max-width: 640px) {
+        /* ══════════ MOBILE ══════════ */
+        @media (max-width:640px) {
             body {
                 touch-action: none;
             }
 
-            .slide-inner {
-                padding: 48px 24px 80px;
+            .inner {
+                padding: 52px 22px 80px;
                 justify-content: flex-start;
-                padding-top: 56px;
+                padding-top: 52px;
             }
 
             .sn {
                 top: 16px;
-                right: 20px;
+                right: 18px;
+                font-size: 10px;
             }
 
             h1 {
@@ -649,34 +717,29 @@
 
             .lead {
                 font-size: 14px;
-                margin-top: 12px;
+                margin-top: 10px;
                 max-width: 100%;
             }
 
-            /* cover */
-            .cover-logo {
-                margin-bottom: 24px;
-            }
-
             .cover-footer {
-                left: 24px;
-                right: 24px;
-                bottom: 72px;
+                left: 22px;
+                right: 22px;
+                bottom: 68px;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 4px;
+                gap: 3px;
             }
 
             .cover-tags {
                 gap: 10px;
                 font-size: 10px;
+                flex-wrap: wrap;
             }
 
-            /* pain */
             .pain-grid {
                 grid-template-columns: 1fr;
                 gap: 10px;
-                margin-top: 20px;
+                margin-top: 18px;
             }
 
             .pain-card {
@@ -686,60 +749,46 @@
                 align-items: flex-start;
             }
 
-            .pain-card .left {
+            .pain-icon {
+                font-size: 20px;
                 flex-shrink: 0;
-            }
-
-            .pain-num {
                 margin-bottom: 0;
             }
 
-            .pain-card h4 {
-                font-size: 13px;
+            .pain-card>div {
+                flex: 1;
             }
 
-            .pain-card p {
-                font-size: 12px;
-            }
-
-            /* split slides → stack */
-            .split {
+            .two-col {
                 grid-template-columns: 1fr;
-                grid-template-rows: auto auto;
-                gap: 24px;
-                padding: 56px 24px 80px;
-                align-content: flex-start;
+                gap: 20px;
+                padding: 52px 22px 80px;
+                align-content: start;
             }
 
-            .split .img-panel {
+            .two-col .img-panel {
                 order: -1;
             }
 
             .img-panel img {
-                max-height: 38vh;
-                border-radius: 14px;
+                max-height: 35vh;
             }
 
-            .img-glow {
-                display: none;
-            }
-
-            /* motors → simplified */
             .motors {
-                gap: 10px;
-                margin-top: 20px;
+                gap: 9px;
+                margin-top: 16px;
             }
 
-            .motor-row {
-                grid-template-columns: 36px 1fr;
+            .motor-card {
+                grid-template-columns: 40px 1fr;
                 grid-template-rows: auto auto;
                 gap: 6px 12px;
                 padding: 14px 16px;
             }
 
             .motor-icon {
-                width: 36px;
-                height: 36px;
+                width: 40px;
+                height: 40px;
                 grid-row: 1/3;
             }
 
@@ -750,7 +799,6 @@
 
             .motor-desc {
                 font-size: 11px;
-                color: rgba(255, 255, 255, .35);
                 grid-column: 2;
             }
 
@@ -758,9 +806,8 @@
                 display: none;
             }
 
-            /* timeline */
             .timeline {
-                margin-top: 20px;
+                margin-top: 18px;
             }
 
             .tl-dot {
@@ -769,19 +816,18 @@
                 font-size: 12px;
             }
 
-            .tl-content strong {
+            .tl-body strong {
                 font-size: 14px;
             }
 
-            .tl-content span {
+            .tl-body span {
                 font-size: 12px;
             }
 
-            /* levels → stack */
             .level-grid {
                 grid-template-columns: 1fr;
-                gap: 12px;
-                margin-top: 20px;
+                gap: 10px;
+                margin-top: 18px;
             }
 
             .level-card {
@@ -797,11 +843,10 @@
                 font-size: 12px;
             }
 
-            /* cta */
-            .cta-box {
-                padding: 28px 24px;
+            .cta-card {
+                padding: 26px 22px;
                 border-radius: 18px;
-                margin-top: 20px;
+                margin-top: 18px;
             }
 
             .cta-big {
@@ -809,26 +854,17 @@
             }
 
             .cta-btn {
-                padding: 14px 24px;
-                font-size: 14px;
                 width: 100%;
                 justify-content: center;
-                margin-top: 20px;
+                margin-top: 18px;
             }
 
-            .trust {
-                font-size: 10px;
-                gap: 12px;
-            }
-
-            /* dots → hidden on mobile (too small) */
             #dots {
                 display: none;
             }
 
-            /* nav */
             #nav {
-                bottom: 20px;
+                bottom: 18px;
             }
 
             .nav-btn {
@@ -838,14 +874,13 @@
             }
         }
 
-        /* TABLET (641–900) */
-        @media (min-width: 641px) and (max-width: 900px) {
-            .slide-inner {
-                padding: 48px 52px 80px;
+        @media (min-width:641px) and (max-width:900px) {
+            .inner {
+                padding: 48px 48px 76px;
             }
 
-            .split {
-                padding: 48px 52px 80px;
+            .two-col {
+                padding: 48px 48px 76px;
                 gap: 36px;
             }
 
@@ -860,13 +895,13 @@
                 align-items: flex-start;
             }
 
-            .pain-num {
-                margin-bottom: 0;
+            .pain-icon {
                 flex-shrink: 0;
+                margin-bottom: 0;
             }
 
-            .motor-row {
-                grid-template-columns: 40px 120px 1fr;
+            .motor-card {
+                grid-template-columns: 48px 1fr;
             }
 
             .motor-alias {
@@ -875,11 +910,7 @@
 
             .level-grid {
                 grid-template-columns: 1fr;
-                gap: 14px;
-            }
-
-            .cta-box {
-                padding: 36px 44px;
+                gap: 12px;
             }
 
             #dots {
@@ -892,24 +923,20 @@
 <body>
     <div id="deck">
 
-        <!-- 1. PORTADA -->
-        <div class="slide bg-cover active" id="s1">
-            <div class="blob" style="width:600px;height:500px;top:-100px;left:-150px;background:rgba(59,130,246,.18)">
-            </div>
-            <div class="blob" style="width:350px;height:350px;bottom:-80px;right:0;background:rgba(37,99,235,.12)">
-            </div>
+        <!-- ══ 1. PORTADA (hero azul) ══ -->
+        <div class="slide hero active" id="s1">
             <div class="sn">01 / 08</div>
-            <div class="slide-inner">
+            <div class="inner">
                 <div class="cover-logo">
                     <img src="logo.png" alt="Neuracall" onerror="this.style.display='none'" />
                     <span class="cover-logo-text">Neuracall S.A.</span>
                 </div>
-                <div class="cover-badge"><span></span>Propuesta Comercial 2025</div>
+                <div class="cover-badge"><span class="cover-badge-dot"></span>Propuesta Comercial 2025</div>
                 <h1>Desafío<br><span class="grad">24hs.</span></h1>
                 <p class="lead">Tu empresa, operativa mañana.<br>Sin implementaciones eternas. Sin permanencia.</p>
             </div>
             <div class="cover-footer">
-                <p>Confidencial · Solo para uso interno</p>
+                <span>Confidencial · Solo para uso interno</span>
                 <div class="cover-tags">
                     <span>Setup 24hs</span><span>·</span><span>Sin permanencia</span><span>·</span><span>Soporte
                         24/7</span>
@@ -917,151 +944,136 @@
             </div>
         </div>
 
-        <!-- 2. EL PROBLEMA -->
-        <div class="slide bg-problem" id="s2">
-            <div class="blob" style="width:450px;height:400px;top:-60px;left:0;background:rgba(120,60,0,.2)"></div>
+        <!-- ══ 2. EL PROBLEMA (warm) ══ -->
+        <div class="slide warm" id="s2">
             <div class="sn">02 / 08</div>
-            <div class="slide-inner">
+            <div class="inner">
                 <div class="eyebrow">El problema</div>
-                <h2>El dato entra<br><span class="grad">dos veces.</span></h2>
-                <p class="lead">El equipo carga en crudo. Después alguien traduce al ERP. <strong
-                        style="color:rgba(255,255,255,.75)">El trabajo real se hace dos veces.</strong></p>
+                <h2>El dato entra<br><span class="blue-grad">dos veces.</span></h2>
+                <p class="lead">El equipo registra lo que pasa. Luego alguien lo traduce al formato del ERP.<br><strong
+                        style="color:var(--ink-2)">El trabajo real se hace dos veces — con todos los errores que eso
+                        implica.</strong></p>
                 <div class="pain-grid">
                     <div class="pain-card">
-                        <div class="left">
-                            <div class="pain-num">01</div>
-                        </div>
-                        <div>
-                            <h4>Doble trabajo</h4>
-                            <p>El campo carga en crudo. El admin interpreta, formatea y sube al ERP.</p>
-                        </div>
+                        <div class="pain-icon">🔁</div>
+                        <div class="pain-accent">Dolor 01</div>
+                        <h4>Doble trabajo</h4>
+                        <p>El campo carga en crudo. El admin interpreta, formatea y sube al ERP.</p>
                     </div>
                     <div class="pain-card">
-                        <div class="left">
-                            <div class="pain-num">02</div>
-                        </div>
-                        <div>
-                            <h4>Error humano acumulado</h4>
-                            <p>Cada vuelta que da el dato acumula errores que el sistema toma como válidos.</p>
-                        </div>
+                        <div class="pain-icon">⚠️</div>
+                        <div class="pain-accent">Dolor 02</div>
+                        <h4>Error humano acumulado</h4>
+                        <p>Cada vuelta que da el dato acumula errores que el sistema toma como válidos.</p>
                     </div>
                     <div class="pain-card">
-                        <div class="left">
-                            <div class="pain-num">03</div>
-                        </div>
-                        <div>
-                            <h4>Costo de capacitación</h4>
-                            <p>Cada persona nueva aprende primero cómo cargar — no cómo trabajar.</p>
-                        </div>
+                        <div class="pain-icon">⏱️</div>
+                        <div class="pain-accent">Dolor 03</div>
+                        <h4>Costo de capacitación</h4>
+                        <p>Cada persona nueva aprende primero cómo cargar — no cómo trabajar.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 3. SOLUCIÓN + imagen -->
-        <div class="slide bg-split" id="s3">
-            <div class="blob" style="width:500px;height:500px;top:-100px;right:-80px;background:rgba(59,130,246,.1)">
-            </div>
+        <!-- ══ 3. LA SOLUCIÓN (white + imagen) ══ -->
+        <div class="slide white" id="s3">
             <div class="sn">03 / 08</div>
-            <div class="slide-inner" style="padding:0">
-                <div class="split">
-                    <div class="split-left">
-                        <div class="eyebrow">La solución</div>
-                        <h2>El equipo carga fácil.<br><span class="grad">El sistema entiende solo.</span></h2>
-                        <p class="lead">Neura Orkesta no elimina la carga de datos. <strong
-                                style="color:rgba(255,255,255,.8)">Elimina el trabajo de darle
-                                formato.</strong><br><br>Tu equipo ingresa como le resulta natural — WhatsApp, PDF,
-                            Excel. Neura lo interpreta y lo sube al ERP exactamente como el sistema lo necesita.</p>
-                    </div>
-                    <div class="img-panel">
-                        <div class="img-glow"></div>
-                        <img src="ui_sync_flow.png" alt="Flujo Neura Sync" />
-                    </div>
+            <div class="two-col">
+                <div class="col">
+                    <div class="eyebrow">La solución</div>
+                    <h2>El equipo carga fácil.<br><span class="blue-grad">El sistema entiende solo.</span></h2>
+                    <p class="lead">Neura Orkesta no elimina la carga de datos. <strong
+                            style="color:var(--ink-2)">Elimina el trabajo de darle formato.</strong><br><br>
+                        Tu equipo ingresa como le resulta natural — WhatsApp, PDF, Excel sin formato. Neura lo
+                        interpreta, lo estructura y lo sube al ERP exactamente como lo necesita.</p>
+                </div>
+                <div class="img-panel">
+                    <img src="ui_sync_flow.png" alt="Flujo Neura Sync" />
                 </div>
             </div>
         </div>
 
-        <!-- 4. LOS TRES MOTORES -->
-        <div class="slide bg-dark" id="s4">
+        <!-- ══ 4. LOS TRES MOTORES (tinted) ══ -->
+        <div class="slide tinted" id="s4">
             <div class="sn">04 / 08</div>
-            <div class="slide-inner">
+            <div class="inner">
                 <div class="eyebrow">La trilogía sinérgica</div>
-                <h2>Tres motores.<br><span class="grad">Un solo flujo.</span></h2>
+                <h2>Tres motores.<br><span class="blue-grad">Un solo flujo.</span></h2>
                 <div class="motors">
-                    <div class="motor-row">
+                    <div class="motor-card">
                         <div class="motor-icon"><img src="neura_sync.png" alt="Sync" /></div>
-                        <div class="motor-name">Neura Sync</div>
-                        <div class="motor-desc">Recibe cualquier formato — PDF, Excel, WhatsApp, email — lo interpreta
-                            con IA y lo sube al ERP listo para usar.</div>
+                        <div class="motor-body">
+                            <div class="motor-name">Neura Sync</div>
+                            <div class="motor-desc">Recibe cualquier formato — PDF, Excel, WhatsApp, email — lo
+                                interpreta con IA y lo sube al ERP listo para usar.</div>
+                        </div>
                         <div class="motor-alias">La Caja Mágica</div>
                     </div>
-                    <div class="motor-row">
+                    <div class="motor-card">
                         <div class="motor-icon"><img src="neura_core.png" alt="Core" /></div>
-                        <div class="motor-name">Neura Core</div>
-                        <div class="motor-desc">CRM, tesorería, compras y logística integrados. Cada acción genera sus
-                            registros derivados automáticamente.</div>
+                        <div class="motor-body">
+                            <div class="motor-name">Neura Core</div>
+                            <div class="motor-desc">CRM, tesorería, compras y logística integrados. Cada acción genera
+                                sus registros derivados automáticamente.</div>
+                        </div>
                         <div class="motor-alias">El Corazón</div>
                     </div>
-                    <div class="motor-row">
+                    <div class="motor-card">
                         <div class="motor-icon"><img src="neura_insight.png" alt="Insight" /></div>
-                        <div class="motor-name">Neura Insight</div>
-                        <div class="motor-desc">Hablále a tu empresa como si fuera una persona. Preguntale por qué y
-                            recibí inteligencia real.</div>
+                        <div class="motor-body">
+                            <div class="motor-name">Neura Insight</div>
+                            <div class="motor-desc">Hablále a tu empresa como si fuera una persona. Preguntale por qué y
+                                recibí inteligencia real.</div>
+                        </div>
                         <div class="motor-alias">El Cerebro</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 5. DASHBOARD UI -->
-        <div class="slide bg-split" id="s5">
-            <div class="blob" style="width:450px;height:450px;bottom:-80px;left:-60px;background:rgba(59,130,246,.08)">
-            </div>
+        <!-- ══ 5. TABLERO BASE (white + imagen) ══ -->
+        <div class="slide white" id="s5">
             <div class="sn">05 / 08</div>
-            <div class="slide-inner" style="padding:0">
-                <div class="split">
-                    <div class="img-panel">
-                        <div class="img-glow"></div>
-                        <img src="ui_dashboard.png" alt="Dashboard" />
-                    </div>
-                    <div class="split-left">
-                        <div class="eyebrow">Tablero Base</div>
-                        <h2>Operativo<br><span class="grad">desde el día uno.</span></h2>
-                        <p class="lead">Cada módulo activado viene con su propio Tablero Base ya configurado. No
-                            arrancás de cero — arrancás con la estructura del área funcionando.<br><br>KPIs, tablas,
-                            alertas y flujos listos para usar desde el primer día.</p>
-                    </div>
+            <div class="two-col">
+                <div class="img-panel">
+                    <img src="ui_dashboard.png" alt="Dashboard Neura" />
+                </div>
+                <div class="col">
+                    <div class="eyebrow">Tablero Base</div>
+                    <h2>Operativo<br><span class="blue-grad">desde el día uno.</span></h2>
+                    <p class="lead">Cada módulo que activás viene con su propio Tablero Base ya configurado.<br><br>
+                        No arrancás de cero — arrancás con la estructura del área funcionando. KPIs, tablas, alertas y
+                        flujos listos desde el primer día.</p>
                 </div>
             </div>
         </div>
 
-        <!-- 6. DESAFÍO 24HS -->
-        <div class="slide bg-darker" id="s6">
-            <div class="blob" style="width:500px;height:380px;top:-40px;right:-80px;background:rgba(59,130,246,.08)">
-            </div>
+        <!-- ══ 6. DESAFÍO 24HS (tinted) ══ -->
+        <div class="slide tinted" id="s6">
             <div class="sn">06 / 08</div>
-            <div class="slide-inner">
+            <div class="inner">
                 <div class="eyebrow">Desafío 24hs</div>
-                <h2>Operativo<br><span class="grad">mañana.</span></h2>
+                <h2>Operativo<br><span class="blue-grad">mañana.</span></h2>
                 <p class="lead">Sin implementaciones de 6 meses. Sin consultoras. Sin contratos de permanencia.</p>
                 <div class="timeline">
-                    <div class="tl-item">
+                    <div class="tl">
                         <div class="tl-dot">1</div>
-                        <div class="tl-content">
+                        <div class="tl-body">
                             <strong>Hoy — Demo 30 min</strong>
                             <span>Entendemos tu operación. Identificamos los módulos clave.</span>
                         </div>
                     </div>
-                    <div class="tl-item">
+                    <div class="tl">
                         <div class="tl-dot">2</div>
-                        <div class="tl-content">
+                        <div class="tl-body">
                             <strong>Mañana — Activación</strong>
                             <span>Configuramos el Tablero Base del módulo elegido.</span>
                         </div>
                     </div>
-                    <div class="tl-item">
+                    <div class="tl">
                         <div class="tl-dot">3</div>
-                        <div class="tl-content">
+                        <div class="tl-body">
                             <strong>Pasado mañana — Operativo</strong>
                             <span>Tu equipo opera sobre Neura Orkesta. Resultados reales.</span>
                         </div>
@@ -1070,42 +1082,40 @@
             </div>
         </div>
 
-        <!-- 7. MODELO ACTIVACIÓN -->
-        <div class="slide bg-dark" id="s7">
+        <!-- ══ 7. MODELO ACTIVACIÓN (white) ══ -->
+        <div class="slide white" id="s7">
             <div class="sn">07 / 08</div>
-            <div class="slide-inner">
+            <div class="inner">
                 <div class="eyebrow">Modelo de activación</div>
-                <h2>Se construye<br><span class="grad">con vos.</span></h2>
+                <h2>Se construye<br><span class="blue-grad">con vos.</span></h2>
                 <div class="level-grid">
                     <div class="level-card l1">
                         <div class="level-badge">Nivel 1 · Motores individuales</div>
                         <h3>Sync · Core · Insight</h3>
-                        <p>Cada motor puede activarse por separado con su Tablero Base ya configurado — operativo desde
-                            el día uno.</p>
+                        <p>Cada motor puede activarse por separado. Viene con su Tablero Base ya configurado — operativo
+                            desde el día uno, sin depender del resto.</p>
                     </div>
                     <div class="level-card l2">
                         <div class="level-badge">Nivel 2 · Neura Orkesta completo</div>
                         <h3>Plataforma + Fichas</h3>
                         <p>Con los tres motores integrados se habilita el sistema de <strong
-                                style="color:var(--blue-light)">fichas</strong> — módulos adicionales por área para
+                                style="color:var(--blue)">fichas</strong> — módulos adicionales por área para
                             profundizar según lo que necesite tu operación.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 8. CTA -->
-        <div class="slide bg-cover" id="s8">
-            <div class="blob" style="width:600px;height:550px;top:-120px;right:-160px;background:rgba(59,130,246,.15)">
-            </div>
+        <!-- ══ 8. CTA (hero azul) ══ -->
+        <div class="slide hero" id="s8">
             <div class="sn">08 / 08</div>
-            <div class="slide-inner">
+            <div class="inner">
                 <div class="cover-logo">
                     <img src="logo.png" alt="Neuracall" onerror="this.style.display='none'" />
                     <span class="cover-logo-text">Neuracall S.A.</span>
                 </div>
                 <div class="eyebrow">El siguiente paso</div>
-                <div class="cta-box">
+                <div class="cta-card">
                     <div class="cta-big">Demo de<br><span class="grad">30 minutos.</span></div>
                     <p class="cta-sub">Sin compromiso. En 24hs ves resultados reales — o no seguimos.</p>
                     <a class="cta-btn"
@@ -1114,9 +1124,7 @@
                         Agendar Demo →
                     </a>
                     <div class="trust">
-                        <span>✓ Setup 24hs</span>
-                        <span>✓ Soporte 24/7</span>
-                        <span>✓ Sin permanencia</span>
+                        <span>✓ Setup 24hs</span><span>✓ Soporte 24/7</span><span>✓ Sin permanencia</span>
                     </div>
                 </div>
             </div>
@@ -1133,10 +1141,9 @@
 
     <script>
         const slides = document.querySelectorAll('.slide');
+        const navEl = document.getElementById('nav');
         const total = slides.length;
-        let current = 0;
-        let startX = 0;
-        let isDragging = false;
+        let current = 0, startX = 0;
 
         // Build dots
         const dotsEl = document.getElementById('dots');
@@ -1147,6 +1154,14 @@
             dotsEl.appendChild(d);
         });
 
+        function isHero(idx) { return slides[idx].classList.contains('hero'); }
+
+        function updateNav(idx) {
+            if (isHero(idx)) navEl.classList.add('hero-nav');
+            else navEl.classList.remove('hero-nav');
+            document.getElementById('counter').textContent = `${idx + 1} / ${total}`;
+        }
+
         function goTo(n) {
             slides[current].classList.remove('active');
             slides[current].classList.add('exit');
@@ -1155,29 +1170,24 @@
             current = ((n % total) + total) % total;
             slides[current].classList.add('active');
             dotsEl.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
-            document.getElementById('counter').textContent = `${current + 1} / ${total}`;
+            updateNav(current);
         }
 
         document.getElementById('next').addEventListener('click', () => goTo(current + 1));
         document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
-
-        // Keyboard
         document.addEventListener('keydown', e => {
             if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(current + 1);
             if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(current - 1);
         });
 
-        // Touch swipe
-        document.addEventListener('touchstart', e => {
-            startX = e.touches[0].clientX;
-            isDragging = true;
-        }, { passive: true });
+        // Swipe
+        document.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
         document.addEventListener('touchend', e => {
-            if (!isDragging) return;
             const dx = e.changedTouches[0].clientX - startX;
-            if (Math.abs(dx) > 50) dx < 0 ? goTo(current + 1) : goTo(current - 1);
-            isDragging = false;
+            if (Math.abs(dx) > 48) dx < 0 ? goTo(current + 1) : goTo(current - 1);
         }, { passive: true });
+
+        updateNav(0);
     </script>
 </body>
 
