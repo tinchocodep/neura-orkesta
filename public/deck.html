@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neura Orkesta — Desafío 24hs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* ── Deck container ── */
+        #deck {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 100px;
+            opacity: 0;
+            transform: translateX(60px);
+            transition: opacity .45s ease, transform .45s ease;
+            pointer-events: none;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+        }
+
+        .slide.exit {
+            opacity: 0;
+            transform: translateX(-60px);
+        }
+
+        /* ── Backgrounds ── */
+        .bg-dark {
+            background: #080b14;
+        }
+
+        .bg-darker {
+            background: #050709;
+        }
+
+        .bg-blue {
+            background: linear-gradient(135deg, #0a1628 0%, #0f2952 100%);
+        }
+
+        .bg-problem {
+            background: linear-gradient(135deg, #0e0a02 0%, #1a0e00 100%);
+        }
+
+        .bg-solve {
+            background: linear-gradient(135deg, #030d1a 0%, #0a1f3a 100%);
+        }
+
+        /* ── Shared typography ── */
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: #3b82f6;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: clamp(52px, 7vw, 88px);
+            font-weight: 900;
+            line-height: 1.0;
+        }
+
+        h2 {
+            font-size: clamp(36px, 5vw, 62px);
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        h3 {
+            font-size: clamp(22px, 3vw, 32px);
+            font-weight: 700;
+        }
+
+        .lead {
+            font-size: clamp(16px, 2vw, 22px);
+            color: rgba(255, 255, 255, .5);
+            line-height: 1.7;
+            max-width: 700px;
+        }
+
+        .accent {
+            color: #3b82f6;
+        }
+
+        .white {
+            color: #fff;
+        }
+
+        /* ── Gradient text ── */
+        .grad {
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── Divider ── */
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: #3b82f6;
+            border-radius: 2px;
+            margin: 28px 0;
+        }
+
+        /* ── Pain cards ── */
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .pain-card {
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 16px;
+            padding: 28px;
+        }
+
+        .pain-card .num {
+            font-size: 36px;
+            font-weight: 900;
+            color: rgba(255, 165, 0, .6);
+            margin-bottom: 12px;
+        }
+
+        .pain-card p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, .55);
+            line-height: 1.6;
+        }
+
+        .pain-card strong {
+            color: rgba(255, 255, 255, .85);
+        }
+
+        /* ── Motors table ── */
+        .motors {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 36px;
+        }
+
+        .motor-row {
+            display: grid;
+            grid-template-columns: 180px 1fr 120px;
+            align-items: center;
+            gap: 24px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(59, 130, 246, .2);
+            border-radius: 14px;
+            padding: 20px 28px;
+        }
+
+        .motor-name {
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .motor-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, .5);
+            line-height: 1.5;
+        }
+
+        .motor-alias {
+            font-size: 12px;
+            font-weight: 700;
+            color: #3b82f6;
+            text-align: right;
+            letter-spacing: .05em;
+        }
+
+        /* ── Timeline ── */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 40px;
+            max-width: 600px;
+        }
+
+        .tl-item {
+            display: flex;
+            gap: 24px;
+            position: relative;
+        }
+
+        .tl-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 19px;
+            top: 40px;
+            bottom: -20px;
+            width: 2px;
+            background: rgba(59, 130, 246, .3);
+        }
+
+        .tl-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #3b82f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 15px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .tl-content {
+            padding-bottom: 28px;
+        }
+
+        .tl-content strong {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .tl-content span {
+            font-size: 14px;
+            color: rgba(255, 255, 255, .45);
+        }
+
+        /* ── Level cards ── */
+        .level-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 36px;
+        }
+
+        .level-card {
+            border-radius: 20px;
+            padding: 36px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-card.l1 {
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .1);
+        }
+
+        .level-card.l2 {
+            background: linear-gradient(135deg, rgba(59, 130, 246, .15), rgba(59, 130, 246, .05));
+            border: 1px solid rgba(59, 130, 246, .4);
+        }
+
+        .level-badge {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 999px;
+        }
+
+        .l1 .level-badge {
+            background: rgba(255, 255, 255, .1);
+            color: rgba(255, 255, 255, .6);
+        }
+
+        .l2 .level-badge {
+            background: rgba(59, 130, 246, .25);
+            color: #60a5fa;
+        }
+
+        .level-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .level-card p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, .5);
+            line-height: 1.6;
+        }
+
+        /* ── CTA slide ── */
+        .cta-box {
+            border: 1px solid rgba(59, 130, 246, .3);
+            border-radius: 24px;
+            padding: 56px 64px;
+            background: rgba(59, 130, 246, .06);
+            max-width: 680px;
+            margin-top: 40px;
+        }
+
+        .cta-box .big {
+            font-size: clamp(32px, 4vw, 52px);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            margin-top: 28px;
+            padding: 16px 36px;
+            background: #3b82f6;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 800;
+            border-radius: 12px;
+            text-decoration: none;
+            letter-spacing: .02em;
+        }
+
+        .trust {
+            margin-top: 20px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, .3);
+            display: flex;
+            gap: 24px;
+        }
+
+        /* ── Nav ── */
+        #nav {
+            position: fixed;
+            bottom: 36px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, .15);
+            background: rgba(255, 255, 255, .06);
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .2s;
+            backdrop-filter: blur(8px);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, .14);
+        }
+
+        #counter {
+            font-size: 13px;
+            color: rgba(255, 255, 255, .35);
+            min-width: 50px;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: .08em;
+        }
+
+        /* ── Progress dots ── */
+        #dots {
+            position: fixed;
+            right: 32px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, .2);
+            cursor: pointer;
+            transition: all .3s;
+        }
+
+        .dot.active {
+            background: #3b82f6;
+            height: 20px;
+        }
+
+        /* ── Slide number ── */
+        .slide-num {
+            position: absolute;
+            top: 36px;
+            right: 56px;
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, .15);
+            letter-spacing: .1em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="deck">
+
+        <!-- ── 1. PORTADA ── -->
+        <div class="slide bg-blue active" id="s1">
+            <div class="slide-num">01 / 08</div>
+            <div class="eyebrow">Neura Orkesta · Propuesta Comercial</div>
+            <h1>Desafío<br><span class="grad">24hs.</span></h1>
+            <div class="divider"></div>
+            <p class="lead">Tu empresa, operativa mañana. Sin implementaciones eternas. Sin permanencia.</p>
+        </div>
+
+        <!-- ── 2. EL PROBLEMA ── -->
+        <div class="slide bg-problem" id="s2">
+            <div class="slide-num">02 / 08</div>
+            <div class="eyebrow">El problema</div>
+            <h2>El dato entra<br><span class="grad">dos veces.</span></h2>
+            <div class="divider"></div>
+            <p class="lead">Tu equipo registra lo que pasa. Después alguien lo interpreta, le da formato y lo carga en
+                el ERP. <strong style="color:rgba(255,255,255,.8)">El dato ya existe — pero tiene que entrar de
+                    nuevo.</strong></p>
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <div class="num">01</div>
+                    <p><strong>Doble trabajo.</strong> El campo carga en crudo. El admin formatea y sube al ERP.</p>
+                </div>
+                <div class="pain-card">
+                    <div class="num">02</div>
+                    <p><strong>Error humano acumulado.</strong> Cada vuelta que da el dato, acumula errores que el
+                        sistema toma como válidos.</p>
+                </div>
+                <div class="pain-card">
+                    <div class="num">03</div>
+                    <p><strong>Costo de capacitación.</strong> Cada persona nueva aprende primero cómo cargar — no cómo
+                        trabajar.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── 3. LA SOLUCIÓN ── -->
+        <div class="slide bg-solve" id="s3">
+            <div class="slide-num">03 / 08</div>
+            <div class="eyebrow">La solución</div>
+            <h2>El equipo carga fácil.<br><span class="grad">El sistema entiende solo.</span></h2>
+            <div class="divider"></div>
+            <p class="lead">Neura Orkesta no elimina la carga de datos. <strong
+                    style="color:rgba(255,255,255,.85)">Elimina el trabajo de darle formato.</strong><br><br>
+                Tu equipo ingresa datos como le resulta natural — WhatsApp, un Excel como viene, una foto, voz. Neura
+                los interpreta con IA, los estructura y los sube al ERP exactamente como el sistema los necesita.
+                Limpio, completo, sin intermediarios.</p>
+        </div>
+
+        <!-- ── 4. LOS TRES MOTORES ── -->
+        <div class="slide bg-dark" id="s4">
+            <div class="slide-num">04 / 08</div>
+            <div class="eyebrow">La trilogía sinérgica</div>
+            <h2>Tres motores.<br><span class="grad">Un solo flujo.</span></h2>
+            <div class="motors">
+                <div class="motor-row">
+                    <div class="motor-name">Neura Sync</div>
+                    <div class="motor-desc">Recibe cualquier formato — PDF, Excel, WhatsApp, email — lo interpreta con
+                        IA y lo sube al ERP listo para usar.</div>
+                    <div class="motor-alias">La Caja Mágica</div>
+                </div>
+                <div class="motor-row">
+                    <div class="motor-name">Neura Core</div>
+                    <div class="motor-desc">CRM, tesorería, compras y logística integrados. Cada acción genera sus
+                        registros derivados automáticamente.</div>
+                    <div class="motor-alias">El Corazón</div>
+                </div>
+                <div class="motor-row">
+                    <div class="motor-name">Neura Insight</div>
+                    <div class="motor-desc">Hablále a tu empresa como si fuera una persona. Preguntale por qué y recibí
+                        una respuesta con inteligencia real.</div>
+                    <div class="motor-alias">El Cerebro</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── 5. DESAFÍO 24HS ── -->
+        <div class="slide bg-darker" id="s5">
+            <div class="slide-num">05 / 08</div>
+            <div class="eyebrow">Desafío 24hs</div>
+            <h2>Operativo<br><span class="grad">mañana.</span></h2>
+            <div class="divider"></div>
+            <div class="timeline">
+                <div class="tl-item">
+                    <div class="tl-dot">1</div>
+                    <div class="tl-content">
+                        <strong>Hoy</strong>
+                        <span>Demo de 30 minutos. Entendemos tu operación.</span>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot">2</div>
+                    <div class="tl-content">
+                        <strong>Mañana</strong>
+                        <span>Activamos el Tablero Base del módulo elegido.</span>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot">3</div>
+                    <div class="tl-content">
+                        <strong>Pasado mañana</strong>
+                        <span>Tu equipo ya opera sobre Neura Orkesta.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── 6. MODELO DE ACTIVACIÓN ── -->
+        <div class="slide bg-dark" id="s6">
+            <div class="slide-num">06 / 08</div>
+            <div class="eyebrow">Modelo de activación</div>
+            <h2>Se construye<br><span class="grad">con vos.</span></h2>
+            <div class="level-grid">
+                <div class="level-card l1">
+                    <div class="level-badge">Nivel 1</div>
+                    <h3>Motores individuales</h3>
+                    <p>Cada motor (Sync, Core, Insight) puede activarse por separado. Viene con su Tablero Base ya
+                        configurado — operativo desde el día uno.</p>
+                </div>
+                <div class="level-card l2">
+                    <div class="level-badge">Nivel 2</div>
+                    <h3>Neura Orkesta completo</h3>
+                    <p>Con los tres motores integrados se habilita el sistema de <strong
+                            style="color:#60a5fa">fichas</strong> — módulos adicionales por área (Comercial, Financiero,
+                        Operativo, RRHH) para ir profundizando según lo que tu operación necesite.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── 7. POR QUÉ AHORA ── -->
+        <div class="slide bg-problem" id="s7">
+            <div class="slide-num">07 / 08</div>
+            <div class="eyebrow">Por qué ahora</div>
+            <h2>Las empresas que siguen<br>con carga manual en 2025<br><span class="grad">ya están perdiendo.</span>
+            </h2>
+            <div class="divider"></div>
+            <p class="lead">No por falta de talento. Porque su talento está atrapado traduciendo datos en lugar de
+                generar valor.<br><br>La pregunta no es <em>si</em> conviene automatizar. Es <strong
+                    style="color:rgba(255,255,255,.8)">cuánto más tiempo te podés dar el lujo de no hacerlo.</strong>
+            </p>
+        </div>
+
+        <!-- ── 8. CTA ── -->
+        <div class="slide bg-blue" id="s8">
+            <div class="slide-num">08 / 08</div>
+            <div class="eyebrow">El siguiente paso</div>
+            <div class="cta-box">
+                <div class="big">Demo de<br><span class="grad">30 minutos.</span></div>
+                <p style="color:rgba(255,255,255,.5);font-size:16px;line-height:1.7">Sin compromiso. Sin setup largo. En
+                    24hs vés resultados reales — o no seguimos.</p>
+                <a class="cta-btn"
+                    href="https://wa.me/5492622567533?text=Hola%21%20Me%20interesa%20Neura%20Orkesta%2C%20quisiera%20agendar%20una%20demo%20%F0%9F%9A%80">Agendar
+                    Demo →</a>
+                <div class="trust">
+                    <span>✓ Setup 24hs</span>
+                    <span>✓ Soporte 24/7</span>
+                    <span>✓ Sin permanencia</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── Progress dots ── -->
+    <div id="dots"></div>
+
+    <!-- ── Nav buttons ── -->
+    <div id="nav">
+        <button class="nav-btn" id="prev">←</button>
+        <span id="counter">1 / 8</span>
+        <button class="nav-btn" id="next">→</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const total = slides.length;
+        let current = 0;
+
+        // Build dots
+        const dotsEl = document.getElementById('dots');
+        slides.forEach((_, i) => {
+            const d = document.createElement('div');
+            d.className = 'dot' + (i === 0 ? ' active' : '');
+            d.addEventListener('click', () => goTo(i));
+            dotsEl.appendChild(d);
+        });
+
+        function goTo(n) {
+            slides[current].classList.remove('active');
+            slides[current].classList.add('exit');
+            setTimeout(() => slides[current].classList.remove('exit'), 450);
+            current = (n + total) % total;
+            slides[current].classList.add('active');
+            document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+            document.getElementById('counter').textContent = `${current + 1} / ${total}`;
+        }
+
+        document.getElementById('next').addEventListener('click', () => goTo(current + 1));
+        document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(current + 1);
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(current - 1);
+        });
+    </script>
+</body>
+
+</html>
