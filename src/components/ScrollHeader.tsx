@@ -4,10 +4,11 @@ import { Menu, X } from 'lucide-react';
 import logo from '../assets/logo.png';
 
 const navLinks = [
-    { label: 'Visión', href: '#vision' },
+    { label: '¿Qué es Neura Orkesta?', href: '#vision' },
+    { label: 'El Problema', href: '#problema' },
     { label: 'Trilogía', href: '#productos' },
-    { label: 'Fichas', href: '#fichas' },
-    { label: 'Abordaje', href: '#abordaje' },
+    { label: 'Características', href: '#solucion' },
+    { label: 'Abordaje', href: '#fichas' },
 ];
 
 function scrollTo(id: string) {

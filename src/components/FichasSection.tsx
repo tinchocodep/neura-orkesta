@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import {
     Users, TrendingUp, Wallet, Package, Plug, Database,
-    LayoutDashboard, ArrowRight
+    LayoutDashboard
 } from 'lucide-react';
 
 /* ─── Data ─────────────────────────────────────────────────────── */
@@ -9,31 +9,31 @@ import {
 const categories = [
     {
         title: 'Comercial',
-        subtitle: 'Vender Más',
+        subtitle: 'Aumentá tus ventas',
         icon: TrendingUp,
         color: '#3b82f6',
     },
     {
         title: 'Financiero',
-        subtitle: 'Controlar la Caja',
+        subtitle: 'Control y organización total de finanzas',
         icon: Wallet,
         color: '#10b981',
     },
     {
         title: 'Operativo',
-        subtitle: 'Mover la Mercadería',
+        subtitle: 'Control de movimiento de mercadería',
         icon: Package,
         color: '#a855f7',
     },
     {
         title: 'Capital Humano',
-        subtitle: 'RRHH Simple',
+        subtitle: 'Gestión de RRHH',
         icon: Users,
         color: '#ec4899',
     },
     {
         title: 'Integraciones',
-        subtitle: 'Conectá todo',
+        subtitle: 'Conectá tus bancos y apps',
         icon: Plug,
         color: '#f97316',
     },
@@ -173,7 +173,8 @@ export default function FichasSection() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true, margin: '-30px' }}
                             transition={{ delay: index * 0.06, duration: 0.5 }}
-                            className="group flex items-center justify-between py-5 md:py-6 cursor-default"
+                            whileHover={{ y: -4, scale: 1.02 }}
+                            className="group flex items-center justify-between py-5 md:py-6 cursor-default transition-all duration-300"
                         >
                             {/* Left: icon + title */}
                             <div className="flex items-center gap-4 md:gap-6">
@@ -183,21 +184,17 @@ export default function FichasSection() {
                                 >
                                     <cat.icon className="w-5 h-5" style={{ color: cat.color }} />
                                 </div>
-                                <h3 className="text-2xl md:text-3xl font-display font-bold text-white/90 group-hover:text-white transition-colors duration-300">
+                                <h3 className="text-2xl md:text-3xl font-display font-bold text-white/90 group-hover:text-white transition-all duration-300">
                                     {cat.title}
                                 </h3>
                             </div>
 
                             {/* Right: subtitle */}
                             <span
-                                className="text-sm md:text-base font-medium transition-colors duration-300 hidden sm:block"
+                                className="text-sm md:text-base font-medium transition-all duration-300 hidden sm:block group-hover:scale-105"
                                 style={{ color: cat.color + 'aa' }}
                             >
                                 {cat.subtitle}
-                                <ArrowRight
-                                    className="inline-block w-4 h-4 ml-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
-                                    style={{ color: cat.color }}
-                                />
                             </span>
                         </motion.div>
                     ))}
