@@ -28,11 +28,11 @@ function App() {
         {/* 1. VISIÓN */}
         <div id="vision"><VisionSection /></div>
 
-        {/* 2. LOS PRODUCTOS */}
-        <div id="productos"><ProductsSection /></div>
-
-        {/* 3. EL DOLOR */}
+        {/* 2. EL DOLOR */}
         <div id="problema"><ProblemSection /></div>
+
+        {/* 3. LOS PRODUCTOS */}
+        <div id="productos"><ProductsSection /></div>
 
         {/* 4. LA SOLUCIÓN */}
         <div id="solucion"><SolutionSection /></div>

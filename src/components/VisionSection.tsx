@@ -60,7 +60,7 @@ export default function VisionSection() {
                             <h3 className="text-xl font-bold text-gray-900 mb-5">Hacia dónde vamos</h3>
 
                             <p className="text-gray-600 text-base leading-relaxed">
-                                "Ser el motor de operaciones estándar de las empresas en crecimiento, creando un futuro donde la carga manual de datos sea obsoleta y el talento humano se dedique exclusivamente a la <strong className="text-gray-900">creatividad y la estrategia</strong>."
+                                "Ser el motor de operaciones de las empresas que eligen competir con tecnología, creando un futuro donde la carga manual sea obsoleta y el talento humano se dedique a la <strong className="text-gray-900">creatividad y la estrategia</strong>."
                             </p>
                         </div>
                     </motion.div>
@@ -78,7 +78,7 @@ export default function VisionSection() {
                             <h3 className="text-xl font-bold text-gray-900 mb-5">Por qué existimos</h3>
 
                             <p className="text-gray-600 text-base leading-relaxed">
-                                "Liberar a las PyMEs de la parálisis operativa, automatizando lo ordinario mediante una arquitectura tecnológica <strong className="text-gray-900">modular y accesible</strong> que transforma el caos manual en eficiencia autónoma inmediata."
+                                "Liberar a las PyMEs de la parálisis operativa y la brecha digital que las frena, automatizando lo ordinario mediante una arquitectura tecnológica <strong className="text-gray-900">modular y accesible</strong> que transforma el caos manual en eficiencia autónoma inmediata."
                             </p>
                         </div>
                     </motion.div>

@@ -22,10 +22,10 @@ export default function HeroVideo() {
     }, []);
 
     return (
-        <div ref={containerRef} className="relative h-screen">
+        <div ref={containerRef} className="relative h-screen overflow-hidden">
             <motion.div
                 style={{ opacity, scale }}
-                className="sticky top-0 h-screen flex flex-col items-center justify-center bg-transparent overflow-hidden"
+                className="sticky top-0 h-screen flex flex-col items-center justify-center bg-transparent"
             >
                 {/* Logo Video - Centered and Large */}
                 <div className="w-full max-w-5xl px-6 mb-4">
@@ -45,7 +45,7 @@ export default function HeroVideo() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 1 }}
-                    className="text-center px-6"
+                    className="text-center px-6 pb-12"
                 >
                     <h1 className="text-5xl md:text-7xl font-display font-bold text-text-primary mb-4">
                         NEURACALL <span className="gradient-text">ORKESTA</span>

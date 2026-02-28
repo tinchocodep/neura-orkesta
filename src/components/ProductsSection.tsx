@@ -82,7 +82,7 @@ export default function ProductsSection() {
                     viewport={{ once: true }}
                     className="text-brand-blue font-semibold text-sm tracking-widest uppercase mb-6"
                 >
-                    Ingeniería de Producto
+                    La Solución
                 </motion.p>
 
                 <motion.h2

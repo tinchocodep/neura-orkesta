@@ -39,7 +39,7 @@ export default function SolutionSection() {
                     viewport={{ once: true }}
                     className="text-brand-blue font-semibold text-sm tracking-widest uppercase mb-8"
                 >
-                    La Solución
+                    Características
                 </motion.p>
 
                 <motion.h2

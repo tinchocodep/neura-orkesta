@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
 import {
     Users, TrendingUp, Wallet, Package, Plug, Database,
-    LayoutDashboard
+    LayoutDashboard, ArrowRight
 } from 'lucide-react';
+
+/* ─── Data ─────────────────────────────────────────────────────── */
 
 const categories = [
     {
@@ -10,63 +12,103 @@ const categories = [
         subtitle: 'Vender Más',
         icon: TrendingUp,
         color: '#3b82f6',
-        gradient: 'from-blue-500 to-blue-600',
-        span: 'md:col-span-2',
-        items: ['Facturación Electrónica', 'Presupuestos Pro', 'CRM Pipeline', 'Seguimiento Automático', 'Cuentas Corrientes', 'Listas de Precios'],
     },
     {
         title: 'Financiero',
         subtitle: 'Controlar la Caja',
         icon: Wallet,
         color: '#10b981',
-        gradient: 'from-emerald-500 to-teal-500',
-        span: 'md:col-span-1',
-        items: ['Tesorería Unificada', 'Conciliación Bancaria', 'Chequera Digital', 'Cashflow', 'Impuestos'],
     },
     {
         title: 'Operativo',
         subtitle: 'Mover la Mercadería',
         icon: Package,
         color: '#a855f7',
-        gradient: 'from-purple-500 to-violet-600',
-        span: 'md:col-span-1',
-        items: ['Inventario Dinámico', 'Compras', 'Logística & Ruteo', 'App Choferes', 'Mantenimiento de Flota'],
     },
     {
         title: 'Capital Humano',
         subtitle: 'RRHH Simple',
         icon: Users,
         color: '#ec4899',
-        gradient: 'from-pink-500 to-rose-500',
-        span: 'md:col-span-1',
-        items: ['Legajo Digital', 'Asistencia', 'Novedades', 'Liquidación Simple'],
     },
     {
         title: 'Integraciones',
         subtitle: 'Conectá todo',
         icon: Plug,
         color: '#f97316',
-        gradient: 'from-orange-500 to-amber-500',
-        span: 'md:col-span-2',
-        items: ['WhatsApp Bot', 'Email Automático', 'Facturación AFIP', 'Webhooks', 'API Abierta', 'Reportes Custom', 'Alertas'],
     },
     {
         title: 'Infraestructura',
         subtitle: 'Escalabilidad',
         icon: Database,
         color: '#6366f1',
-        gradient: 'from-indigo-500 to-blue-600',
-        span: 'md:col-span-1',
-        items: ['+Usuarios', '+IA Sync', 'Mobile App', 'API Access', 'Storage'],
     },
 ];
+
+/** All module names for the marquee ticker */
+const allModules = [
+    'Facturación Electrónica', 'Presupuestos Pro', 'CRM Pipeline',
+    'Seguimiento Automático', 'Cuentas Corrientes', 'Listas de Precios',
+    'Tesorería Unificada', 'Conciliación Bancaria', 'Chequera Digital',
+    'Cashflow', 'Impuestos', 'Inventario Dinámico', 'Compras',
+    'Logística & Ruteo', 'App Choferes', 'Mantenimiento de Flota',
+    'Legajo Digital', 'Asistencia', 'Novedades', 'Liquidación Simple',
+    'WhatsApp Bot', 'Email Automático', 'Facturación AFIP', 'Webhooks',
+    'API Abierta', 'Reportes Custom', 'Alertas', 'Mobile App',
+    'IA Sync', 'Storage',
+];
+
+/** Split modules into two rows for dual-direction marquee */
+const marqueeRowA = allModules.slice(0, Math.ceil(allModules.length / 2));
+const marqueeRowB = allModules.slice(Math.ceil(allModules.length / 2));
+
+/* ─── Marquee Row Component ────────────────────────────────────── */
+
+interface MarqueeRowProps {
+    items: string[];
+    direction?: 'left' | 'right';
+    speed?: number;
+}
+
+function MarqueeRow({ items, direction = 'left', speed = 35 }: MarqueeRowProps) {
+    const animationClass = direction === 'left' ? 'marquee-left' : 'marquee-right';
+
+    return (
+        <div className="relative overflow-hidden py-3">
+            {/* Fade masks */}
+            <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-gray-950 to-transparent pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-gray-950 to-transparent pointer-events-none" />
+
+            <div
+                className={`flex gap-6 whitespace-nowrap ${animationClass}`}
+                style={{ animationDuration: `${speed}s` }}
+            >
+                {/* Duplicate items for seamless loop */}
+                {[...items, ...items].map((mod, i) => (
+                    <span
+                        key={`${mod}-${i}`}
+                        className="inline-flex items-center gap-2 text-sm text-gray-500 font-medium tracking-wide"
+                    >
+                        <span
+                            className="w-1.5 h-1.5 rounded-full flex-shrink-0 opacity-50"
+                            style={{ backgroundColor: 'var(--brand-blue)' }}
+                        />
+                        {mod}
+                    </span>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+/* ─── Main Section ─────────────────────────────────────────────── */
 
 export default function FichasSection() {
     return (
         <section className="section-padding bg-gray-950 overflow-hidden">
             <div className="max-w-7xl mx-auto">
 
-                {/* Header */}
+                {/* ── Header ─────────────────────────────────── */}
                 <div className="mb-16">
                     <motion.p
                         initial={{ opacity: 0, y: 10 }}
@@ -83,7 +125,7 @@ export default function FichasSection() {
                         transition={{ delay: 0.1 }}
                         className="text-5xl md:text-7xl font-display font-bold text-white leading-tight mb-6"
                     >
-                        Armá tu empresa <br />
+                        Potenciá tu empresa <br />
                         <span className="gradient-text">módulo a módulo.</span>
                     </motion.h2>
                     <motion.p
@@ -91,27 +133,18 @@ export default function FichasSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="text-xl text-gray-400 max-w-2xl mb-4"
+                        className="text-xl text-gray-400 max-w-2xl"
                     >
-                        Neura Orkesta no es un software que se compra completo. Es una plataforma que se <span className="text-white font-semibold">construye con vos</span>: empezás con el Tablero Base y activás las fichas que tu operación necesita.
-                    </motion.p>
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.3 }}
-                        className="text-base text-gray-500 max-w-2xl"
-                    >
-                        Sin paquetes cerrados. Sin funciones que no usás. Solo pagás por lo que activás.
+                        Activás solo lo que necesitás. Sin paquetes cerrados.
                     </motion.p>
                 </div>
 
-                {/* Tablero Base — Entry Point */}
+                {/* ── Tablero Base — Entry Point ──────────────── */}
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mb-6 relative rounded-2xl overflow-hidden border border-white/10 p-8 flex flex-col md:flex-row items-start md:items-center gap-6"
+                    className="mb-12 relative rounded-2xl overflow-hidden border border-white/10 p-8 flex flex-col md:flex-row items-start md:items-center gap-6"
                     style={{ background: 'linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%)' }}
                 >
                     <div className="absolute inset-0 bg-brand-blue/5 pointer-events-none" />
@@ -131,55 +164,63 @@ export default function FichasSection() {
                     </div>
                 </motion.div>
 
-                {/* Bento Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* ── Categories — Typographic List ───────────── */}
+                <div className="mb-16 divide-y divide-white/[0.06]">
                     {categories.map((cat, index) => (
                         <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: '-40px' }}
-                            transition={{ delay: index * 0.07, duration: 0.5 }}
-                            whileHover={{ y: -4 }}
-                            className={`relative overflow-hidden rounded-2xl p-6 ${cat.span} group cursor-default`}
-                            style={{ background: `linear-gradient(135deg, ${cat.color}22 0%, ${cat.color}08 100%)`, border: `1px solid ${cat.color}30` }}
+                            key={cat.title}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: '-30px' }}
+                            transition={{ delay: index * 0.06, duration: 0.5 }}
+                            className="group flex items-center justify-between py-5 md:py-6 cursor-default"
                         >
-                            {/* Background glow */}
-                            <div
-                                className="absolute -top-10 -right-10 w-40 h-40 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity"
-                                style={{ backgroundColor: cat.color }}
-                            />
-
-                            <div className="relative z-10 flex items-center justify-between">
-                                <div className="flex items-center gap-4">
-                                    <div
-                                        className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                                        style={{ backgroundColor: cat.color + '25' }}
-                                    >
-                                        <cat.icon className="w-5 h-5" style={{ color: cat.color }} />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg font-bold text-white">{cat.title}</h3>
-                                        <p className="text-sm font-medium" style={{ color: cat.color }}>{cat.subtitle}</p>
-                                    </div>
-                                </div>
-                                <span
-                                    className="text-xs font-bold px-3 py-1.5 rounded-full flex-shrink-0"
-                                    style={{ backgroundColor: cat.color + '20', color: cat.color }}
+                            {/* Left: icon + title */}
+                            <div className="flex items-center gap-4 md:gap-6">
+                                <div
+                                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
+                                    style={{ backgroundColor: cat.color + '18' }}
                                 >
-                                    +{cat.items.length} módulos
-                                </span>
+                                    <cat.icon className="w-5 h-5" style={{ color: cat.color }} />
+                                </div>
+                                <h3 className="text-2xl md:text-3xl font-display font-bold text-white/90 group-hover:text-white transition-colors duration-300">
+                                    {cat.title}
+                                </h3>
                             </div>
+
+                            {/* Right: subtitle */}
+                            <span
+                                className="text-sm md:text-base font-medium transition-colors duration-300 hidden sm:block"
+                                style={{ color: cat.color + 'aa' }}
+                            >
+                                {cat.subtitle}
+                                <ArrowRight
+                                    className="inline-block w-4 h-4 ml-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+                                    style={{ color: cat.color }}
+                                />
+                            </span>
                         </motion.div>
                     ))}
                 </div>
 
-                {/* Bottom note */}
+                {/* ── Marquee — All Modules Ticker ────────────── */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3, duration: 0.8 }}
+                    className="mb-16"
+                >
+                    <MarqueeRow items={marqueeRowA} direction="left" speed={40} />
+                    <MarqueeRow items={marqueeRowB} direction="right" speed={45} />
+                </motion.div>
+
+                {/* ── Bottom CTA ─────────────────────────────── */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mt-12 text-center"
+                    className="text-center"
                 >
                     <p className="text-gray-400 text-lg mb-6">
                         Cada área tiene sus propios módulos. <span className="text-white font-semibold">Activás solo lo que necesitás.</span>
