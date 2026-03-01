@@ -99,20 +99,6 @@ export default function SolutionSection() {
                         ))}
                     </div>
                 </div>
-
-                {/* Fichas callout */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.5 }}
-                    className="mt-20 flex flex-col md:flex-row md:items-center gap-2"
-                >
-                    <span className="text-brand-blue font-bold text-xl">Propuesta Modular →</span>
-                    <p className="text-text-secondary text-lg">
-                        No comprás más software, comprás más capacidad. Escalá activando solo lo que necesitás.
-                    </p>
-                </motion.div>
             </div>
         </section>
     );

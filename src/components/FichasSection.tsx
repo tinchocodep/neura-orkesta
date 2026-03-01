@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import {
-    Users, TrendingUp, Wallet, Package, Plug, Database,
-    LayoutDashboard
+    Users, TrendingUp, Wallet, Package, Plug, Database
 } from 'lucide-react';
 
 /* ─── Data ─────────────────────────────────────────────────────── */
@@ -76,8 +75,8 @@ function MarqueeRow({ items, direction = 'left', speed = 35 }: MarqueeRowProps) 
     return (
         <div className="relative overflow-hidden py-3">
             {/* Fade masks */}
-            <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-gray-950 to-transparent pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-gray-950 to-transparent pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-white to-transparent pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-white to-transparent pointer-events-none" />
 
             <div
                 className={`flex gap-6 whitespace-nowrap ${animationClass}`}
@@ -105,7 +104,7 @@ function MarqueeRow({ items, direction = 'left', speed = 35 }: MarqueeRowProps) 
 
 export default function FichasSection() {
     return (
-        <section className="section-padding bg-gray-950 overflow-hidden">
+        <section className="section-padding bg-white overflow-hidden">
             <div className="max-w-7xl mx-auto">
 
                 {/* ── Header ─────────────────────────────────── */}
@@ -116,14 +115,14 @@ export default function FichasSection() {
                         viewport={{ once: true }}
                         className="text-brand-blue font-semibold text-sm tracking-widest uppercase mb-4"
                     >
-                        Propuesta Comercial
+                        Propuesta Modular
                     </motion.p>
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-5xl md:text-7xl font-display font-bold text-white leading-tight mb-6"
+                        className="text-5xl md:text-7xl font-display font-bold text-text-primary leading-tight mb-6"
                     >
                         Potenciá tu empresa <br />
                         <span className="gradient-text">módulo a módulo.</span>
@@ -133,39 +132,14 @@ export default function FichasSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="text-xl text-gray-400 max-w-2xl"
+                        className="text-xl text-text-secondary max-w-2xl"
                     >
-                        Activás solo lo que necesitás. Sin paquetes cerrados.
+                        No comprás más software, comprás más capacidad. Escalá activando solo lo que necesitás.
                     </motion.p>
                 </div>
 
-                {/* ── Tablero Base — Entry Point ──────────────── */}
-                <motion.div
-                    initial={{ opacity: 0, y: 24 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="mb-12 relative rounded-2xl overflow-hidden border border-white/10 p-8 flex flex-col md:flex-row items-start md:items-center gap-6"
-                    style={{ background: 'linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%)' }}
-                >
-                    <div className="absolute inset-0 bg-brand-blue/5 pointer-events-none" />
-                    <div className="w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
-                        <LayoutDashboard className="w-7 h-7 text-white" />
-                    </div>
-                    <div className="flex-1 relative z-10">
-                        <div className="flex items-center gap-3 mb-1">
-                            <span className="text-xs font-bold text-brand-blue uppercase tracking-widest">Punto de Entrada · Low Ticket</span>
-                        </div>
-                        <h3 className="text-2xl font-display font-bold text-white mb-1">Tablero Base</h3>
-                        <p className="text-white/50 text-sm">Identidad · Agenda · Base de Clientes & Proveedores · Configuración de Empresa</p>
-                    </div>
-                    <div className="text-right flex-shrink-0 relative z-10">
-                        <p className="text-white/30 text-xs uppercase tracking-widest mb-1">Incluido siempre</p>
-                        <p className="text-white font-bold text-lg">Gratis al activar</p>
-                    </div>
-                </motion.div>
-
                 {/* ── Categories — Typographic List ───────────── */}
-                <div className="mb-16 divide-y divide-white/[0.06]">
+                <div className="mb-16 divide-y divide-gray-100">
                     {categories.map((cat, index) => (
                         <motion.div
                             key={cat.title}
@@ -184,7 +158,7 @@ export default function FichasSection() {
                                 >
                                     <cat.icon className="w-5 h-5" style={{ color: cat.color }} />
                                 </div>
-                                <h3 className="text-2xl md:text-3xl font-display font-bold text-white/90 group-hover:text-white transition-all duration-300">
+                                <h3 className="text-2xl md:text-3xl font-display font-bold text-gray-900 group-hover:text-gray-900 transition-all duration-300">
                                     {cat.title}
                                 </h3>
                             </div>
@@ -212,23 +186,28 @@ export default function FichasSection() {
                     <MarqueeRow items={marqueeRowB} direction="right" speed={45} />
                 </motion.div>
 
-                {/* ── Bottom CTA ─────────────────────────────── */}
+                {/* ── Neuralite CTA Card ───────────────────────── */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-center"
+                    className="relative rounded-2xl overflow-hidden border border-white/10 p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-6"
+                    style={{ background: 'linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%)' }}
                 >
-                    <p className="text-gray-400 text-lg mb-6">
-                        Cada área tiene sus propios módulos. <span className="text-white font-semibold">Activás solo lo que necesitás.</span>
-                    </p>
+                    <div className="absolute inset-0 bg-brand-blue/5 pointer-events-none" />
+                    <div className="flex-1 relative z-10">
+                        <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-2">Probá gratis Neuralite</h3>
+                        <p className="text-white/50 text-sm max-w-lg">
+                            Activá tu plataforma en minutos. Sin tarjeta, sin compromiso. Experimentá cómo Neura Orkesta transforma tu operación.
+                        </p>
+                    </div>
                     <a
-                        href="https://wa.me/5492622567533?text=Hola%21%20Quiero%20conocer%20la%20propuesta%20completa%20de%20m%C3%B3dulos%20de%20Neura%20Orkesta%20%F0%9F%93%8B"
+                        href="https://wa.me/5492622567533?text=Hola%21%20Quiero%20probar%20Neuralite%20gratis%20%F0%9F%9A%80"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn-primary text-base px-8 py-4 inline-block"
+                        className="relative z-10 flex-shrink-0 px-8 py-4 bg-brand-blue text-white font-bold text-base rounded-xl hover:bg-brand-blue-dark transition-colors shadow-lg shadow-brand-blue/20"
                     >
-                        Quiero ver la propuesta completa
+                        Probar gratis →
                     </a>
                 </motion.div>
 

@@ -6,7 +6,7 @@ const values = [
         number: '01',
         icon: Zap,
         title: 'Pragmatismo Radical',
-        description: 'Preferimos soluciones simples que funcionen hoy ("Desafío 24hs") antes que perfecciones teóricas que tarden meses. La velocidad es nuestra ventaja.',
+        description: 'Preferimos soluciones simples que funcionen hoy antes que perfecciones teóricas que tarden meses. La velocidad es nuestra ventaja.',
         color: 'from-amber-500 to-orange-500',
         bgColor: 'bg-amber-500/10',
     },
@@ -55,7 +55,7 @@ export default function ValuesSection() {
                     transition={{ duration: 0.5 }}
                     className="text-brand-blue font-semibold text-sm tracking-widest uppercase mb-4"
                 >
-                    Nuestro ADN
+                    Quiénes Somos
                 </motion.p>
 
                 <motion.h2
@@ -65,7 +65,7 @@ export default function ValuesSection() {
                     transition={{ duration: 0.6, delay: 0.1 }}
                     className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-text-primary leading-tight mb-6"
                 >
-                    Nuestros <span className="gradient-text">Valores</span>
+                    Nuestro <span className="gradient-text">ADN</span>
                 </motion.h2>
 
                 <motion.p

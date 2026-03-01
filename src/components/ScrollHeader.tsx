@@ -65,7 +65,7 @@ export default function ScrollHeader() {
                     {/* CTA + Mobile toggle */}
                     <div className="flex items-center gap-3">
                         <button
-                            onClick={() => scrollTo('#abordaje')}
+                            onClick={() => scrollTo('#contacto')}
                             className="px-5 py-2 bg-brand-blue text-white font-semibold rounded-lg hover:bg-brand-blue-dark transition-all shadow-sm text-sm"
                         >
                             Contacto
