@@ -32,7 +32,7 @@ export default function HeroVideo() {
                     <video
                         ref={videoRef}
                         src="/videos/logo-animation.mp4"
-                        className="w-full h-auto"
+                        className="w-full h-auto opacity-70"
                         muted
                         loop
                         playsInline
