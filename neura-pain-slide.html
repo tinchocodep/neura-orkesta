@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neura Orkesta — Deck Comercial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #080D18;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      gap: 0;
+    }
+
+    /* ════════════════════════════════════
+       SLIDE 1 — LOS DOLORES
+    ════════════════════════════════════ */
+    .slide {
+      width: 1280px;
+      height: 720px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* — SLIDE 1 PAIN — */
+    .slide-pain {
+      background: #0F172A;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+    }
+
+    /* left column */
+    .pain-left {
+      background: #0B1120;
+      border-right: 1px solid rgba(239,68,68,0.15);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 44px;
+      position: relative;
+    }
+
+    .pain-left::after {
+      content: '';
+      position: absolute;
+      top: 0; right: -1px; bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, #EF4444 40%, #EF4444 60%, transparent);
+      opacity: 0.4;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #EF4444;
+      margin-bottom: 20px;
+    }
+
+    .pain-title {
+      font-size: 38px;
+      font-weight: 900;
+      line-height: 1.15;
+      color: #F8FAFC;
+      margin-bottom: 16px;
+    }
+
+    .pain-title span {
+      color: #EF4444;
+    }
+
+    .pain-subtitle {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.65;
+      color: #475569;
+      margin-top: 8px;
+    }
+
+    .pain-stat {
+      margin-top: 36px;
+      padding: 18px 20px;
+      background: rgba(239,68,68,0.07);
+      border: 1px solid rgba(239,68,68,0.18);
+      border-radius: 8px;
+    }
+
+    .pain-stat-number {
+      font-size: 42px;
+      font-weight: 900;
+      color: #EF4444;
+      line-height: 1;
+    }
+
+    .pain-stat-label {
+      font-size: 12px;
+      color: #64748B;
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    /* right column — bullets */
+    .pain-right {
+      padding: 52px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .pain-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      transition: background 0.2s;
+    }
+
+    .pain-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(239,68,68,0.12);
+      border: 1px solid rgba(239,68,68,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .pain-dot svg {
+      width: 13px;
+      height: 13px;
+      color: #EF4444;
+    }
+
+    .pain-text {
+      font-size: 15px;
+      font-weight: 400;
+      color: #94A3B8;
+      line-height: 1.45;
+    }
+
+    .pain-text strong {
+      color: #CBD5E1;
+      font-weight: 600;
+    }
+
+    /* logo corner */
+    .logo-corner {
+      position: absolute;
+      top: 28px;
+      right: 32px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #1D4ED8;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ════════════════════════════════════
+       SLIDE 2 — LA SOLUCIÓN
+    ════════════════════════════════════ */
+    .slide-solution {
+      background: #0F172A;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      border-top: 3px solid #1D4ED8;
+    }
+
+    /* noise overlay */
+    .slide-solution::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 60% 50% at 50% 40%, rgba(29,78,216,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 30% 70%, rgba(16,185,129,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* grid */
+    .slide-solution::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(29,78,216,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(29,78,216,0.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+      pointer-events: none;
+    }
+
+    .sol-basta {
+      position: relative;
+      z-index: 2;
+      font-size: 96px;
+      font-weight: 900;
+      color: #1D4ED8;
+      letter-spacing: -2px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .sol-basta-sub {
+      font-size: 18px;
+      font-weight: 600;
+      color: #334155;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .sol-name {
+      position: relative;
+      z-index: 2;
+      font-size: 56px;
+      font-weight: 900;
+      color: #F8FAFC;
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .sol-name em {
+      font-style: normal;
+      color: #10B981;
+    }
+
+    .sol-tagline {
+      position: relative;
+      z-index: 2;
+      font-size: 20px;
+      font-weight: 400;
+      color: #64748B;
+      margin-bottom: 52px;
+    }
+
+    /* 3 pillars */
+    .sol-pillars {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .sol-pillar {
+      width: 310px;
+      padding: 24px 26px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      text-align: left;
+    }
+
+    .sol-pillar-icon {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .sol-pillar-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #F8FAFC;
+      margin-bottom: 8px;
+    }
+
+    .sol-pillar-desc {
+      font-size: 13px;
+      color: #64748B;
+      line-height: 1.55;
+    }
+
+    .sol-pillar-desc strong {
+      color: #10B981;
+    }
+
+    .sol-cta {
+      position: relative;
+      z-index: 2;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      letter-spacing: 1px;
+    }
+
+    /* separador entre slides */
+    .slide-sep {
+      width: 1280px;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #1D4ED8 30%, #10B981 70%, transparent);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ──────────────────────────────────────
+       SLIDE 1: LOS DOLORES
+  ────────────────────────────────────── -->
+  <div class="slide slide-pain">
+
+    <div class="logo-corner">NEURA ORKESTA</div>
+
+    <!-- LEFT: title + stat -->
+    <div class="pain-left">
+      <div class="eyebrow">El problema real</div>
+      <h1 class="pain-title">Tu empresa<br/>corre en<br/><span>modo manual.</span></h1>
+      <p class="pain-subtitle">
+        Decenas de archivos Excel,<br/>
+        horas en tareas repetitivas,<br/>
+        errores todo el tiempo.
+      </p>
+      <div class="pain-stat">
+        <div class="pain-stat-number">+15hs</div>
+        <div class="pain-stat-label">por semana perdidas en carga de datos<br/>por cada empleado administrativo</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: bullets -->
+    <div class="pain-right">
+
+      <div class="pain-item">
+        <div class="pain-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="pain-text"><strong>Facturas de proveedores</strong> cargadas a mano, una por una.</div>
+      </div>
+
+      <div class="pain-item">
+        <div class="pain-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="pain-text"><strong>Resúmenes bancarios en PDF</strong> chequeados manualmente para conciliar.</div>
+      </div>
+
+      <div class="pain-item">
+        <div class="pain-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="pain-text"><strong>Cobranzas registradas a mano</strong> en planillas que nadie termina de entender.</div>
+      </div>
+
+      <div class="pain-item">
+        <div class="pain-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="pain-text"><strong>Facturas en ARCA y remitos</strong> emitidos uno a uno, sin automatización.</div>
+      </div>
+
+      <div class="pain-item">
+        <div class="pain-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="pain-text"><strong>Liquidación de sueldos manual</strong> con riesgo de error en cada cierre de mes.</div>
+      </div>
+
+      <div class="pain-item">
+        <div class="pain-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="pain-text"><strong>Reportes y consultas</strong> que llevan horas armar — cuando la decisión la necesitás hoy.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="slide-sep"></div>
+
+  <!-- ──────────────────────────────────────
+       SLIDE 2: LA SOLUCIÓN
+  ────────────────────────────────────── -->
+  <div class="slide slide-solution">
+
+    <div class="sol-basta">¡Basta!</div>
+    <div class="sol-basta-sub">de tareas manuales y datos dispersos</div>
+
+    <div class="sol-name">Llegó <em>Neura&nbsp;Orkesta.</em></div>
+    <div class="sol-tagline">Tu sistema contable con inteligencia incorporada.</div>
+
+    <div class="sol-pillars">
+      <div class="sol-pillar">
+        <div class="sol-pillar-icon">⚡</div>
+        <div class="sol-pillar-title">Automatizá el registro</div>
+        <div class="sol-pillar-desc">
+          Facturas, cobranzas y movimientos bancarios se <strong>ingresan solos</strong> a tu sistema contable. Cero tipeo.
+        </div>
+      </div>
+      <div class="sol-pillar">
+        <div class="sol-pillar-icon">🔌</div>
+        <div class="sol-pillar-title">Conectado a tu sistema actual</div>
+        <div class="sol-pillar-desc">
+          No reemplaza lo que ya tenés. Se integra a tu sistema contable y <strong>multiplica su poder</strong> sin fricción.
+        </div>
+      </div>
+      <div class="sol-pillar">
+        <div class="sol-pillar-icon">📊</div>
+        <div class="sol-pillar-title">Tableros al instante</div>
+        <div class="sol-pillar-desc">
+          Toda la información de tu empresa disponible en <strong>reportes y dashboards en tiempo real.</strong> Sin esperas.
+        </div>
+      </div>
+    </div>
+
+    <div class="sol-cta">REDUCÍ COSTOS ADMINISTRATIVOS · TOMÁ DECISIONES CON DATOS · RECUPERÁ TU TIEMPO</div>
+
+  </div>
+
+</body>
+</html>

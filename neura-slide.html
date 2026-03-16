@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neura Orkesta — Multi-Industria</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0F172A;
+      font-family: 'Inter', sans-serif;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── SLIDE WRAPPER ── */
+    .slide {
+      width: 1280px;
+      height: 720px;
+      background: #0F172A;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* ── SUBTLE GRID BG ── */
+    .slide::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(29,78,216,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(29,78,216,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    /* ── LEFT PANEL ── */
+    .left {
+      width: 420px;
+      padding: 60px 48px 60px 56px;
+      position: relative;
+      z-index: 10;
+      flex-shrink: 0;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1D4ED8;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tag::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 2px;
+      background: #1D4ED8;
+    }
+
+    .headline {
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1.28;
+      color: #F8FAFC;
+      margin-bottom: 24px;
+    }
+
+    .headline em {
+      font-style: normal;
+      color: #10B981;
+    }
+
+    .sub {
+      font-size: 14px;
+      font-weight: 400;
+      color: #64748B;
+      line-height: 1.65;
+      max-width: 320px;
+    }
+
+    .accent-line {
+      margin-top: 36px;
+      width: 52px;
+      height: 3px;
+      background: linear-gradient(90deg, #1D4ED8, #10B981);
+      border-radius: 2px;
+    }
+
+    /* ── NEURAL CANVAS ── */
+    #neural-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    /* ── SECTOR NODES ── */
+    .node {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 10;
+      animation: nodePulse 3s ease-in-out infinite;
+    }
+
+    @keyframes nodePulse {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .node-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      backdrop-filter: blur(8px);
+    }
+
+    .node-circle::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1px solid;
+      opacity: 0.25;
+      animation: ringPulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes ringPulse {
+      0%, 100% { transform: scale(1); opacity: 0.25; }
+      50% { transform: scale(1.15); opacity: 0.08; }
+    }
+
+    .node-icon {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .node-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .node-sub {
+      font-size: 10px;
+      font-weight: 400;
+      text-align: center;
+      color: #475569;
+      white-space: nowrap;
+      margin-top: -4px;
+    }
+
+    /* ── CENTER NEURON ── */
+    .center-neuron {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+    }
+
+    .neuron-outer {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #2563EB, #0F172A);
+      border: 2px solid #1D4ED8;
+      box-shadow:
+        0 0 40px rgba(29,78,216,0.6),
+        0 0 80px rgba(29,78,216,0.2),
+        inset 0 0 30px rgba(29,78,216,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      animation: neuronGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes neuronGlow {
+      0%, 100% {
+        box-shadow: 0 0 40px rgba(29,78,216,0.6), 0 0 80px rgba(29,78,216,0.2), inset 0 0 30px rgba(29,78,216,0.3);
+      }
+      50% {
+        box-shadow: 0 0 60px rgba(29,78,216,0.85), 0 0 120px rgba(16,185,129,0.25), inset 0 0 40px rgba(29,78,216,0.5);
+      }
+    }
+
+    .neuron-ring {
+      position: absolute;
+      inset: -14px;
+      border-radius: 50%;
+      border: 1px solid rgba(29,78,216,0.3);
+      animation: ringExpand 2s ease-in-out infinite;
+    }
+    .neuron-ring-2 {
+      position: absolute;
+      inset: -28px;
+      border-radius: 50%;
+      border: 1px solid rgba(29,78,216,0.15);
+      animation: ringExpand 2s ease-in-out infinite 0.5s;
+    }
+
+    @keyframes ringExpand {
+      0% { transform: scale(0.9); opacity: 0.5; }
+      100% { transform: scale(1.1); opacity: 0; }
+    }
+
+    .neuron-text {
+      text-align: center;
+      z-index: 2;
+    }
+
+    .neuron-name {
+      font-size: 13px;
+      font-weight: 900;
+      color: #F8FAFC;
+      letter-spacing: 1px;
+    }
+
+    .neuron-tagline {
+      font-size: 9px;
+      font-weight: 500;
+      color: #10B981;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .neuron-bottom-label {
+      margin-top: 12px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* ── BOTTOM TAGLINE ── */
+    .bottom-bar {
+      position: absolute;
+      bottom: 32px;
+      left: 56px;
+      right: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    .bottom-claim {
+      font-size: 12px;
+      color: #334155;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .bottom-brand {
+      font-size: 12px;
+      font-weight: 700;
+      color: #1D4ED8;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+<div class="slide" id="slide">
+
+  <!-- LEFT COPY -->
+  <div class="left">
+    <div class="tag">Industrias</div>
+    <h1 class="headline">
+      La PyME no es una sola industria:<br/>
+      son <em>múltiples sectores</em><br/>
+      con un mismo<br/>
+      caos operativo.
+    </h1>
+    <p class="sub">
+      Distribuidoras, comercios, servicios, industria,<br/>
+      agro, construcción. Distintos rubros,<br/>
+      mismos dolores. Una sola solución.
+    </p>
+    <div class="accent-line"></div>
+  </div>
+
+  <!-- NEURAL CANVAS for cables -->
+  <canvas id="neural-canvas"></canvas>
+
+  <!-- CENTER NEURON (positioned via JS) -->
+  <div class="center-neuron" id="center-neuron">
+    <div class="neuron-outer">
+      <div class="neuron-ring"></div>
+      <div class="neuron-ring-2"></div>
+      <div class="neuron-text">
+        <div class="neuron-name">NEURA</div>
+        <div class="neuron-tagline">ORKESTA</div>
+      </div>
+    </div>
+    <div class="neuron-bottom-label">Sistema Operativo</div>
+  </div>
+
+  <!-- SECTOR NODES (positioned via JS) -->
+  <div class="node" id="node-0" style="animation-delay:0s">
+    <div class="node-circle" style="background:rgba(16,185,129,0.1);border-color:#10B981;">
+      <div class="node-circle" style="position:absolute;inset:0;border:none;background:transparent;">
+      </div>
+      <span class="node-icon">🏭</span>
+    </div>
+    <div class="node-label" style="color:#10B981;">Industria</div>
+    <div class="node-sub">Manufactura</div>
+  </div>
+
+  <div class="node" id="node-1" style="animation-delay:0.4s">
+    <div class="node-circle" style="background:rgba(139,92,246,0.1);border-color:#8B5CF6;">
+      <span class="node-icon">🚛</span>
+    </div>
+    <div class="node-label" style="color:#8B5CF6;">Distribución</div>
+    <div class="node-sub">Logística</div>
+  </div>
+
+  <div class="node" id="node-2" style="animation-delay:0.8s">
+    <div class="node-circle" style="background:rgba(29,78,216,0.1);border-color:#3B82F6;">
+      <span class="node-icon">🛒</span>
+    </div>
+    <div class="node-label" style="color:#3B82F6;">Retail</div>
+    <div class="node-sub">Mayoristas</div>
+  </div>
+
+  <div class="node" id="node-3" style="animation-delay:1.2s">
+    <div class="node-circle" style="background:rgba(249,115,22,0.1);border-color:#F97316;">
+      <span class="node-icon">🤝</span>
+    </div>
+    <div class="node-label" style="color:#F97316;">Servicios</div>
+    <div class="node-sub">B2B / Consultoría</div>
+  </div>
+
+  <div class="node" id="node-4" style="animation-delay:1.6s">
+    <div class="node-circle" style="background:rgba(236,72,153,0.1);border-color:#EC4899;">
+      <span class="node-icon">🌾</span>
+    </div>
+    <div class="node-label" style="color:#EC4899;">Agro</div>
+    <div class="node-sub">Campo / Acopio</div>
+  </div>
+
+  <div class="node" id="node-5" style="animation-delay:2.0s">
+    <div class="node-circle" style="background:rgba(234,179,8,0.1);border-color:#EAB308;">
+      <span class="node-icon">🏗️</span>
+    </div>
+    <div class="node-label" style="color:#EAB308;">Construcción</div>
+    <div class="node-sub">Infraestructura</div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <span class="bottom-claim">Un sistema. Muchas industrias. Un mismo resultado: operar mejor.</span>
+    <span class="bottom-brand">neuracall.com</span>
+  </div>
+
+</div>
+
+<script>
+  const SLIDE_W = 1280;
+  const SLIDE_H = 720;
+
+  // Center of neural hub (relative to slide)
+  const CENTER_X = 790;
+  const CENTER_Y = 345;
+
+  // Node positions (cx, cy) — center of each node, evenly around the neuron
+  const nodePositions = [
+    { id: 'node-0', cx: 860,  cy: 130  }, // Industria — top
+    { id: 'node-1', cx: 1060, cy: 180  }, // Distribución — top right
+    { id: 'node-2', cx: 1120, cy: 345  }, // Retail — right
+    { id: 'node-3', cx: 1020, cy: 540  }, // Servicios — bottom right
+    { id: 'node-4', cx: 790,  cy: 590  }, // Agro — bottom
+    { id: 'node-5', cx: 570,  cy: 510  }, // Construcción — bottom left
+  ];
+
+  const nodeColors = [
+    '#10B981', '#8B5CF6', '#3B82F6', '#F97316', '#EC4899', '#EAB308'
+  ];
+
+  // Position the center neuron
+  const neuron = document.getElementById('center-neuron');
+  neuron.style.left = (CENTER_X - 70) + 'px';
+  neuron.style.top  = (CENTER_Y - 70) + 'px';
+
+  // Position sector nodes
+  nodePositions.forEach(({ id, cx, cy }) => {
+    const el = document.getElementById(id);
+    el.style.left = (cx - 38) + 'px';
+    el.style.top  = (cy - 38) + 'px';
+  });
+
+  // Canvas setup
+  const canvas = document.getElementById('neural-canvas');
+  const slide = document.getElementById('slide');
+
+  function resize() {
+    canvas.width  = slide.offsetWidth;
+    canvas.height = slide.offsetHeight;
+  }
+  resize();
+
+  const ctx = canvas.getContext('2d');
+
+  // Scale factor (slide is 1280px design, rendered at actual size)
+  function scaleX(x) { return x * canvas.width  / SLIDE_W; }
+  function scaleY(y) { return y * canvas.height / SLIDE_H; }
+
+  // Pulse particles along cables
+  const pulses = nodePositions.map((n, i) => ({
+    t: Math.random(),
+    speed: 0.003 + Math.random() * 0.002,
+    color: nodeColors[i],
+    fromX: scaleX(CENTER_X),
+    fromY: scaleY(CENTER_Y),
+    toX: scaleX(n.cx),
+    toY: scaleY(n.cy),
+  }));
+
+  function drawCable(x1, y1, x2, y2, color, alpha) {
+    const mx = (x1 + x2) / 2;
+    const my = (y1 + y2) / 2 - 40;
+
+    // Outer glow
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.quadraticCurveTo(mx, my, x2, y2);
+    ctx.strokeStyle = color.replace(')', `, ${alpha * 0.3})`).replace('rgb', 'rgba').replace('#', '').startsWith('#')
+      ? hexToRgba(color, alpha * 0.4)
+      : color;
+    ctx.lineWidth = 6;
+    ctx.stroke();
+
+    // Core line
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.quadraticCurveTo(mx, my, x2, y2);
+    ctx.strokeStyle = hexToRgba(color, alpha);
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  }
+
+  function hexToRgba(hex, alpha) {
+    const r = parseInt(hex.slice(1,3), 16);
+    const g = parseInt(hex.slice(3,5), 16);
+    const b = parseInt(hex.slice(5,7), 16);
+    return `rgba(${r},${g},${b},${alpha})`;
+  }
+
+  function getQuadPoint(x1, y1, x2, y2, t) {
+    const mx = (x1 + x2) / 2;
+    const my = (y1 + y2) / 2 - 40;
+    const ix = (1-t)*(1-t)*x1 + 2*(1-t)*t*mx + t*t*x2;
+    const iy = (1-t)*(1-t)*y1 + 2*(1-t)*t*my + t*t*y2;
+    return { x: ix, y: iy };
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const cx = scaleX(CENTER_X);
+    const cy = scaleY(CENTER_Y);
+
+    nodePositions.forEach((n, i) => {
+      const nx = scaleX(n.cx);
+      const ny = scaleY(n.cy);
+      const color = nodeColors[i];
+
+      // Cable glow layers
+      ctx.save();
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 8;
+
+      // Glow pass
+      const mx = (cx + nx) / 2;
+      const my = (cy + ny) / 2 - scaleY(40);
+
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.quadraticCurveTo(mx, my, nx, ny);
+      ctx.strokeStyle = hexToRgba(color, 0.08);
+      ctx.lineWidth = 8;
+      ctx.stroke();
+
+      // Main cable
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.quadraticCurveTo(mx, my, nx, ny);
+      ctx.strokeStyle = hexToRgba(color, 0.35);
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([6, 10]);
+      ctx.lineDashOffset = -Date.now() * 0.03;
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.restore();
+    });
+
+    // Draw pulses
+    pulses.forEach((p, i) => {
+      p.t += p.speed;
+      if (p.t > 1) p.t = 0;
+
+      const mx = (p.fromX + p.toX) / 2;
+      const my = (p.fromY + p.toY) / 2 - scaleY(40);
+      const pt = getQuadPoint(p.fromX, p.fromY, p.toX, p.toY, p.t);
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.shadowColor = p.color;
+      ctx.shadowBlur = 16;
+      ctx.fill();
+      ctx.restore();
+
+      // Trailing glow
+      for (let trail = 1; trail <= 4; trail++) {
+        const tt = Math.max(0, p.t - trail * 0.025);
+        const trailPt = getQuadPoint(p.fromX, p.fromY, p.toX, p.toY, tt);
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(trailPt.x, trailPt.y, 3 - trail * 0.5, 0, Math.PI * 2);
+        ctx.fillStyle = hexToRgba(p.color, 0.25 - trail * 0.05);
+        ctx.fill();
+        ctx.restore();
+      }
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+</script>
+</body>
+</html>

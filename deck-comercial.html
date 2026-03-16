@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Neura Orkesta — Deck Comercial</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0F172A;--navy-d:#080D18;--navy-l:#1E293B;
+  --blue:#1D4ED8;--blue-l:#3B82F6;--blue-d:#1e3a8a;
+  --green:#10B981;--green-l:#34D399;
+  --violet:#8B5CF6;--red:#EF4444;
+  --white:#F8FAFC;--slate:#94A3B8;--muted:#475569;--dim:#1E293B;
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--navy-d);font-family:'Inter',sans-serif}
+
+/* ── DECK WRAPPER ── */
+.deck{width:100%;height:100%;position:relative}
+.slide{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  flex-direction:column;
+  overflow:hidden;
+}
+.slide:not(.active){display:none !important}
+.slide.active{display:flex}
+
+/* ── PROGRESS BAR ── */
+#progress{
+  position:fixed;bottom:0;left:0;right:0;
+  height:3px;background:rgba(255,255,255,0.06);
+  z-index:100;
+}
+#progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--green));transition:width .4s ease}
+
+/* ── NAV DOTS ── */
+#dots{
+  position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+  display:flex;gap:8px;z-index:100;
+}
+.dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,0.2);cursor:pointer;
+  transition:all .3s ease;
+}
+.dot.active{background:var(--blue);width:22px;border-radius:3px}
+
+/* ── NAV ARROWS ── */
+#nav-left,#nav-right{
+  position:fixed;top:50%;transform:translateY(-50%);
+  width:42px;height:42px;border-radius:50%;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:100;color:var(--slate);font-size:18px;
+  transition:all .2s;user-select:none;
+}
+#nav-left{left:20px}#nav-right{right:20px}
+#nav-left:hover,#nav-right:hover{background:rgba(29,78,216,0.3);color:white;border-color:var(--blue)}
+
+/* ── LOGO MARK (top-right badge) ── */
+.badge{
+  position:absolute;top:28px;right:36px;
+  font-size:11px;font-weight:800;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--blue-l);z-index:10;
+}
+.badge-light{color:rgba(255,255,255,0.3)}
+
+/* ── GRID BG UTILITY ── */
+.grid-bg::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(29,78,216,0.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(29,78,216,0.05) 1px,transparent 1px);
+  background-size:56px 56px;pointer-events:none;z-index:0;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE 1 — PORTADA
+═══════════════════════════════════════ */
+#s1{
+  background:var(--navy);align-items:center;justify-content:center;
+  text-align:center;position:relative;
+}
+#s1::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(29,78,216,0.18) 0%,transparent 70%);
+  pointer-events:none;
+}
+.s1-logo-wrap{position:relative;z-index:2;margin-bottom:32px}
+.s1-logo-outer{
+  width:96px;height:96px;border-radius:24px;
+  background:linear-gradient(135deg,#1D4ED8,#0c2461);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 0;
+  box-shadow:0 0 60px rgba(29,78,216,0.5);
+}
+.s1-logo-inner{
+  font-size:40px;font-weight:900;color:white;letter-spacing:-1px;
+  font-style:italic;
+}
+.s1-name{
+  position:relative;z-index:2;
+  font-size:76px;font-weight:900;color:var(--white);
+  letter-spacing:-2px;line-height:1;margin-top:28px;
+}
+.s1-name span{color:var(--green)}
+.s1-sub{
+  position:relative;z-index:2;
+  font-size:20px;font-weight:400;color:var(--slate);
+  margin-top:18px;letter-spacing:0.5px;
+}
+.s1-tag{
+  position:relative;z-index:2;
+  margin-top:40px;
+  display:inline-block;
+  padding:10px 28px;
+  background:rgba(29,78,216,0.15);
+  border:1px solid rgba(29,78,216,0.3);
+  border-radius:100px;
+  font-size:13px;font-weight:600;color:var(--blue-l);
+  letter-spacing:1px;
+}
+.s1-footer{
+  position:absolute;bottom:32px;left:0;right:0;
+  text-align:center;font-size:12px;color:var(--muted);
+  z-index:2;letter-spacing:1px;
+}
+/* grid lines */
+.s1-lines{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(29,78,216,0.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(29,78,216,0.06) 1px,transparent 1px);
+  background-size:64px 64px;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE 2 — PROBLEMAS
+═══════════════════════════════════════ */
+#s2{background:var(--navy);grid-template-columns:360px 1fr}
+#s2.active{display:grid}
+.s2-left{
+  background:#0B1120;
+  border-right:1px solid rgba(239,68,68,0.12);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:56px 44px;position:relative;
+}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:18px}
+.s2-title{font-size:36px;font-weight:900;color:var(--white);line-height:1.15;margin-bottom:14px}
+.s2-title em{font-style:normal;color:#EF4444}
+.s2-desc{font-size:13px;font-weight:400;color:var(--muted);line-height:1.65}
+.s2-callout{
+  margin-top:32px;padding:18px 20px;
+  background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.18);border-radius:10px;
+}
+.s2-num{font-size:44px;font-weight:900;color:#EF4444;line-height:1}
+.s2-numlbl{font-size:12px;color:var(--muted);margin-top:6px;font-weight:500;line-height:1.4}
+
+.s2-right{padding:40px 48px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.pain-row{
+  display:flex;align-items:center;gap:14px;padding:13px 16px;
+  background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:8px;
+}
+.pain-icon{
+  width:32px;height:32px;border-radius:8px;
+  background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;flex-shrink:0;
+}
+.pain-text{font-size:14px;color:var(--slate);line-height:1.4}
+.pain-text strong{color:var(--white);font-weight:600}
+
+/* ═══════════════════════════════════════
+   SLIDE 3 — MULTI-INDUSTRIA
+═══════════════════════════════════════ */
+#s3{background:var(--navy);grid-template-columns:420px 1fr;align-items:stretch}
+#s3.active{display:grid}
+.s3-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:64px 52px;border-right:1px solid rgba(29,78,216,0.12);position:relative;
+}
+.s3-title{font-size:34px;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:16px}
+.s3-title em{font-style:normal;color:var(--green)}
+.s3-desc{font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:32px}
+.s3-claim{
+  padding:20px 22px;
+  background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.2);border-radius:10px;
+  font-size:15px;font-weight:600;color:var(--green-l);line-height:1.5;
+}
+
+.s3-right{
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:48px 44px;align-content:center;
+}
+.industry-card{
+  padding:22px 22px;border-radius:12px;
+  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);
+  display:flex;flex-direction:column;gap:8px;
+  transition:border-color .2s;
+}
+.industry-card:hover{border-color:rgba(29,78,216,0.4)}
+.ind-icon{font-size:28px;margin-bottom:4px}
+.ind-name{font-size:15px;font-weight:700;color:var(--white)}
+.ind-desc{font-size:12px;color:var(--muted);line-height:1.5}
+.ind-tag{
+  margin-top:4px;display:inline-block;
+  padding:3px 10px;border-radius:100px;
+  font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE 4 — MISIÓN
+═══════════════════════════════════════ */
+#s4{
+  background:var(--navy-d);
+  align-items:center;justify-content:center;
+  text-align:center;position:relative;
+}
+#s4::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 45%,rgba(16,185,129,0.1) 0%,transparent 65%);
+  pointer-events:none;
+}
+.s4-label{
+  position:relative;z-index:2;
+  font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;
+  color:var(--green);margin-bottom:32px;
+}
+.s4-quote-mark{
+  position:relative;z-index:2;
+  font-size:200px;font-weight:900;color:rgba(29,78,216,0.1);
+  line-height:0.7;margin-bottom:8px;
+}
+.s4-mission{
+  position:relative;z-index:2;
+  font-size:42px;font-weight:800;color:var(--white);
+  line-height:1.25;max-width:900px;letter-spacing:-0.5px;
+}
+.s4-mission em{font-style:normal;color:var(--green)}
+.s4-mission strong{color:var(--blue-l)}
+.s4-divider{
+  position:relative;z-index:2;
+  width:64px;height:3px;
+  background:linear-gradient(90deg,var(--blue),var(--green));
+  border-radius:2px;margin:36px auto;
+}
+.s4-sub{
+  position:relative;z-index:2;
+  font-size:16px;color:var(--muted);max-width:640px;line-height:1.7;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE 5 — PLATAFORMA
+═══════════════════════════════════════ */
+#s5{background:var(--navy);flex-direction:column;padding:48px 64px 52px}
+.s5-header{margin-bottom:36px}
+.s5-title{font-size:30px;font-weight:800;color:var(--white);margin-bottom:6px}
+.s5-sub{font-size:14px;color:var(--muted)}
+
+.platform-flow{display:grid;grid-template-columns:1fr 40px 1fr 40px 1fr 40px 1fr;align-items:center;gap:0;flex:1}
+.platform-arrow{text-align:center;color:var(--muted);font-size:22px}
+
+.platform-card{
+  height:100%;border-radius:14px;padding:26px 22px;
+  display:flex;flex-direction:column;gap:10px;
+  border:1px solid rgba(255,255,255,0.07);
+}
+.pc-sync{background:rgba(139,92,246,0.08);border-color:rgba(139,92,246,0.2)}
+.pc-core{background:rgba(29,78,216,0.08);border-color:rgba(29,78,216,0.2)}
+.pc-erp{background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.2)}
+.pc-insight{background:rgba(234,179,8,0.08);border-color:rgba(234,179,8,0.2)}
+
+.pc-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:2px}
+.pc-sync  .pc-label{color:#8B5CF6}
+.pc-core  .pc-label{color:var(--blue-l)}
+.pc-erp   .pc-label{color:var(--green)}
+.pc-insight .pc-label{color:#EAB308}
+
+.pc-name{font-size:18px;font-weight:800;color:var(--white);margin-bottom:4px}
+.pc-desc{font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:8px}
+.pc-items{display:flex;flex-direction:column;gap:6px}
+.pc-item{
+  display:flex;align-items:center;gap:8px;
+  font-size:11px;color:var(--slate);font-weight:500;
+}
+.pc-item-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.pc-sync .pc-item-dot{background:#8B5CF6}
+.pc-core .pc-item-dot{background:var(--blue-l)}
+.pc-erp  .pc-item-dot{background:var(--green)}
+.pc-insight .pc-item-dot{background:#EAB308}
+
+/* input chips */
+.chip-grid{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.chip{
+  padding:3px 9px;border-radius:6px;
+  font-size:10px;font-weight:600;
+  background:rgba(139,92,246,0.15);color:#A78BFA;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE 6 — SOFTWARE A MEDIDA
+═══════════════════════════════════════ */
+#s6{background:var(--navy);grid-template-columns:1fr 1fr;align-items:stretch}
+#s6.active{display:grid}
+.s6-left{
+  background:#0B1120;border-right:1px solid rgba(139,92,246,0.12);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:64px 50px;
+}
+.s6-title{font-size:34px;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:16px}
+.s6-title em{font-style:normal;color:var(--violet)}
+.s6-text{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px}
+.s6-promise{
+  padding:20px 22px;
+  background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:10px;
+  font-size:14px;font-weight:600;color:var(--violet);line-height:1.6;
+}
+
+.s6-right{padding:56px 48px;display:flex;flex-direction:column;justify-content:center;gap:0}
+.step-item{display:flex;gap:20px;padding-bottom:28px;position:relative}
+.step-item:not(:last-child)::after{
+  content:'';position:absolute;left:19px;top:42px;bottom:0;
+  width:1px;background:rgba(139,92,246,0.2);
+}
+.step-num{
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.3);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-size:14px;font-weight:800;color:var(--violet);
+}
+.step-content{padding-top:4px}
+.step-title{font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px}
+.step-desc{font-size:13px;color:var(--muted);line-height:1.55}
+
+/* ═══════════════════════════════════════
+   SLIDE 7 — ABORDAJE + MODELOS COMERCIALES
+═══════════════════════════════════════ */
+#s7{background:var(--navy);flex-direction:column;padding:44px 60px}
+.s7-header{margin-bottom:28px}
+.s7-title{font-size:28px;font-weight:900;color:var(--white);margin-bottom:6px}
+.s7-sub{font-size:13px;color:var(--muted)}
+.s7-body{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;flex:1}
+.model-card{
+  border-radius:14px;padding:28px 26px;
+  display:flex;flex-direction:column;gap:14px;
+  border:1px solid rgba(255,255,255,0.08);
+  position:relative;overflow:hidden;
+}
+.model-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+}
+.mc-a{background:rgba(16,185,129,0.06)}
+.mc-a::before{background:var(--green)}
+.mc-b{background:rgba(29,78,216,0.06)}
+.mc-b::before{background:var(--blue)}
+.mc-c{background:rgba(139,92,246,0.06)}
+.mc-c::before{background:var(--violet)}
+
+.model-num{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase}
+.mc-a .model-num{color:var(--green)}
+.mc-b .model-num{color:var(--blue-l)}
+.mc-c .model-num{color:var(--violet)}
+.model-name{font-size:20px;font-weight:800;color:var(--white);line-height:1.2}
+.model-desc{font-size:13px;color:var(--muted);line-height:1.6}
+.model-pricing{
+  margin-top:auto;padding:14px 16px;border-radius:8px;
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
+}
+.model-pricing-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12px;color:var(--slate);font-weight:500}
+.model-pricing-row:last-child{margin-bottom:0}
+.pricing-dot{width:6px;height:6px;border-radius:50%}
+.mc-a .pricing-dot{background:var(--green)}
+.mc-b .pricing-dot{background:var(--blue-l)}
+.mc-c .pricing-dot{background:var(--violet)}
+
+/* efficiency strip */
+.efficiency-strip{
+  margin-bottom:20px;
+  padding:14px 20px;
+  background:rgba(29,78,216,0.08);border:1px solid rgba(29,78,216,0.15);border-radius:10px;
+  display:flex;align-items:center;gap:28px;flex-wrap:wrap;
+}
+.eff-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--slate);font-weight:500}
+.eff-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(16,185,129,0.5)}
+
+/* ═══════════════════════════════════════
+   SLIDE 8 — POR QUÉ + DESAFÍO 24HS
+═══════════════════════════════════════ */
+#s8{background:var(--navy);grid-template-columns:1fr 420px;align-items:stretch}
+#s8.active{display:grid}
+.s8-left{padding:48px 52px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(29,78,216,0.12)}
+.s8-title{font-size:28px;font-weight:900;color:var(--white);margin-bottom:24px}
+.reasons-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.reason-card{
+  padding:16px 18px;border-radius:10px;
+  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);
+  display:flex;gap:12px;
+}
+.reason-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.reason-content{min-width:0}
+.reason-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:4px}
+.reason-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+.s8-right{
+  background:#080D18;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:52px 44px;
+  position:relative;overflow:hidden;
+}
+.s8-right::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 90% 70% at 50% 40%,rgba(29,78,216,0.18) 0%,transparent 70%);
+  pointer-events:none;
+}
+.desafio-label{
+  position:relative;z-index:2;
+  font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue-l);margin-bottom:10px;
+}
+.desafio-title{
+  position:relative;z-index:2;
+  font-size:40px;font-weight:900;color:var(--white);line-height:1;margin-bottom:6px;
+}
+.desafio-title em{font-style:normal;color:var(--green)}
+.desafio-sub{
+  position:relative;z-index:2;
+  font-size:13px;color:var(--muted);margin-bottom:32px;line-height:1.6;
+}
+.desafio-steps{position:relative;z-index:2;display:flex;flex-direction:column;gap:0}
+.d-step{display:flex;gap:16px;padding-bottom:20px;position:relative}
+.d-step:not(:last-child)::after{
+  content:'';position:absolute;left:17px;top:38px;bottom:0;
+  width:1px;background:rgba(29,78,216,0.25);
+}
+.d-step-dot{
+  width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  background:rgba(29,78,216,0.15);border:1px solid rgba(29,78,216,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;color:var(--blue-l);
+}
+.d-step-content{min-width:0}
+.d-step-when{font-size:10px;font-weight:700;color:var(--blue-l);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
+.d-step-desc{font-size:13px;color:var(--slate);line-height:1.45}
+.desafio-cta{
+  position:relative;z-index:2;
+  margin-top:24px;padding:14px 20px;
+  background:var(--blue);border-radius:10px;
+  font-size:14px;font-weight:700;color:white;text-align:center;
+  letter-spacing:0.5px;
+}
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 1 — PORTADA
+══════════════════════════════════════════════ -->
+<div class="slide active" id="s1">
+  <div class="s1-lines"></div>
+  <div class="s1-logo-wrap">
+    <div class="s1-logo-outer">
+      <div class="s1-logo-inner">N</div>
+    </div>
+  </div>
+  <div class="s1-name">Neura<span>Orkesta</span></div>
+  <div class="s1-sub">Sistema operativo para empresas que quieren operar mejor.</div>
+  <div class="s1-tag">Automatización · Datos en tiempo real · Software a medida</div>
+  <div class="s1-footer">neuracall.com &nbsp;·&nbsp; 2026</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 2 — PROBLEMAS
+══════════════════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="badge badge-light">NEURA ORKESTA</div>
+  <div class="s2-left">
+    <div class="eyebrow" style="color:#EF4444">El problema</div>
+    <h2 class="s2-title">Tu empresa<br/><em>corre en<br/>modo manual.</em></h2>
+    <p class="s2-desc">Decenas de archivos Excel, horas en tareas repetitivas, errores todo el tiempo. Y mientras tanto, el negocio no para.</p>
+    <div class="s2-callout">
+      <div class="s2-num">+15hs</div>
+      <div class="s2-numlbl">por semana perdidas en carga manual de datos por cada empleado administrativo</div>
+    </div>
+  </div>
+  <div class="s2-right">
+    <div class="pain-row">
+      <div class="pain-icon">📄</div>
+      <div class="pain-text"><strong>Facturas de proveedores</strong> cargadas a mano, una por una, todos los días.</div>
+    </div>
+    <div class="pain-row">
+      <div class="pain-icon">🏦</div>
+      <div class="pain-text"><strong>Resúmenes bancarios en PDF</strong> chequeados manualmente para conciliar con lo que dice el sistema.</div>
+    </div>
+    <div class="pain-row">
+      <div class="pain-icon">💰</div>
+      <div class="pain-text"><strong>Cobranzas registradas en planillas</strong> que nadie llega a entender del todo.</div>
+    </div>
+    <div class="pain-row">
+      <div class="pain-icon">🧾</div>
+      <div class="pain-text"><strong>Facturas en ARCA y remitos</strong> emitidos uno a uno, sin ningún tipo de automatización.</div>
+    </div>
+    <div class="pain-row">
+      <div class="pain-icon">👥</div>
+      <div class="pain-text"><strong>Liquidación de sueldos manual</strong> con riesgo de error en cada cierre de mes.</div>
+    </div>
+    <div class="pain-row">
+      <div class="pain-icon">📊</div>
+      <div class="pain-text"><strong>Reportes y consultas</strong> que llevan horas armar — cuando la decisión la necesitás hoy.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 3 — MULTI-INDUSTRIA
+══════════════════════════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="badge badge-light">NEURA ORKESTA</div>
+  <div class="s3-left">
+    <div class="eyebrow" style="color:var(--green)">Para quién</div>
+    <h2 class="s3-title">No es solo para<br/>PyMEs.<br/><em>Es para cualquier<br/>empresa que opera.</em></h2>
+    <p class="s3-desc">El caos operativo no tiene rubro. Desde una distribuidora hasta un estudio contable, los dolores son los mismos: datos dispersos, procesos manuales y tiempo perdido.</p>
+    <div class="s3-claim">Un mismo sistema.<br/>Múltiples industrias.<br/>Un solo resultado: <strong style="color:white">operar mejor.</strong></div>
+  </div>
+  <div class="s3-right">
+    <div class="industry-card">
+      <div class="ind-icon">🚛</div>
+      <div class="ind-name">Distribución y Logística</div>
+      <div class="ind-desc">Pedidos, remitos, rutas y entregas sincronizados en tiempo real.</div>
+      <span class="ind-tag" style="background:rgba(139,92,246,0.12);color:#A78BFA">Operaciones</span>
+    </div>
+    <div class="industry-card">
+      <div class="ind-icon">🛒</div>
+      <div class="ind-name">Retail y Mayoristas</div>
+      <div class="ind-desc">Stock, precios, cobranzas y clientes en un solo lugar.</div>
+      <span class="ind-tag" style="background:rgba(29,78,216,0.12);color:var(--blue-l)">Comercial</span>
+    </div>
+    <div class="industry-card">
+      <div class="ind-icon">🤝</div>
+      <div class="ind-name">Servicios B2B</div>
+      <div class="ind-desc">Presupuestos, facturación, contratos y seguimiento de clientes automatizados.</div>
+      <span class="ind-tag" style="background:rgba(16,185,129,0.12);color:var(--green)">Servicios</span>
+    </div>
+    <div class="industry-card">
+      <div class="ind-icon">🏭</div>
+      <div class="ind-name">Industria y Manufactura</div>
+      <div class="ind-desc">Producción, insumos, proveedores y nómina integrados sin fricción.</div>
+      <span class="ind-tag" style="background:rgba(234,179,8,0.12);color:#EAB308">Industrial</span>
+    </div>
+    <div class="industry-card">
+      <div class="ind-icon">🏗️</div>
+      <div class="ind-name">Construcción</div>
+      <div class="ind-desc">Obras, materiales, subcontratistas y costos controlados desde un tablero.</div>
+      <span class="ind-tag" style="background:rgba(249,115,22,0.12);color:#FB923C">Proyectos</span>
+    </div>
+    <div class="industry-card">
+      <div class="ind-icon">🏥</div>
+      <div class="ind-name">Salud y Profesionales</div>
+      <div class="ind-desc">Turnos, facturación, honorarios y reportes sin tablas de Excel.</div>
+      <span class="ind-tag" style="background:rgba(236,72,153,0.12);color:#F472B6">Salud</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 4 — MISIÓN
+══════════════════════════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="badge" style="color:rgba(255,255,255,0.15)">NEURA ORKESTA</div>
+  <div class="s4-label">Nuestra misión</div>
+  <div class="s4-quote-mark">"</div>
+  <h2 class="s4-mission">
+    Automatizar <em>lo ordinario</em><br/>para que las personas<br/>se dediquen a <strong>lo extraordinario.</strong>
+  </h2>
+  <div class="s4-divider"></div>
+  <p class="s4-sub">
+    Cada hora que tu equipo gasta cargando datos, conciliando planillas o buscando un número es una hora menos para crecer, innovar y generar valor real. Nosotros nos encargamos de lo repetitivo para que vos puedas enfocarte en lo que importa.
+  </p>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 5 — PLATAFORMA
+══════════════════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="badge badge-light">NEURA ORKESTA</div>
+  <div class="s5-header">
+    <div class="eyebrow" style="color:var(--blue-l)">Cómo funciona</div>
+    <div class="s5-title">Una plataforma, cuatro capas que trabajan juntas.</div>
+    <div class="s5-sub">Sin tecnicismos: así fluye la información en tu empresa con Neura Orkesta.</div>
+  </div>
+
+  <div class="platform-flow">
+
+    <!-- SYNC -->
+    <div class="platform-card pc-sync">
+      <div class="pc-label">Capa 1</div>
+      <div class="pc-name">SYNC</div>
+      <div class="pc-desc">La puerta de entrada. Mandás cualquier documento y Neura lo lee y lo convierte en datos usables. Cero tipeo.</div>
+      <div class="chip-grid">
+        <span class="chip">📄 Facturas</span>
+        <span class="chip">📊 Excel</span>
+        <span class="chip">📸 Fotos</span>
+        <span class="chip">📧 Emails</span>
+        <span class="chip">💬 WhatsApp</span>
+        <span class="chip">🗂️ PDFs</span>
+        <span class="chip">📁 Archivos</span>
+      </div>
+      <div class="pc-items" style="margin-top:12px">
+        <div class="pc-item"><div class="pc-item-dot"></div>Lee y entiende cualquier formato</div>
+        <div class="pc-item"><div class="pc-item-dot"></div>Extrae los datos automáticamente</div>
+        <div class="pc-item"><div class="pc-item-dot"></div>Cero carga manual</div>
+      </div>
+    </div>
+
+    <div class="platform-arrow">→</div>
+
+    <!-- CORE -->
+    <div class="platform-card pc-core">
+      <div class="pc-label">Capa 2</div>
+      <div class="pc-name">CORE</div>
+      <div class="pc-desc">El corazón de la operación. Acá se procesan, guardan y organizan todos los datos. También centralizás las tareas del equipo.</div>
+      <div class="pc-items" style="margin-top:8px">
+        <div class="pc-item"><div class="pc-item-dot"></div>CRM: clientes y oportunidades</div>
+        <div class="pc-item"><div class="pc-item-dot"></div>Tesorería y cobranzas</div>
+        <div class="pc-item"><div class="pc-item-dot"></div>Compras y proveedores</div>
+        <div class="pc-item"><div class="pc-item-dot"></div>Logística y entregas</div>
+        <div class="pc-item"><div class="pc-item-dot"></div>Tareas y flujos de aprobación</div>
+      </div>
+    </div>
+
+    <div class="platform-arrow">→</div>
+
+    <!-- ERP -->
+    <div class="platform-card pc-erp">
+      <div class="pc-label">Capa 3</div>
+      <div class="pc-name">ERP</div>
+      <div class="pc-desc">Nos adaptamos a tu sistema contable actual o te ofrecemos el nuestro. Los datos llegan solos, sin que nadie tenga que volver a cargarlos.</div>
+      <div class="pc-items" style="margin-top:8px">
+        <div class="pc-item"><div class="pc-item-dot"></div>Compatible con tu ERP actual</div>
+        <div class="pc-item"><div class="pc-item-dot"></div>O usás el nuestro incluido</div>
+        <div class="pc-item"><div class="pc-item-dot"></div>Registros automáticos</div>
+        <div class="pc-item"><div class="pc-item-dot"></div>Factura electrónica ARCA</div>
+        <div class="pc-item"><div class="pc-item-dot"></div>Liquidación de sueldos</div>
+      </div>
+    </div>
+
+    <div class="platform-arrow">→</div>
+
+    <!-- INSIGHT -->
+    <div class="platform-card pc-insight">
+      <div class="pc-label">Capa 4</div>
+      <div class="pc-name">INSIGHT</div>
+      <div class="pc-desc">Preguntale a tu empresa en lenguaje común y obtené respuestas con datos reales al instante. Tableros, reportes y alertas automáticas.</div>
+      <div class="pc-items" style="margin-top:8px">
+        <div class="pc-item"><div class="pc-item-dot"></div>Dashboards por área</div>
+        <div class="pc-item"><div class="pc-item-dot"></div>Consultas en lenguaje natural</div>
+        <div class="pc-item"><div class="pc-item-dot"></div>Alertas inteligentes proactivas</div>
+        <div class="pc-item"><div class="pc-item-dot"></div>Exportación Excel / PDF</div>
+        <div class="pc-item"><div class="pc-item-dot"></div>Información en tiempo real</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 6 — SOFTWARE A MEDIDA
+══════════════════════════════════════════════ -->
+<div class="slide" id="s6">
+  <div class="badge badge-light">NEURA ORKESTA</div>
+  <div class="s6-left">
+    <div class="eyebrow" style="color:var(--violet)">Diferencial clave</div>
+    <h2 class="s6-title">También hacemos<br/><em>software a medida.</em></h2>
+    <p class="s6-text">Si tu empresa tiene un proceso único que ninguna herramienta estándar resuelve, nuestro equipo lo construye. No como un proyecto externo cualquiera — como una extensión natural de Neura Orkesta, conectada a todo lo que ya tenés.</p>
+    <div class="s6-promise">
+      💡 Entendemos tu negocio primero. Después escribimos una sola línea de código.
+    </div>
+  </div>
+  <div class="s6-right">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">Escuchamos el dolor real</div>
+        <div class="step-desc">Nos reunimos con el equipo que vive el problema. Sin consultores intermediarios. Entendemos qué pasa hoy y qué necesitarían que pasara.</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">Diseñamos la solución juntos</div>
+        <div class="step-desc">Proponemos cómo resolverlo en simple, sin tecnicismos. Mostramos prototipos antes de escribir código. Vos aprobás, nosotros construimos.</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title">Desarrollamos rápido y bien</div>
+        <div class="step-desc">Entregamos en iteraciones cortas. Nada de esperar meses para ver resultados. Primera versión funcionando en semanas.</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <div class="step-title">Se integra a tu Orkesta</div>
+        <div class="step-desc">Lo desarrollado no queda como una isla. Se conecta nativamente con Sync, Core y los datos que ya existen en tu empresa.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 7 — ABORDAJE + MODELOS COMERCIALES
+══════════════════════════════════════════════ -->
+<div class="slide" id="s7">
+  <div class="badge badge-light">NEURA ORKESTA</div>
+  <div class="s7-header">
+    <div class="eyebrow" style="color:var(--blue-l)">Modelo de trabajo</div>
+    <div class="s7-title">Nos adaptamos a lo que tu empresa necesita.</div>
+    <div class="s7-sub">Tres formas de trabajar juntos. Sin contratos rígidos, sin permanencia obligatoria.</div>
+  </div>
+
+  <div class="efficiency-strip">
+    <div class="eff-item"><div class="eff-dot"></div>Implementación en 24 horas</div>
+    <div class="eff-item"><div class="eff-dot"></div>Sin permanencia obligatoria</div>
+    <div class="eff-item"><div class="eff-dot"></div>Soporte continuo</div>
+    <div class="eff-item"><div class="eff-dot"></div>Escalamos con vos</div>
+    <div class="eff-item"><div class="eff-dot"></div>Equipo local, decisiones rápidas</div>
+  </div>
+
+  <div class="s7-body">
+
+    <div class="model-card mc-a">
+      <div class="model-num">Modelo 01</div>
+      <div class="model-name">Producto<br/>ya desarrollado</div>
+      <div class="model-desc">Accedés a una solución que ya existe dentro de Neura Orkesta, lista para usar. Configuramos el sistema para tu empresa y en 24 horas estás operando.</div>
+      <div class="model-pricing">
+        <div class="model-pricing-row"><div class="pricing-dot"></div>Fee de instalación único (pago único al inicio)</div>
+        <div class="model-pricing-row"><div class="pricing-dot"></div>Suscripción mensual por uso y soporte</div>
+      </div>
+    </div>
+
+    <div class="model-card mc-b">
+      <div class="model-num">Modelo 02</div>
+      <div class="model-name">Customización<br/>sobre Neura Orkesta</div>
+      <div class="model-desc">Tomamos nuestra plataforma base y la adaptamos a los procesos específicos de tu empresa. Cambios en flujos, formularios, integraciones o reportes a medida.</div>
+      <div class="model-pricing">
+        <div class="model-pricing-row"><div class="pricing-dot"></div>Fee de instalación y configuración (pago único)</div>
+        <div class="model-pricing-row"><div class="pricing-dot"></div>Suscripción mensual por uso y soporte</div>
+      </div>
+    </div>
+
+    <div class="model-card mc-c">
+      <div class="model-num">Modelo 03</div>
+      <div class="model-name">Desarrollo<br/>a medida</div>
+      <div class="model-desc">Para necesidades que van más allá de la plataforma estándar. Construimos una solución desde cero, con tu lógica de negocio, integrada o independiente de Orkesta.</div>
+      <div class="model-pricing">
+        <div class="model-pricing-row"><div class="pricing-dot"></div>Presupuesto por proyecto (pago según etapas)</div>
+        <div class="model-pricing-row"><div class="pricing-dot"></div>Mantenimiento posterior: opcional y acordado</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 8 — POR QUÉ + DESAFÍO 24HS
+══════════════════════════════════════════════ -->
+<div class="slide" id="s8">
+  <div class="s8-left">
+    <div class="eyebrow" style="color:var(--blue-l);margin-bottom:18px">Por qué elegirnos</div>
+    <div class="s8-title">Razones concretas para<br/>operar con Neura Orkesta.</div>
+    <div class="reasons-grid">
+      <div class="reason-card">
+        <div class="reason-icon">⚡</div>
+        <div class="reason-content">
+          <div class="reason-title">Implementación en 24hs</div>
+          <div class="reason-desc">No meses de proyecto. Empezás a operar al día siguiente.</div>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-icon">🔌</div>
+        <div class="reason-content">
+          <div class="reason-title">Conectado a lo que ya tenés</div>
+          <div class="reason-desc">No reemplaza tu sistema contable. Lo potencia sin fricciones.</div>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-icon">🧩</div>
+        <div class="reason-content">
+          <div class="reason-title">Modular y flexible</div>
+          <div class="reason-desc">Pagás por lo que usás. Sumás funciones cuando las necesitás.</div>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-icon">🤖</div>
+        <div class="reason-content">
+          <div class="reason-title">IA en el centro</div>
+          <div class="reason-desc">No es un slogan. La IA trabaja en cada registro automático.</div>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-icon">🛡️</div>
+        <div class="reason-content">
+          <div class="reason-title">Sin permanencia obligatoria</div>
+          <div class="reason-desc">Nos ganamos tu confianza mes a mes, no con contratos.</div>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-icon">🇦🇷</div>
+        <div class="reason-content">
+          <div class="reason-title">Equipo local que entiende tu negocio</div>
+          <div class="reason-desc">Realidad argentina: ARCA, AFIP, SIPER, bancos locales y más.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="s8-right">
+    <div class="desafio-label">Nuestro compromiso</div>
+    <div class="desafio-title">El Desafío<br/><em>24 horas.</em></div>
+    <div class="desafio-sub">Si no tenés sistema hoy, mañana podés estar operando. Si ya tenés uno, lo conectamos en el mismo día. Sin excusas.</div>
+    <div class="desafio-steps">
+      <div class="d-step">
+        <div class="d-step-dot">1</div>
+        <div class="d-step-content">
+          <div class="d-step-when">Día 0 — Mañana</div>
+          <div class="d-step-desc">Kick-off: entendemos tus datos y procesos clave. Exportamos lo que necesitamos.</div>
+        </div>
+      </div>
+      <div class="d-step">
+        <div class="d-step-dot">2</div>
+        <div class="d-step-content">
+          <div class="d-step-when">Día 0 — Tarde</div>
+          <div class="d-step-desc">Configuramos el sistema, cargamos tus datos y activamos las integraciones necesarias.</div>
+        </div>
+      </div>
+      <div class="d-step">
+        <div class="d-step-dot">3</div>
+        <div class="d-step-content">
+          <div class="d-step-when">Día 1 — 8:00 AM</div>
+          <div class="d-step-desc">Tu equipo entra, hace un tutorial de 15 minutos y empieza a operar.</div>
+        </div>
+      </div>
+    </div>
+    <div class="desafio-cta">Aceptar el Desafío 24hs →</div>
+  </div>
+</div>
+
+</div><!-- end deck -->
+
+<!-- Navigation -->
+<div id="progress"><div id="progress-fill"></div></div>
+<div id="dots"></div>
+<div id="nav-left">‹</div>
+<div id="nav-right">›</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const dotsEl = document.getElementById('dots');
+const fill = document.getElementById('progress-fill');
+let current = 0;
+const N = slides.length;
+
+// Build dots
+slides.forEach((_,i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' active':'');
+  d.onclick = () => go(i);
+  dotsEl.appendChild(d);
+});
+
+function go(n) {
+  slides[current].classList.remove('active');
+  document.querySelectorAll('.dot')[current].classList.remove('active');
+  current = (n + N) % N;
+  slides[current].classList.add('active');
+  document.querySelectorAll('.dot')[current].classList.add('active');
+  fill.style.width = ((current+1)/N*100) + '%';
+}
+
+document.getElementById('nav-left').onclick  = () => go(current-1);
+document.getElementById('nav-right').onclick = () => go(current+1);
+
+document.addEventListener('keydown', e => {
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' ') go(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') go(current-1);
+});
+
+// Init progress
+fill.style.width = (1/N*100)+'%';
+</script>
+</body>
+</html>
