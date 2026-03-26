@@ -37,6 +37,8 @@ export default function HeroVideo() {
                         loop
                         playsInline
                         autoPlay
+                        // @ts-expect-error fetchpriority not in React types yet
+                        fetchpriority="high"
                     />
                 </div>
 

@@ -87,8 +87,16 @@
       "addressCountry": "AR"
     },
     "sameAs": [
-      "https://www.linkedin.com/company/neuracall"
-    ]
+      "https://www.linkedin.com/company/neuracall",
+      "https://www.instagram.com/neuraorkesta",
+      "https://wa.me/5492622567533"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "availableLanguage": "Spanish",
+      "url": "https://wa.me/5492622567533"
+    }
   }
   </script>
 
@@ -113,14 +121,95 @@
   }
   </script>
 
-  <!-- Fonts -->
+  <!-- Structured Data: FAQPage for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Qué es Neuracall Orkesta?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Neuracall Orkesta es un sistema operativo empresarial modular que automatiza procesos y centraliza la gestión comercial, financiera, operativa y de RRHH para empresas argentinas."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cómo funciona el sistema modular de fichas?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "El sistema de fichas permite agregar funcionalidades a medida que tu empresa crece. Empezás con el tablero base y sumás módulos como facturación electrónica, gestión de inventario, RRHH, logística, CRM y más."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Para qué tipo de empresas es Neuracall Orkesta?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Neuracall Orkesta está diseñado para PyMEs y medianas empresas argentinas de cualquier industria que buscan digitalizar y automatizar sus operaciones."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué productos incluye Neuracall Orkesta?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Incluye tres productos principales: Neura Core (tablero de control centralizado), Neura Sync (automatización de procesos en tiempo real) y Neura Insight (inteligencia artificial y analytics)."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: WebSite for search box -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Neuracall Orkesta",
+    "url": "https://neuraorkesta.com",
+    "description": "Sistema operativo empresarial modular para empresas argentinas"
+  }
+  </script>
+
+  <!-- Fonts: loaded non-blocking with preconnect + preload -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" />
+  </noscript>
+
+  <!-- Preload hero video for faster LCP -->
+  <link rel="preload" as="video" href="/videos/logo-animation.mp4" type="video/mp4" />
 </head>
 
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
+
+  <!-- SEO: Noscript fallback for crawlers that don't execute JS -->
+  <noscript>
+    <div style="max-width:800px;margin:0 auto;padding:2rem;font-family:system-ui,sans-serif">
+      <h1>Neuracall Orkesta — Tu empresa, operando en tiempo real</h1>
+      <p>Neuracall Orkesta es el sistema operativo empresarial modular que automatiza procesos para que las empresas argentinas escalen. Eliminamos el trabajo manual para que tu empresa haga lo extraordinario.</p>
+      <h2>Nuestros Productos</h2>
+      <ul>
+        <li><strong>Neura Core</strong> — El tablero de control centralizado. Gestión comercial, financiera, operativa y de RRHH en una sola plataforma.</li>
+        <li><strong>Neura Sync</strong> — Automatización de procesos. Conecta todas las áreas de tu empresa en tiempo real.</li>
+        <li><strong>Neura Insight</strong> — Inteligencia artificial aplicada a tus datos. Dashboards, KPIs y predicciones para tomar mejores decisiones.</li>
+      </ul>
+      <h2>Sistema Modular de Fichas</h2>
+      <p>Empezá con lo básico y escalá al control total. Nuestro sistema de fichas modulares te permite agregar funcionalidades a medida que tu empresa crece: facturación electrónica, gestión de inventario, RRHH, logística, CRM y más.</p>
+      <h2>Contacto</h2>
+      <p>Email: <a href="mailto:neuracallbot@gmail.com">neuracallbot@gmail.com</a></p>
+      <p>WhatsApp: <a href="https://wa.me/5492622567533">+54 9 262 256-7533</a></p>
+      <p>Instagram: <a href="https://www.instagram.com/neuraorkesta">@neuraorkesta</a></p>
+    </div>
+  </noscript>
 </body>
 
 </html>

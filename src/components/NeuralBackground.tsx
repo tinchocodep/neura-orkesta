@@ -26,8 +26,10 @@ export default function NeuralBackground() {
         updateSize();
         window.addEventListener('resize', updateSize);
 
-        // Create neurons
-        const neuronCount = 60;
+        // Fewer neurons on mobile for better performance
+        const isMobile = window.innerWidth < 768;
+        const neuronCount = isMobile ? 20 : 60;
+        const connectionDistance = isMobile ? 120 : 180;
         const neurons: Neuron[] = [];
 
         for (let i = 0; i < neuronCount; i++) {
@@ -65,11 +67,11 @@ export default function NeuralBackground() {
                     const dy = neuron.y - otherNeuron.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
-                    if (distance < 180) {
+                    if (distance < connectionDistance) {
                         ctx.beginPath();
                         ctx.moveTo(neuron.x, neuron.y);
                         ctx.lineTo(otherNeuron.x, otherNeuron.y);
-                        const opacity = (1 - distance / 180) * 0.4;
+                        const opacity = (1 - distance / connectionDistance) * 0.4;
                         ctx.strokeStyle = `rgba(65, 105, 225, ${opacity})`;
                         ctx.lineWidth = 2;
                         ctx.stroke();
