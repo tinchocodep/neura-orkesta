@@ -183,8 +183,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" />
   </noscript>
 
-  <!-- Preload hero video for faster LCP -->
-  <link rel="preload" as="video" href="/videos/logo-animation.mp4" type="video/mp4" />
+  <!-- Preload hero video for desktop LCP (mobile uses static image) -->
+  <link rel="preload" as="video" href="/videos/logo-animation.mp4" type="video/mp4" media="(min-width: 768px)" />
 </head>
 
 <body>
