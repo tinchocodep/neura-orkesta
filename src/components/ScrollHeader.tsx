@@ -42,10 +42,10 @@ export default function ScrollHeader() {
                         onClick={() => scrollTo('#inicio')}
                         className="flex items-center gap-3 hover:opacity-80 transition-opacity"
                     >
-                        <img src={logo} alt="Neura Call" className="h-9 w-auto" />
+                        <img src={logo} alt="NeuraOrkesta" width="36" height="36" className="h-9 w-auto" />
                         <div>
-                            <p className="font-display font-bold text-brand-blue text-base leading-none">NEURACALL</p>
-                            <p className="text-xs text-text-muted leading-none">Neuracall Orkesta</p>
+                            <p className="font-display font-bold text-brand-blue text-base leading-none">NEURAORKESTA</p>
+                            <p className="text-xs text-text-muted leading-none">Tu empresa, en tiempo real</p>
                         </div>
                     </button>
 

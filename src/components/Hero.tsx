@@ -27,7 +27,7 @@ export default function Hero() {
                             transition={{ delay: 0.1, duration: 0.8 }}
                             className="inline-block"
                         >
-                            <span className="text-brand-blue font-semibold text-lg">NEURACALL ORKESTA</span>
+                            <span className="text-brand-blue font-semibold text-lg">NEURAORKESTA</span>
                         </motion.div>
 
                         <motion.h1
@@ -87,6 +87,8 @@ export default function Hero() {
                             <img
                                 src={heroCore}
                                 alt="Neuracall Core"
+                                width="600"
+                                height="600"
                                 className="w-full h-auto drop-shadow-2xl"
                             />
                         </motion.div>

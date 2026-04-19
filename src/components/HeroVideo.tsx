@@ -38,7 +38,7 @@ export default function HeroVideo() {
                     {isMobile ? (
                         <img
                             src={logoSm}
-                            alt="Neuracall Orkesta"
+                            alt="NeuraOrkesta"
                             width="192"
                             height="192"
                             className="w-48 h-auto mx-auto opacity-70"
@@ -59,7 +59,7 @@ export default function HeroVideo() {
                 {/* Text Below Logo — no animation delay for faster LCP */}
                 <div className="text-center px-6 pb-12">
                     <h1 className="text-5xl md:text-7xl font-display font-bold text-text-primary mb-4">
-                        NEURACALL <span className="gradient-text">ORKESTA</span>
+                        NEURA<span className="gradient-text">ORKESTA</span>
                     </h1>
                     <p className="text-xl md:text-2xl text-text-secondary">
                         Tu empresa, operando en tiempo real.

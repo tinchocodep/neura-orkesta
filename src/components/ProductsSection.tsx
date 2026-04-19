@@ -128,6 +128,8 @@ export default function ProductsSection() {
                                         <img
                                             src={product.image}
                                             alt={product.name}
+                                            width="500"
+                                            height="500"
                                             className="w-full h-full object-contain drop-shadow-2xl"
                                         />
                                     </motion.div>
