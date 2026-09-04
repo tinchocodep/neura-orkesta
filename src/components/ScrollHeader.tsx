@@ -7,7 +7,7 @@ const WHATSAPP_URL =
     'https://wa.me/5492622567533?text=Hola%21%20Me%20interesa%20Neura%20Orkesta%20%F0%9F%9A%80';
 
 const navLinks = [
-    { label: 'El problema', href: '#problema' },
+    { label: 'Qué hace', href: '#que-hace' },
     { label: 'Cómo funciona', href: '#capas' },
     { label: 'Para quién', href: '#industrias' },
     { label: 'Cómo trabajamos', href: '#modelos' },

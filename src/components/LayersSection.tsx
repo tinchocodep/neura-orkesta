@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Check, LayoutDashboard, MessageCircle } from 'lucide-react';
 
 /* ─────────────────────────────────────────────────────────────
-   Las 4 capas: Sync → Core → Integraciones → Insight.
+   Los 3 motores: Sync (digitaliza y conecta) → Core (donde operás) → Insight (para decidir).
    REGLA DE POSICIONAMIENTO: Neura NO es un ERP y no se centra en el ERP.
    Se integra a TODAS las herramientas que la empresa ya usa: Excel, Drive,
    un ERP, un sistema contable, el banco. El sistema propio incluido se nombra
@@ -28,26 +28,28 @@ const layers: Layer[] = [
     {
         id: 'sync',
         number: '01',
-        eyebrow: 'Capa 01 · Sync',
+        eyebrow: 'Motor 01 · Sync',
         name: 'NeuraSync',
-        headline: 'Tu equipo carga fácil. El sistema entiende solo.',
-        description: 'Mandá lo que sea: WhatsApp, PDF, Excel sin formato, fotos, mails. Neura lo interpreta con IA, lo estructura y lo sube al sistema listo para usar.',
+        headline: 'Digitaliza lo que entra y lo conecta con todo lo que ya usás.',
+        description: 'Mandá lo que sea: WhatsApp, PDF, Excel sin formato, fotos, mails. Neura lo interpreta con IA, lo estructura y se lo entrega ya formateado a cada herramienta — tu Excel, tu Drive, tu ERP, tu sistema contable, tu banco.',
         bullets: [
             'Lee y entiende cualquier formato',
-            'Extrae los datos automáticamente',
             'Vos cargás como te sale; el formato lo pone Neura',
+            'Excel, Google Drive y planillas compartidas',
+            'Tu ERP o tu sistema contable, el que sea',
+            'Bancos, ARCA y facturación electrónica',
         ],
-        image: '/neura_sync.png',
+        image: '/neura_sync.webp',
         caption: 'Sync',
         tone: 'brand',
     },
     {
         id: 'core',
         number: '02',
-        eyebrow: 'Capa 02 · Core',
+        eyebrow: 'Motor 02 · Core',
         name: 'NeuraCore',
-        headline: 'El dato entra una vez y se acomoda solo.',
-        description: 'El trabajo del día queda registrado en un solo lugar y se encadena. Cada acción genera sus registros derivados, sin volver a tipear nada.',
+        headline: 'La pantalla donde operás tu empresa.',
+        description: 'Acá gestionás el día a día: clientes, cobranzas, compras, entregas y tareas, todo en un solo lugar. Cada acción genera sus registros derivados sola, sin volver a tipear nada.',
         bullets: [
             'CRM: clientes y oportunidades',
             'Tesorería y cobranzas',
@@ -55,31 +57,14 @@ const layers: Layer[] = [
             'Logística y entregas',
             'Tareas y flujos de aprobación',
         ],
-        image: '/neura_core.png',
+        image: '/neura_core.webp',
         caption: 'Core',
         tone: 'brand',
     },
     {
-        id: 'integraciones',
-        number: '03',
-        eyebrow: 'Capa 03 · Integraciones',
-        name: 'Integraciones',
-        headline: 'No te pedimos que cambies nada.',
-        description: 'Nos conectamos con las herramientas que ya usás — una planilla de Excel, una carpeta de Drive, tu ERP, tu sistema contable, tu banco — y les mandamos los datos ya formateados. Si no tenés un sistema de gestión, hay uno incluido.',
-        bullets: [
-            'Excel, Google Drive y planillas compartidas',
-            'Tu ERP o tu sistema contable, el que sea',
-            'Bancos, ARCA y facturación electrónica',
-            'WhatsApp y mail, como entrada y como salida',
-            'Si no tenés sistema de gestión, viene uno incluido',
-        ],
-        caption: 'Integraciones',
-        tone: 'neutral',
-    },
-    {
         id: 'insight',
-        number: '04',
-        eyebrow: 'Capa 04 · Insight',
+        number: '03',
+        eyebrow: 'Motor 03 · Insight',
         name: 'NeuraInsight',
         headline: 'Preguntale a tu empresa, en castellano.',
         description: 'Todo lo que Neura digitalizó y conectó vuelve como respuesta. Preguntás en castellano y te contesta con los datos de tu operación, actualizados.',
@@ -90,7 +75,7 @@ const layers: Layer[] = [
             'Exportar a Excel/PDF',
             'Información en tiempo real',
         ],
-        image: '/neura_insight.png',
+        image: '/neura_insight.webp',
         caption: 'Insight',
         tone: 'brand',
     },
@@ -127,7 +112,7 @@ export default function LayersSection() {
                     transition={{ delay: 0.1 }}
                     className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-text-primary leading-tight mb-6"
                 >
-                    Cuatro capas. <span className="gradient-text">Un solo flujo.</span>
+                    Tres motores. <span className="gradient-text">Un solo flujo.</span>
                 </motion.h2>
 
                 <motion.p
@@ -256,6 +241,9 @@ export default function LayersSection() {
                                                     />
                                                 </div>
                                             ) : (
+                                                /* Diagrama de integración (hoy sin uso: todas las
+                                                   capas tienen imagen). Se conserva por si alguna
+                                                   vuelve a necesitarlo. */
                                                 /* Capa Integraciones: diagrama sobrio.
                                                    El sujeto siempre es Neura conectándose al
                                                    sistema que la empresa ya tiene. */
@@ -290,6 +278,26 @@ export default function LayersSection() {
                                                                 las que ya usás
                                                             </p>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Sync es el que conecta: el abanico de destinos
+                                                vive acá, no en una capa aparte. */}
+                                            {layer.id === 'sync' && (
+                                                <div className="absolute inset-x-4 bottom-10 sm:bottom-12">
+                                                    <p className="mb-2 text-center text-[10px] font-bold uppercase tracking-widest text-text-muted">
+                                                        Y sale hacia
+                                                    </p>
+                                                    <div className="flex flex-wrap justify-center gap-1.5">
+                                                        {['Excel', 'Drive', 'Tu ERP', 'Tu banco', 'ARCA'].map((tool) => (
+                                                            <span
+                                                                key={tool}
+                                                                className="rounded-md border border-gray-200 bg-white px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-text-secondary shadow-soft"
+                                                            >
+                                                                {tool}
+                                                            </span>
+                                                        ))}
                                                     </div>
                                                 </div>
                                             )}

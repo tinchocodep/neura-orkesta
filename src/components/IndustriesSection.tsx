@@ -151,9 +151,9 @@ export default function IndustriesSection() {
                     transition={{ delay: 0.1 }}
                     className="text-lg md:text-xl text-text-secondary leading-relaxed max-w-3xl mb-14"
                 >
-                    El caos operativo no tiene rubro. Desde una distribuidora hasta un estudio
-                    contable, los dolores son los mismos: datos dispersos, procesos manuales y
-                    tiempo perdido.
+                    Desde una distribuidora hasta un estudio contable, la operación se ordena
+                    igual: el dato entra una vez, se conecta con las herramientas de cada rubro
+                    y llega a donde tiene que llegar.
                 </motion.p>
 
                 {/* ── Las 7 industrias ───────────────────────── */}

@@ -49,7 +49,7 @@ Ninguna pieza de copy puede afirmar ni sugerir que Neura reemplaza el ERP, el si
 5. **Sístole y diástole.** Después de cada escena cara va una sección deliberadamente quieta. "Más movimiento" sin contraste es mareo.
 6. **Color = estado, no decoración.** Gris = manual/pendiente. Azul = procesado por Neura. Verde = confirmado/registrado. Se respeta en todas las demos y hace legible la animación sin leyendas.
 7. **Un solo CTA primario:** WhatsApp. Neuralite baja a secundario dentro de "Cómo trabajamos".
-8. **Reduced-motion significa sin movimiento, no sin contenido.** Cada demo queda en un estado final legible; los números, las 4 capas y las 7 industrias se ven completas igual.
+8. **Reduced-motion significa sin movimiento, no sin contenido.** Cada demo queda en un estado final legible; los números, los 3 motores y las 7 industrias se ven completas igual.
 
 ## Arquitectura
 
@@ -72,25 +72,19 @@ Descartado: "El ERP con IA que carga los datos por vos". Vendía mejor pero afir
 
 **Movimiento:** reveal tipográfico por línea con máscara, 3 líneas escalonadas 60ms, terminado antes de los 400ms. Después entra "el dato" (una tarjeta-documento) y aterriza en el marco: ese objeto es el que va a viajar por toda la página. Se elimina el `useTransform` de scale+fade actual — cuesta y no aporta.
 
-### 2. El dato entra dos veces
+### 2. Qué hace Neura
 
-**Propósito:** instalar el dolor nombrando el **mecanismo**, no solo el síntoma. Reemplaza a `ProblemSection` ("El Caos Manual", puro adjetivo, 3 tarjetitas con íconos rojos).
+**Propósito:** decir lo que Neura hace, no lo que la empresa hace mal.
 
-- **Titular:** "El dato entra dos veces."
-- **Bajada:** "Tu equipo registra lo que pasa en crudo. Después alguien lo reformatea para el ERP. Con errores. Siempre."
-- **Los tres costos** (diapositiva 2 de `public/deck.html`):
-  - **Doble trabajo** — el campo carga en crudo, el admin reformatea y sube al ERP.
-  - **Error humano** — cada vuelta acumula errores que el sistema toma como válidos.
-  - **Costo de capacitación** — cada persona nueva aprende primero cómo cargar, no cómo trabajar. Si se va, todo empieza de nuevo.
-- **El número como respaldo, no como titular:** "+15 horas por semana. Por cada empleado administrativo."
-- Los 6 ejemplos del deck en criollo, segunda persona: "Las facturas de proveedores las cargás a mano, una por una" / "El resumen del banco lo conciliás mirando el PDF" / "La cobranza vive en una planilla que entiende uno solo" / "El remito y la factura en ARCA, de a uno" / "Los sueldos, a mano y rezando en cada cierre" / "El reporte que necesitás hoy está listo en tres días".
-- **Cierre:** "Nada de esto es culpa de tu equipo. Es que nadie conectó los sistemas."
+Esta sección reemplaza a la vieja "El dato entra dos veces", que estaba construida sobre el error: el doble trabajo, las horas perdidas, los seis ejemplos de carga manual, y hasta un "nada de esto es culpa de tu equipo" que, por más que absolviera, seguía hablando de culpa. **Decisión del cliente: el foco va en lo que Neura hace hoy, no en el problema.**
 
-**Por qué el mecanismo va primero.** "+15 horas" es un síntoma y admite la respuesta *"a mí no me pasa tanto"*. "El dato entra dos veces" describe algo que el dueño puede verificar en su propia operación en cinco segundos, y una vez que lo ve ya no lo puede dejar de ver. El número queda como respaldo cuantitativo debajo.
+- **Titular:** "Tu operación, al día sola."
+- **Bajada:** "Neura digitaliza lo que entra, conecta las herramientas que ya usás y automatiza el trabajo de darle formato al dato. Tu equipo sigue trabajando como siempre."
+- **Los tres verbos** como bloques: Digitaliza · Conecta · Automatiza.
+- **Lo concreto, desde el primer día** — los seis ejemplos del deck, dados vuelta de dolor a capacidad:
+  "Las facturas de proveedores se cargan solas" · "El resumen del banco se concilia solo" · "Las cobranzas quedan registradas al momento" · "Los remitos y las facturas ARCA salen automáticos" · "La liquidación de sueldos, sin tipear" · "El reporte que necesitás hoy, listo hoy".
 
-**Movimiento:** el "15" es un contador atado a `scrollYProgress`, scrubbeado y reversible (sube al bajar, baja al subir), con `tabular-nums`. Las 6 filas caen con peso (`y: -12 → 0`, expo-out, 40ms de stagger) y cada una que aterriza engorda una barra fina al costado: se ve acumular el costo.
-
-**Color:** el rojo actual (`red-500`/`red-50`) se lee como error de validación de una app rota. Pasa a terracota/ámbar (`#C2410C` sobre `#FFF7ED`): dolor de negocio, no bug.
+**El +15hs y los tres costos salen de la web.** Siguen sirviendo para el deck y para una conversación de venta, donde hay alguien que puede leer la reacción del otro. En frío, en una landing, abrir por el error pone al lector a la defensiva.
 
 ### 3. El recorrido de un dato
 
@@ -100,14 +94,15 @@ Antetítulo fijo: "Digitalizá. Conectá. Automatizá. Orquestá."
 
 **El encuadre de toda la sección**, tomado de la diapositiva 3: *"Neura no elimina la carga de datos. Elimina el trabajo de darle formato."* Es una afirmación honesta y diferenciada — no promete magia, promete sacarte el reformateo.
 
-| Acto | Titular | Contenido |
+| Motor | Titular | Contenido |
 |---|---|---|
-| **SYNC** | "Tu equipo carga fácil. El sistema entiende solo." | Mandá lo que sea — WhatsApp, PDF, Excel sin formato, fotos, mails. Neura lo interpreta con IA, lo estructura y lo sube al sistema listo para usar. |
-| **CORE** | "El dato entra una vez y se acomoda solo." | CRM, tesorería y cobranzas, compras y proveedores, logística y entregas, tareas y aprobaciones. Cada acción genera sus registros derivados. |
-| **Integraciones** | "No te pedimos que cambies nada." | **Nos conectamos con las herramientas que ya usás** —Excel, Drive, tu ERP, tu sistema contable, tu banco— y les mandamos los datos ya formateados. Si no tenés un sistema de gestión, hay uno incluido. Bancos, ARCA y facturación electrónica, liquidación de sueldos. |
-| **INSIGHT** | "Preguntale a tu empresa, en castellano." | Dashboards por área, consultas en lenguaje natural, alertas proactivas, exportar a Excel/PDF. |
+| **SYNC** | "Digitaliza lo que entra y lo conecta con todo lo que ya usás." | Mandá lo que sea (WhatsApp, PDF, Excel sin formato, fotos, mails). Neura lo interpreta con IA, lo estructura y **se lo entrega ya formateado a cada herramienta**: Excel, Drive, tu ERP, tu sistema contable, tu banco, ARCA. |
+| **CORE** | "La pantalla donde operás tu empresa." | CRM y oportunidades, tesorería y cobranzas, compras y proveedores, logística y entregas, tareas y flujos de aprobación. Cada acción genera sus registros derivados sola. |
+| **INSIGHT** | "Preguntale a tu empresa, en castellano." | Dashboards por área, estado de resultados, consultas en lenguaje natural, alertas proactivas, exportar a Excel/PDF. |
 
-**El acto Integraciones es el más delicado y el más importante.** Es el que desactiva la objeción #1 del segmento (*"ya tengo mis planillas y mi contador"*) y es también donde más fácil se rompe el posicionamiento. Reglas de copy para ese acto:
+**Son TRES motores, no cuatro capas.** La integración no es un paso posterior: es lo que hace Sync. El dato entra desde Excel, Drive o WhatsApp *y* sale hacia las herramientas de la empresa en el mismo momento, así que separarla en una capa propia la aleja de donde realmente ocurre — y de paso convierte al ERP en un destino con sección propia, que es exactamente lo que no queremos.
+
+**Sync es el motor más delicado en términos de posicionamiento.** Reglas de copy:
 
 - El sujeto de la frase es **Neura conectándose**, nunca Neura siendo el sistema.
 - Se nombran **varias herramientas, no sólo el ERP**: Excel, Drive, ERP, sistema contable, banco. El ERP aparece en la lista, nunca como titular.

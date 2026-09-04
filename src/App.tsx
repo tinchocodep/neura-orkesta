@@ -6,7 +6,7 @@ import Hero from './components/Hero';
 // así que el chunk de framer queda detrás de este boundary y sale del camino crítico.
 const ScrollHeader = lazy(() => import('./components/ScrollHeader'));
 const NeuralBackground = lazy(() => import('./components/NeuralBackground'));
-const ProblemSection = lazy(() => import('./components/ProblemSection'));
+const CapabilitiesSection = lazy(() => import('./components/CapabilitiesSection'));
 const LayersSection = lazy(() => import('./components/LayersSection'));
 const ClientsSection = lazy(() => import('./components/ClientsSection'));
 const ChallengeSection = lazy(() => import('./components/ChallengeSection'));
@@ -39,9 +39,9 @@ function App() {
             </Suspense>
 
             <div className="relative z-10">
-                {/* 1. El problema — el dato entra dos veces */}
-                <Suspense fallback={<SectionFallback minHeight={1200} />}>
-                    <ProblemSection />
+                {/* 1. Qué hace Neura */}
+                <Suspense fallback={<SectionFallback minHeight={1100} />}>
+                    <CapabilitiesSection />
                 </Suspense>
 
                 {/* 2. Cómo funciona — las 4 capas */}

@@ -5,7 +5,7 @@ const WHATSAPP_URL =
     'https://wa.me/5492622567533?text=Hola%21%20Te%20cuento%20mi%20peor%20proceso%20manual%3A%20';
 
 const NAV_LINKS = [
-    { href: '#problema', label: 'El problema' },
+    { href: '#que-hace', label: 'Qué hace Neura' },
     { href: '#capas', label: 'Cómo funciona' },
     { href: '#industrias', label: '¿Es para vos?' },
     { href: '#modelos', label: 'Cómo trabajamos' },

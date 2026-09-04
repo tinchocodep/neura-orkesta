@@ -153,7 +153,7 @@ export default function Hero() {
                         </div>
 
                         <p className="mt-4 text-center text-sm leading-relaxed text-text-muted lg:text-left">
-                            No te pedimos que cambies de sistema: nos integramos al que ya usás.
+                            No te pedimos que cambies nada: nos integramos a las herramientas que ya usás.
                         </p>
                     </div>
                 </div>
