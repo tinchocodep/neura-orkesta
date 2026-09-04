@@ -1,14 +1,16 @@
 import { motion, useScroll } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo-header.png';
+
+const WHATSAPP_URL =
+    'https://wa.me/5492622567533?text=Hola%21%20Me%20interesa%20Neura%20Orkesta%20%F0%9F%9A%80';
 
 const navLinks = [
-    { label: '¿Qué es Neura Orkesta?', href: '#vision' },
-    { label: 'El Problema', href: '#problema' },
-    { label: 'Trilogía', href: '#productos' },
-    { label: 'Características', href: '#solucion' },
-    { label: 'Abordaje', href: '#fichas' },
+    { label: 'El problema', href: '#problema' },
+    { label: 'Cómo funciona', href: '#capas' },
+    { label: 'Para quién', href: '#industrias' },
+    { label: 'Cómo trabajamos', href: '#modelos' },
 ];
 
 function scrollTo(id: string) {
@@ -18,24 +20,27 @@ function scrollTo(id: string) {
 
 export default function ScrollHeader() {
     const { scrollY } = useScroll();
-    const [isVisible, setIsVisible] = useState(false);
+    const [isCompact, setIsCompact] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
 
+    // El header está visible desde el scroll 0: el CTA no puede depender de que
+    // el visitante baje una pantalla entera. Al scrollear sólo se compacta.
     useEffect(() => {
         const unsubscribe = scrollY.on('change', (latest) => {
-            setIsVisible(latest > window.innerHeight * 0.8);
+            setIsCompact(latest > 24);
         });
         return () => unsubscribe();
     }, [scrollY]);
 
     return (
         <motion.nav
-            initial={{ y: -100 }}
-            animate={{ y: isVisible ? 0 : -100 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm"
+            className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md transition-all duration-300 ${
+                isCompact
+                    ? 'bg-white/95 border-b border-gray-100 shadow-sm py-2'
+                    : 'bg-white/80 border-b border-transparent py-4'
+            }`}
         >
-            <div className="max-w-7xl mx-auto px-6 md:px-12 py-4">
+            <div className="max-w-7xl mx-auto px-6 md:px-12">
                 <div className="flex items-center justify-between">
                     {/* Logo */}
                     <button
@@ -43,9 +48,9 @@ export default function ScrollHeader() {
                         className="flex items-center gap-3 hover:opacity-80 transition-opacity"
                     >
                         <img src={logo} alt="NeuraOrkesta" width="36" height="36" className="h-9 w-auto" />
-                        <div>
+                        <div className="text-left">
                             <p className="font-display font-bold text-brand-blue text-base leading-none">NEURAORKESTA</p>
-                            <p className="text-xs text-text-muted leading-none">Tu empresa, en tiempo real</p>
+                            <p className="text-xs text-text-muted leading-none">Tu PyME, en tiempo real</p>
                         </div>
                     </button>
 
@@ -64,15 +69,19 @@ export default function ScrollHeader() {
 
                     {/* CTA + Mobile toggle */}
                     <div className="flex items-center gap-3">
-                        <button
-                            onClick={() => scrollTo('#contacto')}
-                            className="px-5 py-2 bg-brand-blue text-white font-semibold rounded-lg hover:bg-brand-blue-dark transition-all shadow-sm text-sm"
+                        <a
+                            href={WHATSAPP_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-5 py-2 bg-brand-blue text-white font-semibold rounded-lg hover:bg-brand-blue-dark transition-all shadow-sm text-sm whitespace-nowrap"
                         >
-                            Contacto
-                        </button>
+                            Escribinos
+                        </a>
                         <button
                             className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
                             onClick={() => setMobileOpen(!mobileOpen)}
+                            aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
+                            aria-expanded={mobileOpen}
                         >
                             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                         </button>

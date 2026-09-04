@@ -18,73 +18,97 @@ export default function NeuralBackground() {
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        // Set canvas size
+        // Respetar prefers-reduced-motion: se dibuja un frame y no se anima.
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
         const updateSize = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            canvas.style.width = `${window.innerWidth}px`;
+            canvas.style.height = `${window.innerHeight}px`;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         };
         updateSize();
         window.addEventListener('resize', updateSize);
 
-        // Fewer neurons on mobile for better performance
         const isMobile = window.innerWidth < 768;
-        const neuronCount = isMobile ? 20 : 60;
+        const neuronCount = isMobile ? 16 : 60;
         const connectionDistance = isMobile ? 120 : 180;
-        const neurons: Neuron[] = [];
+        // Comparar distancias al cuadrado evita una raíz cuadrada por par de neuronas.
+        const connectionDistanceSq = connectionDistance * connectionDistance;
 
+        const neurons: Neuron[] = [];
         for (let i = 0; i < neuronCount; i++) {
             neurons.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
                 vx: (Math.random() - 0.5) * 0.5,
                 vy: (Math.random() - 0.5) * 0.5,
             });
         }
 
-        // Animation loop
-        const animate = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let frameId = 0;
+        let lastFrame = 0;
+        const FRAME_MS = 1000 / 30; // 30fps alcanza para un fondo ambiente
 
-            // Update and draw neurons
-            neurons.forEach((neuron, i) => {
-                // Update position
-                neuron.x += neuron.vx;
-                neuron.y += neuron.vy;
+        const draw = () => {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            ctx.clearRect(0, 0, w, h);
 
-                // Bounce off edges
-                if (neuron.x < 0 || neuron.x > canvas.width) neuron.vx *= -1;
-                if (neuron.y < 0 || neuron.y > canvas.height) neuron.vy *= -1;
+            for (let i = 0; i < neurons.length; i++) {
+                const neuron = neurons[i];
 
-                // Draw neuron (larger and more visible)
+                if (!reduceMotion) {
+                    neuron.x += neuron.vx;
+                    neuron.y += neuron.vy;
+                    if (neuron.x < 0 || neuron.x > w) neuron.vx *= -1;
+                    if (neuron.y < 0 || neuron.y > h) neuron.vy *= -1;
+                }
+
                 ctx.beginPath();
                 ctx.arc(neuron.x, neuron.y, 5, 0, Math.PI * 2);
                 ctx.fillStyle = 'rgba(65, 105, 225, 0.7)';
                 ctx.fill();
 
-                // Draw connections to nearby neurons
-                neurons.slice(i + 1).forEach((otherNeuron) => {
-                    const dx = neuron.x - otherNeuron.x;
-                    const dy = neuron.y - otherNeuron.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
+                // Índices en vez de slice(): no aloca un array nuevo por neurona por frame.
+                for (let j = i + 1; j < neurons.length; j++) {
+                    const other = neurons[j];
+                    const dx = neuron.x - other.x;
+                    const dy = neuron.y - other.y;
+                    const distSq = dx * dx + dy * dy;
+                    if (distSq >= connectionDistanceSq) continue;
 
-                    if (distance < connectionDistance) {
-                        ctx.beginPath();
-                        ctx.moveTo(neuron.x, neuron.y);
-                        ctx.lineTo(otherNeuron.x, otherNeuron.y);
-                        const opacity = (1 - distance / connectionDistance) * 0.4;
-                        ctx.strokeStyle = `rgba(65, 105, 225, ${opacity})`;
-                        ctx.lineWidth = 2;
-                        ctx.stroke();
-                    }
-                });
-            });
-
-            requestAnimationFrame(animate);
+                    const opacity = (1 - Math.sqrt(distSq) / connectionDistance) * 0.4;
+                    ctx.beginPath();
+                    ctx.moveTo(neuron.x, neuron.y);
+                    ctx.lineTo(other.x, other.y);
+                    ctx.strokeStyle = `rgba(65, 105, 225, ${opacity})`;
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+            }
         };
 
-        animate();
+        const animate = (now: number) => {
+            frameId = requestAnimationFrame(animate);
+            if (now - lastFrame < FRAME_MS) return;
+            lastFrame = now;
+            if (document.hidden) return;
+            draw();
+        };
+
+        if (reduceMotion) {
+            draw();
+        } else {
+            frameId = requestAnimationFrame(animate);
+        }
 
         return () => {
+            // El cleanup original sólo removía el listener de resize: el loop de rAF
+            // sobrevivía al unmount (y en StrictMode arrancaban dos).
+            cancelAnimationFrame(frameId);
             window.removeEventListener('resize', updateSize);
         };
     }, []);
@@ -92,6 +116,7 @@ export default function NeuralBackground() {
     return (
         <motion.canvas
             ref={canvasRef}
+            aria-hidden="true"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 2 }}
