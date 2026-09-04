@@ -24,15 +24,21 @@ La web se hizo hace ~5 meses y quedó desfasada del pitch actual de la empresa e
 
 ## Regla de posicionamiento (la más importante del documento)
 
-**Neura Orkesta NO es un ERP. Se integra al ERP que la empresa ya usa.**
+**Neura Orkesta NO es un ERP, y tampoco se integra sólo a un ERP. Se integra a TODAS las herramientas que la empresa ya usa.**
 
-Tiene un mini-ERP incluido, pero eso es una red de seguridad para el que no tiene sistema — no es lo que se vende. El punto fuerte es la integración: *digitalizamos, conectamos y automatizamos para que tengas la visión completa de tu PyME y tomes mejores decisiones.*
+Una planilla de Excel, una carpeta de Drive, un ERP, un sistema contable, el home banking, WhatsApp, el mail. El ERP es *una* de esas herramientas, no el eje. Centrar el discurso en el ERP achica el producto y deja afuera a la mayoría de las PyMEs, que no tienen un ERP sino un conjunto desordenado de planillas y carpetas.
 
-Ninguna pieza de copy puede afirmar ni sugerir que Neura reemplaza el ERP, el sistema contable o el contador. La formulación canónica está en la diapositiva 3 de `public/deck.html`:
+El punto fuerte es la unificación: *digitalizamos, conectamos y automatizamos para que tengas la visión completa de tu PyME y tomes mejores decisiones.* Es exactamente lo que dice LinkedIn: **"unifica los sistemas que ya tenés"**.
 
-> "Tu equipo ingresa como le resulta natural — WhatsApp, PDF, Excel sin formato. Neura lo interpreta, lo estructura y **lo sube al ERP** exactamente como lo necesita."
+Tiene un sistema de gestión propio incluido, pero eso es una red de seguridad para el que no tiene nada — no es lo que se vende.
 
-**Implicancia para SEO:** las keywords de ERP se conservan — quien busca "ERP para PyMEs" es exactamente el público — pero el copy visible nunca dice que Neura *sea* un ERP. Dice que se conecta al que ya tenés, y que si no tenés, hay uno incluido.
+Ninguna pieza de copy puede afirmar ni sugerir que Neura reemplaza el ERP, el sistema contable, las planillas o el contador. La formulación canónica está en la diapositiva 3 de `public/deck.html`:
+
+> "Tu equipo ingresa como le resulta natural — WhatsApp, PDF, Excel sin formato. Neura lo interpreta, lo estructura y **lo sube** exactamente como lo necesita."
+
+**Vocabulario.** PROHIBIDO: "nuestro ERP", "el ERP de Neura", "Neura es un ERP", "reemplazá tu sistema", y también hablar de la integración *sólo* en términos de ERP. PERMITIDO: "las herramientas que ya usás", "se integra a", "les manda los datos a", "Excel, Drive, tu ERP, tu banco".
+
+**Implicancia para SEO:** las keywords de ERP se conservan — quien busca "ERP para PyMEs" es parte del público — pero el copy visible nunca dice que Neura *sea* un ERP ni que el ERP sea el único destino. Dice que se conecta con lo que ya tenés, sea lo que sea.
 
 ## Principios
 
@@ -98,14 +104,14 @@ Antetítulo fijo: "Digitalizá. Conectá. Automatizá. Orquestá."
 |---|---|---|
 | **SYNC** | "Tu equipo carga fácil. El sistema entiende solo." | Mandá lo que sea — WhatsApp, PDF, Excel sin formato, fotos, mails. Neura lo interpreta con IA, lo estructura y lo sube al sistema listo para usar. |
 | **CORE** | "El dato entra una vez y se acomoda solo." | CRM, tesorería y cobranzas, compras y proveedores, logística y entregas, tareas y aprobaciones. Cada acción genera sus registros derivados. |
-| **ERP** | "No te pedimos que cambies de sistema." | **Nos integramos al ERP que ya usás** y le mandamos los datos ya formateados. Si no tenés ninguno, hay uno incluido. Registros automáticos, factura electrónica ARCA, liquidación de sueldos. |
+| **Integraciones** | "No te pedimos que cambies nada." | **Nos conectamos con las herramientas que ya usás** —Excel, Drive, tu ERP, tu sistema contable, tu banco— y les mandamos los datos ya formateados. Si no tenés un sistema de gestión, hay uno incluido. Bancos, ARCA y facturación electrónica, liquidación de sueldos. |
 | **INSIGHT** | "Preguntale a tu empresa, en castellano." | Dashboards por área, consultas en lenguaje natural, alertas proactivas, exportar a Excel/PDF. |
 
-**El acto ERP es el más delicado y el más importante.** Es el que desactiva la objeción #1 del segmento (*"ya tengo sistema y contador"*) y es también donde más fácil se rompe el posicionamiento. Reglas de copy para ese acto:
+**El acto Integraciones es el más delicado y el más importante.** Es el que desactiva la objeción #1 del segmento (*"ya tengo mis planillas y mi contador"*) y es también donde más fácil se rompe el posicionamiento. Reglas de copy para ese acto:
 
-- El sujeto de la frase es **Neura conectándose**, nunca Neura siendo el ERP.
-- El mini-ERP se nombra **segundo y en tono menor**: es una red de seguridad para quien no tiene sistema, no la propuesta de valor.
-- Prohibido: "nuestro ERP", "el ERP de Neura", "reemplazá tu sistema". Permitido: "se integra a", "le manda los datos a", "trabaja con".
+- El sujeto de la frase es **Neura conectándose**, nunca Neura siendo el sistema.
+- Se nombran **varias herramientas, no sólo el ERP**: Excel, Drive, ERP, sistema contable, banco. El ERP aparece en la lista, nunca como titular.
+- El sistema de gestión propio se nombra **último y en tono menor**: red de seguridad para quien no tiene nada, no la propuesta de valor.
 
 **Capturas reales del producto** van acá, una por acto. Reemplazan los mockups inventados: es la prueba más fuerte disponible.
 
