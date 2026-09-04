@@ -5,11 +5,12 @@
 
 ## Problema
 
-La web se hizo hace ~5 meses y quedó desfasada del pitch actual de la empresa en tres ejes:
+La web se hizo hace ~5 meses y quedó desfasada del pitch actual de la empresa en cuatro ejes:
 
-1. **Contenido.** La web vende una "Trilogía Sinérgica" de 3 productos. El deck comercial y LinkedIn ya venden **4 capas** (Sync → Core → **ERP** → Insight). Falta además todo el material que el deck sí tiene: el dolor cuantificado (+15hs/semana por empleado administrativo), las 6 industrias, el diferencial de software a medida, los 3 modelos de trabajo y el cronograma real del Desafío 24hs. El copy dice AFIP; el organismo hoy se llama ARCA.
-2. **Venta.** La primera pantalla no tiene ningún CTA. El header aparece recién a `window.innerHeight * 0.8` (`ScrollHeader.tsx:26`) y su botón "Contacto" no abre WhatsApp: hace `scrollIntoView` al footer, ~700vh abajo. El H1 dice el nombre de la empresa, no qué vende.
-3. **Movimiento.** Hay ~136 llamadas `motion.*` y ~50 `whileInView`, prácticamente todas con el mismo `initial={{opacity:0, y:20..40}}`. No hay parallax, ni escenas ancladas, ni scroll-scrubbing real (salvo el fade del hero y la línea del timeline). El sitio se siente estático porque *es* el mismo gesto repetido 50 veces.
+1. **Posicionamiento.** La web nunca dice que Neura se **integra** al ERP que la empresa ya tiene — que es el punto fuerte del producto. Habla de "motores" y "cajas mágicas" en abstracto, lo cual deja al lector armando la hipótesis equivocada de que Neura viene a reemplazarle el sistema.
+2. **Contenido.** La web vende una "Trilogía Sinérgica" de 3 productos. El deck comercial vende **4 capas** (Sync → Core → **ERP** → Insight). Falta además todo el material que los decks sí tienen: "el dato entra dos veces" con sus tres costos, el número de respaldo (+15hs/semana por empleado administrativo), las industrias, el Tablero Base, el modelo de activación en dos niveles, el diferencial de software a medida, los 3 modelos de trabajo y el cronograma real del Desafío 24hs. El copy dice AFIP; el organismo hoy se llama ARCA.
+3. **Venta.** La primera pantalla no tiene ningún CTA. El header aparece recién a `window.innerHeight * 0.8` (`ScrollHeader.tsx:26`) y su botón "Contacto" no abre WhatsApp: hace `scrollIntoView` al footer, ~700vh abajo. El H1 dice el nombre de la empresa, no qué vende.
+4. **Movimiento.** Hay ~136 llamadas `motion.*` y ~50 `whileInView`, prácticamente todas con el mismo `initial={{opacity:0, y:20..40}}`. No hay parallax, ni escenas ancladas, ni scroll-scrubbing real (salvo el fade del hero y la línea del timeline). El sitio se siente estático porque *es* el mismo gesto repetido 50 veces.
 
 ## Decisiones tomadas
 
@@ -21,6 +22,18 @@ La web se hizo hace ~5 meses y quedó desfasada del pitch actual de la empresa e
 | Precio | Sin números. La sección se llama "Cómo trabajamos", no "Cuánto sale" |
 | Video del hero | Nuevo y liviano. IA solo para textura física; nada de texto generado |
 
+## Regla de posicionamiento (la más importante del documento)
+
+**Neura Orkesta NO es un ERP. Se integra al ERP que la empresa ya usa.**
+
+Tiene un mini-ERP incluido, pero eso es una red de seguridad para el que no tiene sistema — no es lo que se vende. El punto fuerte es la integración: *digitalizamos, conectamos y automatizamos para que tengas la visión completa de tu PyME y tomes mejores decisiones.*
+
+Ninguna pieza de copy puede afirmar ni sugerir que Neura reemplaza el ERP, el sistema contable o el contador. La formulación canónica está en la diapositiva 3 de `public/deck.html`:
+
+> "Tu equipo ingresa como le resulta natural — WhatsApp, PDF, Excel sin formato. Neura lo interpreta, lo estructura y **lo sube al ERP** exactamente como lo necesita."
+
+**Implicancia para SEO:** las keywords de ERP se conservan — quien busca "ERP para PyMEs" es exactamente el público — pero el copy visible nunca dice que Neura *sea* un ERP. Dice que se conecta al que ya tenés, y que si no tenés, hay uno incluido.
+
 ## Principios
 
 1. **El contenido primero.** La reestructura de copy vale ~80% del valor comercial y es independiente del sistema de animación. Se publica antes que cualquier escena.
@@ -30,35 +43,44 @@ La web se hizo hace ~5 meses y quedó desfasada del pitch actual de la empresa e
 5. **Sístole y diástole.** Después de cada escena cara va una sección deliberadamente quieta. "Más movimiento" sin contraste es mareo.
 6. **Color = estado, no decoración.** Gris = manual/pendiente. Azul = procesado por Neura. Verde = confirmado/registrado. Se respeta en todas las demos y hace legible la animación sin leyendas.
 7. **Un solo CTA primario:** WhatsApp. Neuralite baja a secundario dentro de "Cómo trabajamos".
-8. **Reduced-motion significa sin movimiento, no sin contenido.** Cada demo queda en un estado final legible; los números, las 4 capas y las 6 industrias se ven completas igual.
+8. **Reduced-motion significa sin movimiento, no sin contenido.** Cada demo queda en un estado final legible; los números, las 4 capas y las 7 industrias se ven completas igual.
 
 ## Arquitectura
 
-Nueve secciones, ordenadas como embudo: dolor con número → producto → prueba → riesgo → modelo → calificación → objeciones → cierre.
+Nueve secciones, ordenadas como embudo: dolor con mecanismo → producto → prueba → riesgo → modelo → calificación → objeciones → cierre.
 
 ### 1. Hero
 
 **Propósito:** los 5 segundos. Qué es, para quién, cuánto tarda, y un botón.
 
-- **H1:** "El ERP con IA que carga los datos por vos."
-- **Bajada:** "NeuraOrkesta digitaliza, conecta y automatiza la gestión de tu PyME. Unificá los sistemas que ya tenés y andá operando en 24 horas."
+- **H1:** "Conectamos todo lo que ya usás."
+- **Bajada:** "NeuraOrkesta digitaliza, conecta y automatiza tu PyME para que tengas la foto completa y decidas con datos."
 - **CTAs:** `[Escribinos por WhatsApp]` primario + `[Ver cómo funciona]` secundario (ancla a la sección 3).
 - **Tira de prueba:** "Andando en 24hs · Sin permanencia · Se conecta a tu sistema contable actual · Equipo argentino, ARCA y bancos locales".
 - **Franja de clientes:** logos reales, discretos, debajo de la tira.
 - El wordmark NEURAORKESTA baja a logo en el header; deja de ser el H1.
 
-**Nota sobre el H1.** LinkedIn usa "Tu PyME, en tiempo real con IA". En frío no pasa el test de 5 segundos: no nombra la categoría, y el que cae de Google lee "IA" y "tiempo real" sin saber qué se vende. La bajada conserva los verbos exactos de LinkedIn (digitaliza, conecta, automatiza) y "Tu PyME, en tiempo real" se mantiene como cierre de marca en la sección 9.
+**Nota sobre el H1.** El H1 elegido deja explícito desde el primer segundo que Neura no reemplaza nada, que es la corrección de posicionamiento central de este documento. La bajada conserva los verbos exactos de LinkedIn (digitaliza, conecta, automatiza) y cierra con el beneficio real —la foto completa para decidir—, no con una capacidad técnica. "Gestioná tu PyME en tiempo real" se mantiene como cierre de marca en la sección 9.
+
+Descartado: "El ERP con IA que carga los datos por vos". Vendía mejor pero afirmaba que Neura *es* un ERP, que es exactamente lo que no es.
 
 **Movimiento:** reveal tipográfico por línea con máscara, 3 líneas escalonadas 60ms, terminado antes de los 400ms. Después entra "el dato" (una tarjeta-documento) y aterriza en el marco: ese objeto es el que va a viajar por toda la página. Se elimina el `useTransform` de scale+fade actual — cuesta y no aporta.
 
-### 2. Las 15 horas
+### 2. El dato entra dos veces
 
-**Propósito:** instalar el dolor con un número, no con adjetivos. Reemplaza a `ProblemSection` ("El Caos Manual", puro adjetivo, 3 tarjetitas con íconos rojos).
+**Propósito:** instalar el dolor nombrando el **mecanismo**, no solo el síntoma. Reemplaza a `ProblemSection` ("El Caos Manual", puro adjetivo, 3 tarjetitas con íconos rojos).
 
-- **Titular:** "+15 horas por semana. Por empleado. Tipeando."
-- Los 4 dolores de LinkedIn en una línea: sistemas desarticulados · procesos manuales · decisiones a ciegas · datos duplicados.
+- **Titular:** "El dato entra dos veces."
+- **Bajada:** "Tu equipo registra lo que pasa en crudo. Después alguien lo reformatea para el ERP. Con errores. Siempre."
+- **Los tres costos** (diapositiva 2 de `public/deck.html`):
+  - **Doble trabajo** — el campo carga en crudo, el admin reformatea y sube al ERP.
+  - **Error humano** — cada vuelta acumula errores que el sistema toma como válidos.
+  - **Costo de capacitación** — cada persona nueva aprende primero cómo cargar, no cómo trabajar. Si se va, todo empieza de nuevo.
+- **El número como respaldo, no como titular:** "+15 horas por semana. Por cada empleado administrativo."
 - Los 6 ejemplos del deck en criollo, segunda persona: "Las facturas de proveedores las cargás a mano, una por una" / "El resumen del banco lo conciliás mirando el PDF" / "La cobranza vive en una planilla que entiende uno solo" / "El remito y la factura en ARCA, de a uno" / "Los sueldos, a mano y rezando en cada cierre" / "El reporte que necesitás hoy está listo en tres días".
 - **Cierre:** "Nada de esto es culpa de tu equipo. Es que nadie conectó los sistemas."
+
+**Por qué el mecanismo va primero.** "+15 horas" es un síntoma y admite la respuesta *"a mí no me pasa tanto"*. "El dato entra dos veces" describe algo que el dueño puede verificar en su propia operación en cinco segundos, y una vez que lo ve ya no lo puede dejar de ver. El número queda como respaldo cuantitativo debajo.
 
 **Movimiento:** el "15" es un contador atado a `scrollYProgress`, scrubbeado y reversible (sube al bajar, baja al subir), con `tabular-nums`. Las 6 filas caen con peso (`y: -12 → 0`, expo-out, 40ms de stagger) y cada una que aterriza engorda una barra fina al costado: se ve acumular el costo.
 
@@ -70,16 +92,24 @@ Nueve secciones, ordenadas como embudo: dolor con número → producto → prueb
 
 Antetítulo fijo: "Digitalizá. Conectá. Automatizá. Orquestá."
 
+**El encuadre de toda la sección**, tomado de la diapositiva 3: *"Neura no elimina la carga de datos. Elimina el trabajo de darle formato."* Es una afirmación honesta y diferenciada — no promete magia, promete sacarte el reformateo.
+
 | Acto | Titular | Contenido |
 |---|---|---|
-| **SYNC** | "Mandá lo que sea. Neura lo lee." | Facturas, Excel, fotos, mails, WhatsApp, PDFs. Cero tipeo. |
-| **CORE** | "El dato entra una vez y se acomoda solo." | CRM, tesorería y cobranzas, compras, logística, tareas y aprobaciones. |
-| **ERP** | "No reemplazamos a tu contador. Le mandamos los datos solos." | Compatible con tu ERP actual, o usás el nuestro incluido. Registros automáticos, factura electrónica ARCA, liquidación de sueldos. |
+| **SYNC** | "Tu equipo carga fácil. El sistema entiende solo." | Mandá lo que sea — WhatsApp, PDF, Excel sin formato, fotos, mails. Neura lo interpreta con IA, lo estructura y lo sube al sistema listo para usar. |
+| **CORE** | "El dato entra una vez y se acomoda solo." | CRM, tesorería y cobranzas, compras y proveedores, logística y entregas, tareas y aprobaciones. Cada acción genera sus registros derivados. |
+| **ERP** | "No te pedimos que cambies de sistema." | **Nos integramos al ERP que ya usás** y le mandamos los datos ya formateados. Si no tenés ninguno, hay uno incluido. Registros automáticos, factura electrónica ARCA, liquidación de sueldos. |
 | **INSIGHT** | "Preguntale a tu empresa, en castellano." | Dashboards por área, consultas en lenguaje natural, alertas proactivas, exportar a Excel/PDF. |
 
-El acto **ERP** es el más importante comercialmente y hoy no existe en la web: desactiva la objeción #1 del segmento, *"ya tengo sistema y contador"*.
+**El acto ERP es el más delicado y el más importante.** Es el que desactiva la objeción #1 del segmento (*"ya tengo sistema y contador"*) y es también donde más fácil se rompe el posicionamiento. Reglas de copy para ese acto:
+
+- El sujeto de la frase es **Neura conectándose**, nunca Neura siendo el ERP.
+- El mini-ERP se nombra **segundo y en tono menor**: es una red de seguridad para quien no tiene sistema, no la propuesta de valor.
+- Prohibido: "nuestro ERP", "el ERP de Neura", "reemplazá tu sistema". Permitido: "se integra a", "le manda los datos a", "trabaja con".
 
 **Capturas reales del producto** van acá, una por acto. Reemplazan los mockups inventados: es la prueba más fuerte disponible.
+
+**Tablero Base** (contenido nuevo, de la diapositiva 5 de `public/deck.html`) cierra la sección: *"Cada módulo que activás viene con su Tablero Base ya configurado. No arrancás de cero — arrancás con la estructura del área funcionando: KPIs, tablas, alertas y flujos listos desde el primer día."* Es la prueba concreta de que el "operativo en 24hs" es posible, y hoy no está en ningún lado de la web.
 
 **Movimiento:** escena anclada de ~350vh con escenario central fijo y `scrollYProgress` mapeado a 4 tramos. El objeto "dato" que nació en el hero se transforma acto por acto. Todo `transform`/`opacity`, una sola capa, sin layout. **Es la única escena anclada del sitio.**
 
@@ -115,6 +145,13 @@ La prueba social aparece **dos veces y con roles distintos**, no por redundancia
 - **Franja transversal:** implementación 24hs · sin permanencia · soporte continuo · escalamos con vos · equipo local.
 - **Sin montos.** El título promete estructura, no precio. "Probá gratis Neuralite" vive acá como CTA secundario.
 
+**Cómo se empieza — el modelo de activación en dos niveles** (diapositiva 7 de `public/deck.html`, contenido nuevo). Es un eje distinto de los 3 modelos: los modelos dicen *cómo se cobra*, los niveles dicen *por dónde arrancás*.
+
+- **Nivel 1 · Motores individuales.** Sync, Core o Insight se activan por separado. Cada uno viene con su Tablero Base ya configurado: operativo desde el día uno, sin depender del resto.
+- **Nivel 2 · Orkesta completo.** Con los tres motores integrados se habilita el **sistema de fichas** — módulos adicionales por área para profundizar según lo que necesite la operación.
+
+Esto además le da sentido a las fichas, que hoy en la web son un marquee de 30 nombres sin explicación de para qué sirven ni cuándo aparecen.
+
 **Movimiento:** deliberadamente quieto. Es la sección donde el comprador tiene que leer, no mirar.
 
 ### 7. ¿Es para vos?
@@ -122,7 +159,9 @@ La prueba social aparece **dos veces y con roles distintos**, no por redundancia
 **Propósito:** autocalificación. También responde "esto es para empresas grandes".
 
 - **Titular:** "No es solo para PyMEs. Es para cualquier empresa que opera."
-- 6 industrias, cada una con su línea concreta: Distribución y Logística (pedidos, remitos, rutas, entregas) · Retail y Mayoristas (stock, precios, cobranzas) · Servicios B2B (presupuestos, facturación, contratos) · Industria y Manufactura (producción, insumos, nómina) · Construcción (obras, materiales, subcontratistas, costos por obra) · Salud y Profesionales (turnos, facturación, honorarios).
+- **7 industrias**, cada una con su línea concreta: Distribución y Logística (pedidos, remitos, rutas, entregas) · Retail y Mayoristas (stock, precios, cobranzas) · Servicios B2B (presupuestos, facturación, contratos) · Industria y Manufactura (producción, insumos, nómina) · Construcción (obras, materiales, subcontratistas, costos por obra) · Salud y Profesionales (turnos, facturación, honorarios) · **Agro** (campo, acopio).
+
+  `deck-comercial.html` lista 6 y `neura-slide.html` lista Agro como séptima. Van las 7: en Argentina el agro es un segmento demasiado grande para dejarlo afuera de la grilla de autocalificación.
 - Debajo, el marquee de 30 módulos que ya existe, con bajada: "Activás lo que necesitás. Pagás por lo que usás." La adyacencia es obligatoria: suelto es relleno, pegado a las industrias es prueba de amplitud.
 
 **Movimiento:** el swap de línea es una máscara horizontal, nunca crossfade. El marquee conserva sus keyframes CSS pero se le ata la velocidad a `useVelocity(scrollY)`: si scrolleás rápido corre más rápido, si parás sigue lento. Es el detalle más barato que hace sentir que la página responde al dedo.
@@ -252,3 +291,17 @@ Bloquean la fase 1:
 - Blog, casos de estudio extensos, calculadora de ahorro interactiva.
 - Rediseño del deck comercial o de los slides sueltos del repo.
 - Cambio de paleta de marca o de tipografías.
+
+## Fuentes
+
+Hay dos decks en el repo y **no dicen lo mismo**. Ante conflicto, manda el posicionamiento de `public/deck.html`.
+
+| Archivo | Qué es | Qué se toma |
+|---|---|---|
+| `public/deck.html` | "Desafío 24hs", 8 slides, Propuesta Comercial 2025 | **El posicionamiento** (integración, no reemplazo), "el dato entra dos veces" + sus 3 costos, "no elimina la carga: elimina el formato", Tablero Base, activación en 2 niveles |
+| `deck-comercial.html` | Deck 2026, más extenso | Las 4 capas, +15hs y los 6 ejemplos, industrias, software a medida, los 3 modelos de trabajo, las 6 razones, timeline del 24hs |
+| `neura-slide.html` | Slide suelto de industrias | Agro como séptima industria |
+| `neura-pain-slide.html` | Slide suelto del problema | Redacción alternativa de los 6 ejemplos |
+| LinkedIn | Perfil de empresa | Los verbos canónicos (digitaliza · conecta · automatiza · orquesta), "Gestioná tu PyME en tiempo real" |
+
+**Conflicto conocido y cómo se resuelve:** `deck-comercial.html` presenta el ERP como una capa propia de Neura ("o usás el nuestro incluido"), lo que se lee como que Neura *es* un ERP. Se conservan las 4 capas —es la estructura que el cliente eligió— pero la capa ERP se reescribe como **superficie de integración**, con el mini-ERP mencionado en segundo plano. Ver "Regla de posicionamiento".
