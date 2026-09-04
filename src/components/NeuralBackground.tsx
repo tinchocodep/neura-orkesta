@@ -68,8 +68,8 @@ export default function NeuralBackground() {
                 }
 
                 ctx.beginPath();
-                ctx.arc(neuron.x, neuron.y, 5, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(65, 105, 225, 0.7)';
+                ctx.arc(neuron.x, neuron.y, 3, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(65, 105, 225, 0.22)';
                 ctx.fill();
 
                 // Índices en vez de slice(): no aloca un array nuevo por neurona por frame.
@@ -80,12 +80,12 @@ export default function NeuralBackground() {
                     const distSq = dx * dx + dy * dy;
                     if (distSq >= connectionDistanceSq) continue;
 
-                    const opacity = (1 - Math.sqrt(distSq) / connectionDistance) * 0.4;
+                    const opacity = (1 - Math.sqrt(distSq) / connectionDistance) * 0.13;
                     ctx.beginPath();
                     ctx.moveTo(neuron.x, neuron.y);
                     ctx.lineTo(other.x, other.y);
                     ctx.strokeStyle = `rgba(65, 105, 225, ${opacity})`;
-                    ctx.lineWidth = 2;
+                    ctx.lineWidth = 1;
                     ctx.stroke();
                 }
             }

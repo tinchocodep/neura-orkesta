@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { ArrowDown, Check, MessageCircle } from 'lucide-react';
 
 // Único CTA primario del sitio. El mensaje se personaliza por sección de origen.
@@ -29,6 +30,33 @@ const proofPoints = [
 const LOGOS_CLIENTES: { nombre: string; logo: string }[] = [];
 
 export default function Hero() {
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    // El video se adjunta DESPUÉS del primer paint y sólo si el visitante no pidió
+    // reducir movimiento y no está ahorrando datos. Hasta entonces el hero es el
+    // póster: 20KB, sin pedir un solo byte de video.
+    useEffect(() => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const conn = (navigator as { connection?: { saveData?: boolean } }).connection;
+        if (conn?.saveData) return;
+
+        const start = () => {
+            const el = videoRef.current;
+            if (!el) return;
+            el.src = '/videos/hero-flow.mp4';
+            el.play().catch(() => {
+                /* autoplay bloqueado: queda el póster, que muestra lo mismo */
+            });
+        };
+
+        const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 400));
+        const id = idle(start);
+        return () => {
+            if (window.cancelIdleCallback) window.cancelIdleCallback(id as number);
+            else clearTimeout(id as number);
+        };
+    }, []);
+
     return (
         <section className="relative flex min-h-svh items-center overflow-hidden px-6 pb-16 pt-28 md:px-12 md:pt-32 lg:px-24">
             {/* Ambiente: manchas de marca muy suaves, sin costo de layout */}
@@ -47,7 +75,7 @@ export default function Hero() {
                         </p>
 
                         {/* El único <h1> del sitio. Sin animación: es el LCP. */}
-                        <h1 className="font-display text-5xl font-bold leading-[1.05] text-text-primary sm:text-6xl lg:text-7xl">
+                        <h1 className="font-display text-[3.25rem] font-bold leading-[0.98] tracking-[-0.03em] text-text-primary sm:text-7xl lg:text-[5.5rem]">
                             Conectamos todo <br className="hidden sm:block" />
                             <span className="text-brand-blue">lo que ya usás.</span>
                         </h1>
@@ -98,62 +126,37 @@ export default function Hero() {
                         </ul>
                     </div>
 
-                    {/* ── Columna derecha: hueco del video ────────────────── */}
-                    {/* fase 3: video + demo. Este bloque entero se reemplaza por el
-                        <img poster> + <video> con carga condicional. Mientras tanto el
-                        recorrido del dato se cuenta en DOM, que además es indexable. */}
+                    {/* ── Columna derecha: el recorrido del dato ───────────── */}
                     <div
                         className="animate-fade-in"
                         style={{ animationDelay: '340ms', animationFillMode: 'both' }}
                     >
-                        <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-soft">
-                            <div className="flex items-center gap-2 border-b border-gray-100 bg-light-secondary px-4 py-3">
-                                <span className="h-2.5 w-2.5 rounded-full bg-gray-300" />
-                                <span className="h-2.5 w-2.5 rounded-full bg-gray-200" />
-                                <span className="h-2.5 w-2.5 rounded-full bg-gray-200" />
-                                <span className="ml-2 text-xs font-medium uppercase tracking-widest text-text-muted">
-                                    El recorrido de un dato
-                                </span>
-                            </div>
-
-                            <div className="flex min-h-[20rem] flex-col justify-center gap-3 p-6 sm:aspect-[4/3] sm:p-8">
-                                {/* Color = estado: gris entra crudo, azul lo procesa Neura, verde queda registrado */}
-                                <div className="rounded-xl border border-gray-100 bg-light-secondary p-4">
-                                    <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-text-muted">
-                                        Tu equipo carga como le sale
-                                    </p>
-                                    <div className="flex flex-wrap gap-2">
-                                        {['WhatsApp', 'PDF', 'Excel sin formato', 'Una foto'].map((item) => (
-                                            <span
-                                                key={item}
-                                                className="rounded-md border border-gray-200 bg-white px-3 py-1.5 text-sm text-text-secondary"
-                                            >
-                                                {item}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <ArrowDown className="mx-auto h-4 w-4 text-gray-300" aria-hidden="true" />
-
-                                <div className="rounded-xl border border-brand-blue/20 bg-brand-blue/5 p-4">
-                                    <p className="text-sm font-semibold text-brand-blue">
-                                        NeuraOrkesta lo interpreta, lo estructura y lo ordena.
-                                    </p>
-                                </div>
-
-                                <ArrowDown className="mx-auto h-4 w-4 text-gray-300" aria-hidden="true" />
-
-                                <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4">
-                                    <p className="text-sm font-semibold text-emerald-800">
-                                        Llega a cada herramienta con el formato exacto que necesita.
-                                    </p>
-                                </div>
-                            </div>
+                        {/* El póster es un <img> normal y es lo que pinta primero: el video
+                            nunca es el elemento LCP. El mp4 pesa 128KB y arranca recién
+                            después del primer paint. */}
+                        <div className="relative overflow-hidden rounded-3xl">
+                            <img
+                                src="/hero-flow.webp"
+                                alt="Documentos desordenados que entran a NeuraOrkesta y salen ordenados hacia las herramientas de la empresa"
+                                width="960"
+                                height="698"
+                                fetchPriority="high"
+                                className="w-full h-auto"
+                            />
+                            <video
+                                ref={videoRef}
+                                className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700"
+                                muted
+                                loop
+                                playsInline
+                                preload="none"
+                                aria-hidden="true"
+                                onPlaying={(e) => { e.currentTarget.style.opacity = '1'; }}
+                            />
                         </div>
 
-                        <p className="mt-4 text-center text-sm leading-relaxed text-text-muted lg:text-left">
-                            No te pedimos que cambies nada: nos integramos a las herramientas que ya usás.
+                        <p className="mt-5 text-center text-base leading-relaxed text-text-muted lg:text-left">
+                            Entra como te quede cómodo. Sale ordenado hacia todo lo que ya usás.
                         </p>
                     </div>
                 </div>

@@ -1,3 +1,4 @@
+import LoopVideo from './LoopVideo';
 import { Fragment } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Check, LayoutDashboard, MessageCircle } from 'lucide-react';
@@ -19,6 +20,7 @@ type Layer = {
     description: string;
     bullets: string[];
     image?: string;
+    video?: string;
     caption: string;
     /* 'brand' = acento azul · 'neutral' = sobrio (capa Integraciones) */
     tone: 'brand' | 'neutral';
@@ -40,6 +42,7 @@ const layers: Layer[] = [
             'Bancos, ARCA y facturación electrónica',
         ],
         image: '/neura_sync.webp',
+        video: '/videos/neura_sync.mp4',
         caption: 'Sync',
         tone: 'brand',
     },
@@ -58,6 +61,7 @@ const layers: Layer[] = [
             'Tareas y flujos de aprobación',
         ],
         image: '/neura_core.webp',
+        video: '/videos/neura_core.mp4',
         caption: 'Core',
         tone: 'brand',
     },
@@ -76,6 +80,7 @@ const layers: Layer[] = [
             'Información en tiempo real',
         ],
         image: '/neura_insight.webp',
+        video: '/videos/neura_insight.mp4',
         caption: 'Insight',
         tone: 'brand',
     },
@@ -219,7 +224,7 @@ export default function LayersSection() {
                                         cambiar el contenido interno por un <img>. */}
                                     <div className={isReversed ? 'lg:order-1' : ''}>
                                         <div
-                                            className={`relative w-full aspect-[4/3] sm:aspect-[16/10] rounded-2xl border overflow-hidden ${isNeutral ? 'border-gray-200 bg-light-secondary' : 'border-gray-100 bg-light-secondary'}`}
+                                            className={`relative w-full aspect-square rounded-2xl border overflow-hidden ${isNeutral ? 'border-gray-200 bg-light-secondary' : 'border-gray-100 bg-light-secondary'}`}
                                         >
                                             <div
                                                 className="absolute inset-0"
@@ -227,19 +232,13 @@ export default function LayersSection() {
                                                 aria-hidden="true"
                                             />
 
-                                            {layer.image ? (
-                                                <div className="relative h-full w-full flex items-center justify-center p-8">
-                                                    <img
-                                                        src={layer.image}
-                                                        alt=""
-                                                        aria-hidden="true"
-                                                        loading="lazy"
-                                                        decoding="async"
-                                                        width="640"
-                                                        height="640"
-                                                        className="h-24 w-24 sm:h-32 sm:w-32 md:h-40 md:w-40 object-contain drop-shadow-xl"
-                                                    />
-                                                </div>
+                                            {layer.image && layer.video ? (
+                                                <LoopVideo
+                                                    src={layer.video}
+                                                    poster={layer.image}
+                                                    alt={`Animación de ${layer.name}`}
+                                                    className="relative h-full w-full p-4 sm:p-6"
+                                                />
                                             ) : (
                                                 /* Diagrama de integración (hoy sin uso: todas las
                                                    capas tienen imagen). Se conserva por si alguna
