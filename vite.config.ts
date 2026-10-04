@@ -7,19 +7,11 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        // La forma de objeto de manualChunks dejaba a React adentro del chunk
-        // 'framer' (framer-motion depende de React y Rollup lo resolvía ahí
-        // primero). Eso obligaba a precargar framer-motion en el <head> junto
-        // con el runtime, aunque ninguna sección above-the-fold lo use.
-        // Con la forma de función el reparto es explícito: React va al camino
-        // crítico, framer-motion queda aislado detrás de las secciones lazy.
+        // React va al camino crítico en su propio trozo; three.js (la escena de la solución)
+        // queda aparte y sólo se baja en pantalla grande, cuando la sección está por entrar.
         manualChunks(id) {
           if (!id.includes('node_modules')) return
-          if (
-            id.includes('framer-motion') ||
-            id.includes('motion-dom') ||
-            id.includes('motion-utils')
-          ) return 'framer'
+          if (id.includes('/three/')) return 'three'
           if (
             id.includes('/react/') ||
             id.includes('/react-dom/') ||

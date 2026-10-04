@@ -6,11 +6,6 @@ export default {
     ],
     theme: {
         extend: {
-            screens: {
-                // La tarjeta grande del video pide ancho Y alto: un celular acostado es ancho
-                // pero no tiene alto para ella.
-                'tarjeta': { raw: '(min-width: 768px) and (min-height: 600px)' },
-            },
             colors: {
                 // Paleta del deck comercial (sept. 2026). El azul del deck (#3B7BFF) está pensado
                 // para fondo oscuro: con texto blanco encima no llega al contraste AA, así que

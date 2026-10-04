@@ -9,6 +9,8 @@ interface VideoWidgetProps {
 
 const POSTER = '/hero/reel-poster.webp';
 
+type Modo = 'oculta' | 'tarjeta' | 'burbuja';
+
 function Reproductor({ onCerrar }: { onCerrar: () => void }) {
     const dialogoRef = useRef<HTMLDialogElement>(null);
 
@@ -71,14 +73,25 @@ function Reproductor({ onCerrar }: { onCerrar: () => void }) {
 export default function VideoWidget({ abierto, onAbrir, onCerrar }: VideoWidgetProps) {
     const vistaPreviaRef = useRef<HTMLVideoElement>(null);
     const [oculto, setOculto] = useState(false);
-    const [visible, setVisible] = useState(false);
+    const [modo, setModo] = useState<Modo>('oculta');
 
-    // En el celular el hero ya trae su botón «Ver el video»: la burbuja aparece al bajar,
-    // así no le queda encima. En pantallas grandes la tarjeta está siempre.
+    // Arriba de todo, en pantalla grande, es una tarjeta: forma parte del hero. Al bajar se
+    // achica a una burbuja para no tapar el contenido de las secciones. En el celular el hero
+    // ya trae su botón «Ver el video», así que arriba no aparece.
     useEffect(() => {
         const medir = () => {
-            const grande = window.innerWidth >= 768 && window.innerHeight >= 600;
-            setVisible(grande || window.scrollY > window.innerHeight * 0.45);
+            const alto = window.innerHeight;
+            const grande = window.innerWidth >= 768 && alto >= 600;
+            const pasoElHero = window.scrollY > alto * 0.45;
+            // Sobre el formulario y al final de la página se corre: quedaba encima del botón
+            // de enviar y de los datos del pie.
+            const formulario = document.getElementById('neuralite')?.getBoundingClientRect();
+            const sobreFormulario = !!formulario && formulario.top < alto * 0.6 && formulario.bottom > alto * 0.4;
+            const finDePagina = window.scrollY + alto > document.documentElement.scrollHeight - 160;
+
+            if (sobreFormulario || (finDePagina && pasoElHero)) setModo('oculta');
+            else if (pasoElHero) setModo('burbuja');
+            else setModo(grande ? 'tarjeta' : 'oculta');
         };
         medir();
         window.addEventListener('scroll', medir, { passive: true });
@@ -88,6 +101,9 @@ export default function VideoWidget({ abierto, onAbrir, onCerrar }: VideoWidgetP
             window.removeEventListener('resize', medir);
         };
     }, []);
+
+    const visible = modo !== 'oculta';
+    const tarjeta = modo === 'tarjeta';
 
     // La vista previa se pide recién cuando la tarjeta se ve y el hero ya pintó: no compite
     // con él ni se baja para nadie.
@@ -117,7 +133,7 @@ export default function VideoWidget({ abierto, onAbrir, onCerrar }: VideoWidgetP
         <>
             {!oculto && (
                 <div
-                    className={`video-widget-entra fixed bottom-5 right-5 z-40 transition-[opacity,visibility] duration-300 tarjeta:bottom-6 tarjeta:right-6 ${
+                    className={`video-widget-entra fixed bottom-5 right-5 z-40 transition-[opacity,visibility] duration-300 md:bottom-6 md:right-6 ${
                         visible ? '' : 'invisible opacity-0'
                     }`}
                 >
@@ -125,7 +141,11 @@ export default function VideoWidget({ abierto, onAbrir, onCerrar }: VideoWidgetP
                         type="button"
                         onClick={onAbrir}
                         aria-label="Video · 1 min. Neura te lo cuenta"
-                        className="group relative block h-[4.5rem] w-[4.5rem] overflow-hidden rounded-full bg-night shadow-[0_10px_40px_rgba(8,15,32,0.45)] ring-2 ring-brand-blue transition-transform duration-300 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-blue tarjeta:h-[15.5rem] tarjeta:w-[8.75rem] tarjeta:rounded-2xl tarjeta:ring-1 tarjeta:ring-white/25"
+                        className={`group relative block overflow-hidden bg-night shadow-[0_10px_40px_rgba(8,15,32,0.45)] transition-[width,height,border-radius,transform] duration-300 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-blue ${
+                            tarjeta
+                                ? 'h-[15.5rem] w-[8.75rem] rounded-2xl ring-1 ring-white/25'
+                                : 'h-[4.5rem] w-[4.5rem] rounded-full ring-2 ring-brand-blue'
+                        }`}
                     >
                         <img
                             src={POSTER}
@@ -133,38 +153,53 @@ export default function VideoWidget({ abierto, onAbrir, onCerrar }: VideoWidgetP
                             width="540"
                             height="960"
                             loading="lazy"
-                            className="absolute inset-0 h-full w-full object-cover object-[50%_33%] tarjeta:object-center"
+                            className={`absolute inset-0 h-full w-full object-cover ${tarjeta ? 'object-center' : 'object-[50%_33%]'}`}
                         />
                         <video
                             ref={vistaPreviaRef}
-                            className="absolute inset-0 h-full w-full object-cover object-[50%_33%] tarjeta:object-center"
+                            className={`absolute inset-0 h-full w-full object-cover ${tarjeta ? 'object-center' : 'object-[50%_33%]'}`}
                             muted
                             loop
                             playsInline
                             preload="none"
                             aria-hidden="true"
                         />
-                        <span className="absolute inset-0 bg-gradient-to-t from-night via-night/10 to-transparent tarjeta:via-transparent" />
-                        <span className="absolute left-1/2 top-1/2 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-night shadow-lg transition-transform duration-300 group-hover:scale-110 tarjeta:h-11 tarjeta:w-11">
-                            <Play className="h-3.5 w-3.5 translate-x-px fill-current tarjeta:h-4 tarjeta:w-4" aria-hidden="true" />
+                        <span
+                            className={`absolute inset-0 bg-gradient-to-t from-night to-transparent ${
+                                tarjeta ? 'via-transparent' : 'via-night/10'
+                            }`}
+                        />
+                        <span
+                            className={`absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-night shadow-lg transition-transform duration-300 group-hover:scale-110 ${
+                                tarjeta ? 'h-11 w-11' : 'h-8 w-8'
+                            }`}
+                        >
+                            <Play
+                                className={`translate-x-px fill-current ${tarjeta ? 'h-4 w-4' : 'h-3.5 w-3.5'}`}
+                                aria-hidden="true"
+                            />
                         </span>
-                        <span className="absolute inset-x-0 bottom-0 hidden px-3 pb-3 text-left tarjeta:block">
-                            <span className="block text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-brand-blue-light">
-                                Video · 1 min
+                        {tarjeta && (
+                            <span className="absolute inset-x-0 bottom-0 px-3 pb-3 text-left">
+                                <span className="block text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-brand-blue-light">
+                                    Video · 1 min
+                                </span>
+                                <span className="mt-0.5 block font-display text-sm font-semibold leading-tight text-white">
+                                    Neura te lo cuenta
+                                </span>
                             </span>
-                            <span className="mt-0.5 block font-display text-sm font-semibold leading-tight text-white">
-                                Neura te lo cuenta
-                            </span>
-                        </span>
+                        )}
                     </button>
-                    <button
-                        type="button"
-                        onClick={() => setOculto(true)}
-                        aria-label="Ocultar el video"
-                        className="absolute -right-2 -top-2 hidden h-7 w-7 items-center justify-center rounded-full border border-white/20 bg-night text-white/80 shadow-md transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue tarjeta:flex"
-                    >
-                        <X className="h-3.5 w-3.5" aria-hidden="true" />
-                    </button>
+                    {tarjeta && (
+                        <button
+                            type="button"
+                            onClick={() => setOculto(true)}
+                            aria-label="Ocultar el video"
+                            className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full border border-white/20 bg-night text-white/80 shadow-md transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+                        >
+                            <X className="h-3.5 w-3.5" aria-hidden="true" />
+                        </button>
+                    )}
                 </div>
             )}
             {abierto && <Reproductor onCerrar={onCerrar} />}

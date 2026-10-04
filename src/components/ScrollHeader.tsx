@@ -2,19 +2,16 @@ import { useEffect, useState } from 'react';
 import { Menu, MessageCircle, X } from 'lucide-react';
 import logo from '../assets/logo-header.png';
 import { URL_INGRESAR, WHATSAPP_REUNION } from './contacto';
+import { irA } from './navegacion';
 
 const navLinks = [
-    { label: '¿Qué es Neura Orkesta?', href: '#vision' },
-    { label: 'El Problema', href: '#problema' },
-    { label: 'Trilogía', href: '#productos' },
-    { label: 'Características', href: '#solucion' },
-    { label: 'Abordaje', href: '#fichas' },
+    { label: 'Qué es', href: '#vision' },
+    { label: 'El problema', href: '#problema' },
+    { label: 'Tres piezas', href: '#solucion' },
+    { label: 'Clientes', href: '#clientes' },
+    { label: 'Implementación', href: '#implementacion' },
+    { label: 'Neuralite', href: '#neuralite' },
 ];
-
-function scrollTo(id: string) {
-    const el = document.querySelector(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
 
 export default function ScrollHeader() {
     const [sobreHero, setSobreHero] = useState(true);
@@ -38,7 +35,7 @@ export default function ScrollHeader() {
             <div className="mx-auto max-w-7xl px-6 py-4 md:px-12">
                 <div className="flex items-center justify-between gap-4">
                     <button
-                        onClick={() => scrollTo('#inicio')}
+                        onClick={() => irA('#inicio')}
                         className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
                     >
                         <img src={logo} alt="" width="36" height="36" className="h-9 w-auto" />
@@ -51,7 +48,7 @@ export default function ScrollHeader() {
                         {navLinks.map((link) => (
                             <button
                                 key={link.href}
-                                onClick={() => scrollTo(link.href)}
+                                onClick={() => irA(link.href)}
                                 className="rounded-lg px-3.5 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-brand-blue/5 hover:text-brand-blue-dark"
                             >
                                 {link.label}
@@ -92,7 +89,7 @@ export default function ScrollHeader() {
                         {navLinks.map((link) => (
                             <button
                                 key={link.href}
-                                onClick={() => { scrollTo(link.href); setMobileOpen(false); }}
+                                onClick={() => { irA(link.href); setMobileOpen(false); }}
                                 className="rounded-lg px-4 py-2.5 text-left text-sm font-medium text-text-secondary transition-colors hover:bg-brand-blue/5 hover:text-brand-blue-dark"
                             >
                                 {link.label}

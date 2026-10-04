@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { MessageCircle, Play } from 'lucide-react';
 import { WHATSAPP_REUNION } from './contacto';
+import { irA } from './navegacion';
 
 interface HeroProps {
     onVerVideo: () => void;
@@ -112,7 +113,8 @@ export default function Hero({ onVerVideo }: HeroProps) {
                         {piezas.map((pieza) => (
                             <li key={pieza.nombre}>
                                 <a
-                                    href="#productos"
+                                    href="#solucion"
+                                    onClick={(e) => { e.preventDefault(); irA('#solucion'); }}
                                     className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-2.5 py-1.5 text-[0.8rem] font-medium text-text-secondary transition-colors duration-200 hover:border-brand-blue/50 hover:text-text-primary sm:px-4 sm:text-sm"
                                 >
                                     <span className={`h-1.5 w-1.5 rounded-full ${pieza.punto}`} aria-hidden="true" />
