@@ -21,6 +21,7 @@ export interface RotuloMaqueta {
     texto: string;
     x: number;
     y: number;
+    soloCelular?: boolean;
 }
 
 export interface ContenidoPieza {
@@ -60,7 +61,7 @@ export const PIEZAS_CONTENIDO: readonly ContenidoPieza[] = [
         pantalla: {
             src: '/pantallas/comprobantes.webp',
             ancho: 1800,
-            alto: 1025,
+            alto: 1003,
             alt: 'Pantalla de Neura: la bandeja de comprobantes, con fecha, proveedor, monto y estado de cada uno.',
         },
     },
@@ -95,14 +96,15 @@ export const PIEZAS_CONTENIDO: readonly ContenidoPieza[] = [
         rotulos: [
             { texto: 'El depósito', x: 660, y: 520 },
             { texto: 'La obra', x: 1575, y: 450 },
-            { texto: 'El viaje', x: 520, y: 1160 },
-            { texto: 'La oficina', x: 1150, y: 880 },
+            { texto: 'El viaje', x: 600, y: 1160 },
+            // En pantalla grande cae justo debajo de la pantalla real: ahí no se muestra.
+            { texto: 'La oficina', x: 1150, y: 880, soloCelular: true },
             { texto: 'El local', x: 1900, y: 760 },
         ],
         pantalla: {
             src: '/pantallas/obras.webp',
             ancho: 1800,
-            alto: 1028,
+            alto: 1021,
             alt: 'Pantalla de Neura: las obras de la empresa, con la caja de cada una.',
         },
     },

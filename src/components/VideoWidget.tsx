@@ -42,6 +42,7 @@ function Reproductor({ onCerrar }: { onCerrar: () => void }) {
             ref={dialogoRef}
             aria-label="Video: Neura Orkesta en un minuto"
             onCancel={(e) => { e.preventDefault(); onCerrar(); }}
+            onClick={(e) => { if (e.target === e.currentTarget) onCerrar(); }}
             className="m-0 h-dvh max-h-none w-screen max-w-none bg-transparent p-4 backdrop:bg-night/90 backdrop:backdrop-blur-md"
         >
             <div

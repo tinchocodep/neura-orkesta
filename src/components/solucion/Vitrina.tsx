@@ -45,7 +45,7 @@ export default function Vitrina({ pieza, onAmpliar, className = '', style }: Vit
                         <span
                             key={rotulo.texto}
                             aria-hidden="true"
-                            className="sol-rotulo flex items-center gap-1.5 whitespace-nowrap rounded-full border border-line bg-white/95 px-2 py-1 text-[0.6875rem] font-medium leading-none text-ink shadow-[0_2px_6px_rgba(8,15,32,0.08)]"
+                            className={`sol-rotulo flex items-center gap-1.5 whitespace-nowrap rounded-full border border-line bg-white/95 px-2 py-1 text-[0.6875rem] font-medium leading-none text-ink shadow-[0_2px_6px_rgba(8,15,32,0.08)] ${rotulo.soloCelular ? 'lg:hidden' : ''}`}
                             style={{
                                 left: `${(rotulo.x / ANCHO_MAQUETA) * 100}%`,
                                 top: `${(rotulo.y / ALTO_MAQUETA) * 100}%`,

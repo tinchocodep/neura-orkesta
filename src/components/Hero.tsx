@@ -61,7 +61,9 @@ export default function Hero({ onVerVideo }: HeroProps) {
         <section className="hero-alto relative isolate flex flex-col overflow-hidden bg-white text-ink lg:flex-row lg:items-center">
             <LogoAnimado />
 
-            <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-14 pt-2 md:px-12 lg:pb-16 lg:pt-24">
+            {/* El relleno va afuera del tope de ancho, igual que en las secciones: si no, el hero arranca 48 px más adentro. */}
+            <div className="relative z-10 w-full px-6 pb-14 pt-2 md:px-12 lg:pb-16 lg:pt-24">
+                <div className="mx-auto max-w-7xl">
                 <div className="max-w-[38rem]">
                     <p className="hero-entra mb-5 text-[0.7rem] font-semibold uppercase tracking-[0.34em] text-brand-blue-dark sm:text-xs">
                         Conectá. Automatizá. Decidí.
@@ -115,7 +117,7 @@ export default function Hero({ onVerVideo }: HeroProps) {
                                 <a
                                     href="#solucion"
                                     onClick={(e) => { e.preventDefault(); irA('#solucion'); }}
-                                    className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-2.5 py-1.5 text-[0.8rem] font-medium text-text-secondary transition-colors duration-200 hover:border-brand-blue/50 hover:text-text-primary sm:px-4 sm:text-sm"
+                                    className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-2 py-1.5 text-[0.8rem] sm:gap-2 font-medium text-text-secondary transition-colors duration-200 hover:border-brand-blue/50 hover:text-text-primary sm:px-4 sm:text-sm"
                                 >
                                     <span className={`h-1.5 w-1.5 rounded-full ${pieza.punto}`} aria-hidden="true" />
                                     {pieza.nombre}
@@ -125,12 +127,13 @@ export default function Hero({ onVerVideo }: HeroProps) {
                     </ul>
 
                     <p
-                        className="hero-entra mt-6 hidden text-base text-ink-soft sm:block"
+                        className="hero-entra mt-6 hidden text-base text-ink-soft sm:block [@media(max-height:720px)]:!hidden"
                         style={{ animationDelay: '320ms' }}
                     >
                         Entendé lo que pasa.{' '}
                         <strong className="font-semibold text-ink">Mirá para adelante.</strong>
                     </p>
+                </div>
                 </div>
             </div>
         </section>

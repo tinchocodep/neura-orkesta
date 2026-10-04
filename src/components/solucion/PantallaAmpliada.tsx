@@ -36,10 +36,13 @@ export default function PantallaAmpliada({ pantalla, onCerrar }: PantallaAmpliad
             ref={dialogoRef}
             aria-label="Pantalla real · empresa de demostración"
             onCancel={(e) => { e.preventDefault(); onCerrar(); }}
-            className="m-0 h-dvh max-h-none w-screen max-w-none bg-transparent p-4 backdrop:bg-night/90 backdrop:backdrop-blur-md md:p-10"
+            // Tocar el margen oscuro cierra: el margen es del <dialog>, no del contenedor de adentro.
+            onClick={(e) => { if (e.target === e.currentTarget) onCerrar(); }}
+            className="m-0 h-dvh max-h-none w-screen max-w-none bg-transparent p-4 backdrop:bg-night/90 backdrop:backdrop-blur-md md:p-14"
         >
             <div
-                className="flex h-full items-center justify-start overflow-auto md:justify-center"
+                // En el celular el carril llega hasta los bordes del teléfono: así se nota que la pantalla sigue de costado.
+                className="-mx-4 flex h-full items-center justify-start overflow-auto px-4 md:mx-0 md:justify-center md:px-0"
                 onClick={(e) => { if (e.target === e.currentTarget) onCerrar(); }}
             >
                 <img
@@ -50,15 +53,19 @@ export default function PantallaAmpliada({ pantalla, onCerrar }: PantallaAmpliad
                     // En el celular la pantalla no se achica al ancho del teléfono: queda legible y se recorre de costado.
                     className="h-auto max-h-none w-[900px] max-w-none shrink-0 rounded-[14px] md:max-h-full md:w-auto md:max-w-full md:shrink bg-white shadow-[0_30px_120px_rgba(59,123,255,0.25)] ring-1 ring-white/15"
                 />
-                <button
-                    type="button"
-                    onClick={onCerrar}
-                    aria-label="Cerrar la pantalla"
-                    className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition-colors hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue-light md:right-8 md:top-8"
-                >
-                    <X className="h-5 w-5" aria-hidden="true" />
-                </button>
             </div>
+            <p className="pointer-events-none absolute inset-x-0 bottom-5 text-center text-sm text-white/75 md:hidden" aria-hidden="true">
+                Deslizá hacia los costados para verla entera
+            </p>
+            {/* Fondo oscuro propio y fuera del área de la imagen: la pantalla es casi blanca y una X translúcida no se veía. */}
+            <button
+                type="button"
+                onClick={onCerrar}
+                aria-label="Cerrar la pantalla"
+                className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-night/85 text-white transition-colors hover:bg-night focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue-light md:right-1.5 md:top-1.5"
+            >
+                <X className="h-5 w-5" aria-hidden="true" />
+            </button>
         </dialog>
     );
 }

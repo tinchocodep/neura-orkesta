@@ -143,7 +143,8 @@ export type IdBloque = 'intro' | 'rotulos' | 'sync' | 'core' | 'insight' | 'rema
 
 /** Cada bloque de texto: [entra desde, entra hasta, sale desde, sale hasta]. −1 = ya está; 2 = no sale. */
 export const BLOQUES: Record<IdBloque, readonly [number, number, number, number]> = {
-    intro: [-1, -1, 0.09, 0.14],
+    // El título se va antes de que la cabeza suba: en ventanas bajas (650 de alto) lo alcanza en 0.06.
+    intro: [-1, -1, 0.02, 0.06],
     rotulos: [0.17, 0.21, 0.25, 0.285],
     sync: [0.3, 0.35, 0.41, 0.45],
     core: [0.5, 0.55, 0.61, 0.65],

@@ -59,6 +59,7 @@ const ESTILOS = `
   --zz:calc(var(--z0)*(1 + 0.08*var(--e,0.5)));
   transform:translate(calc((var(--ax) - var(--cx)*var(--zz))*100%),calc((var(--ay) - var(--cy)*var(--zz))*100%)) scale(var(--zz))}
 .sol-rotulo{position:absolute;transform:translate(-50%,-50%) scale(calc(1/var(--zz)))}
+@media (max-width:1023px){[data-bloque="insight"] .sol-capa{--ax:.5}}
 `;
 
 interface PiezasSvgProps {
@@ -89,9 +90,10 @@ interface BloqueProps {
 }
 
 function Bloque({ pieza, escena, onAmpliar }: BloqueProps) {
-    // En la escena el texto de la derecha deja libre la franja de la tarjeta del video (140 px + márgenes).
+    // En la escena el texto de la derecha deja libre la franja de la burbuja del video (72 px + márgenes).
+    // Más que eso arrima el bloque a la pieza 3D en ventanas de 1024 de ancho.
     const lugar: CSSProperties = pieza.lado === 'der'
-        ? { right: 'max(196px, calc((100vw - 1280px) / 2))' }
+        ? { right: 'max(120px, calc((100vw - 1280px) / 2))' }
         : { left: 'max(6vw, calc((100vw - 1280px) / 2))' };
 
     return (
@@ -118,7 +120,7 @@ function Bloque({ pieza, escena, onAmpliar }: BloqueProps) {
                     {pieza.titulo}
                 </h3>
                 <p
-                    className="mt-4 max-w-[32em] text-lg leading-normal text-ink-soft sm:text-xl sm:leading-normal"
+                    className="mt-4 max-w-[32em] text-balance text-lg leading-normal text-ink-soft sm:text-xl sm:leading-normal"
                     style={escena ? { fontSize: 'clamp(1.0625rem, 1.35vw, 1.25rem)' } : undefined}
                 >
                     {pieza.texto}
@@ -129,7 +131,7 @@ function Bloque({ pieza, escena, onAmpliar }: BloqueProps) {
                 onAmpliar={onAmpliar}
                 className={escena ? 'mt-5' : ''}
                 // El tercer tope ata el ancho al alto que queda en ventanas bajas (notebooks de 768).
-                style={escena ? { width: 'min(100%, 68vh, calc((100vh - 390px) * 1.6))' } : undefined}
+                style={escena ? { width: 'min(100%, 68vh, calc((100vh - 420px) * 1.6))' } : undefined}
             />
         </article>
     );
@@ -360,7 +362,7 @@ export default function Solucion() {
             aria-labelledby="solucion-titulo"
             className={
                 escena
-                    ? `relative bg-white text-ink [scroll-margin-top:0px] ${P_FORZADO !== null ? 'sol-pista-forzada' : 'sol-pista'}`
+                    ? `relative bg-white text-ink ![scroll-margin-top:0px] ${P_FORZADO !== null ? 'sol-pista-forzada' : 'sol-pista'}`
                     : 'seccion seccion-blanca overflow-hidden'
             }
         >

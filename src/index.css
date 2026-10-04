@@ -14,9 +14,16 @@
   box-sizing: border-box;
 }
 
-/* El header fijo mide 73 px: sin este margen tapa el comienzo de la sección a la que se salta. */
+/* El header fijo mide 69 px en el celular y 73 desde sm: sin este margen tapa el comienzo de la
+   sección a la que se salta, y con uno de más asoma una raya de la sección anterior. */
 section[id] {
-  scroll-margin-top: 72px;
+  scroll-margin-top: 68px;
+}
+
+@media (min-width: 640px) {
+  section[id] {
+    scroll-margin-top: 72px;
+  }
 }
 
 html {

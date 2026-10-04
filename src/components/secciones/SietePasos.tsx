@@ -160,7 +160,7 @@ export default function SietePasos() {
                         <br />
                         los 7 procesos en conjunto.
                     </p>
-                    <p className="mt-6 text-lg leading-snug text-ink-soft lg:mt-0 lg:text-right lg:text-xl lg:leading-snug">
+                    <p className="mt-6 text-lg leading-snug text-ink-soft lg:mt-0 lg:pr-20 lg:text-right lg:text-xl lg:leading-snug">
                         No queda solo ejecutado.{' '}
                         <strong className="block font-semibold text-ink">Queda cerrado.</strong>
                     </p>

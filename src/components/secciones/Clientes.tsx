@@ -96,7 +96,7 @@ export default function Clientes() {
                     height="752"
                     loading="lazy"
                     decoding="async"
-                    className="pointer-events-none absolute -right-44 -top-36 -z-10 w-[30rem] max-w-none select-none opacity-40 mix-blend-lighten lg:-right-[2vw] lg:-top-10 lg:w-[min(62vw,56rem)] lg:opacity-50"
+                    className="pointer-events-none absolute -right-44 -top-36 -z-10 w-[30rem] max-w-none select-none opacity-40 mix-blend-lighten lg:-right-[2vw] lg:-top-20 lg:w-[min(62vw,56rem)] lg:opacity-50"
                     style={{ maskImage: MASCARA_ANILLOS, WebkitMaskImage: MASCARA_ANILLOS }}
                 />
 

@@ -154,7 +154,14 @@ export default function Neuralite() {
         const encontrados = validar(limpios);
         setErrores(encontrados);
         if (encontrados.nombre || encontrados.mail) {
-            (encontrados.nombre ? nombreRef : mailRef).current?.focus();
+            // focus() a secas deja el campo debajo de la barra fija: se ve el aviso y no dónde escribir.
+            // Sólo se mueve la página si el campo, su etiqueta o su aviso no se ven.
+            const campo = (encontrados.nombre ? nombreRef : mailRef).current;
+            if (campo) {
+                campo.focus({ preventScroll: true });
+                const caja = campo.getBoundingClientRect();
+                if (caja.top < FRANJA_DE_LA_BARRA + 32 || caja.bottom + 32 > window.innerHeight) campo.scrollIntoView({ block: 'center' });
+            }
             return;
         }
 
@@ -197,7 +204,7 @@ export default function Neuralite() {
 
     return (
         <section id="neuralite" aria-labelledby="neuralite-titulo" className="seccion seccion-clara">
-            <div className="contenedor grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:gap-16">
+            <div className="contenedor grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-start lg:gap-12 xl:gap-16">
                 <Aparece>
                     <p className="sobretitulo">Neuralite</p>
                     {/* En dos columnas el cuerpo acompaña al ancho para que cada renglón entre entero en la suya. */}

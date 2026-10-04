@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Menu, MessageCircle, X } from 'lucide-react';
 import logo from '../assets/logo-header.png';
 import { URL_INGRESAR, WHATSAPP_REUNION } from './contacto';
@@ -16,9 +16,14 @@ const navLinks = [
 export default function ScrollHeader() {
     const [sobreHero, setSobreHero] = useState(true);
     const [mobileOpen, setMobileOpen] = useState(false);
+    const abiertoEn = useRef(0);
 
     useEffect(() => {
-        const medir = () => setSobreHero(window.scrollY < 24);
+        const medir = () => {
+            setSobreHero(window.scrollY < 24);
+            // Si con el menú abierto se sigue bajando, se cierra solo: quedaba tapando media pantalla.
+            if (Math.abs(window.scrollY - abiertoEn.current) > 48) setMobileOpen(false);
+        };
         medir();
         window.addEventListener('scroll', medir, { passive: true });
         return () => window.removeEventListener('scroll', medir);
@@ -28,11 +33,11 @@ export default function ScrollHeader() {
 
     return (
         <nav
-            className={`fixed inset-x-0 top-0 z-50 border-b text-ink transition-colors duration-300 ${
+            className={`fixed inset-x-0 top-0 z-50 border-b px-6 text-ink transition-colors duration-300 md:px-12 ${
                 solido ? 'border-gray-100 bg-white/95 shadow-sm backdrop-blur-md' : 'border-transparent'
             }`}
         >
-            <div className="mx-auto max-w-7xl px-6 py-4 md:px-12">
+            <div className="mx-auto max-w-7xl py-4">
                 <div className="flex items-center justify-between gap-4">
                     <button
                         onClick={() => irA('#inicio')}
@@ -75,7 +80,7 @@ export default function ScrollHeader() {
                         </a>
                         <button
                             className="rounded-lg p-2 transition-colors hover:bg-gray-100 xl:hidden"
-                            onClick={() => setMobileOpen(!mobileOpen)}
+                            onClick={() => { abiertoEn.current = window.scrollY; setMobileOpen(!mobileOpen); }}
                             aria-label={mobileOpen ? 'Cerrar el menú' : 'Abrir el menú'}
                             aria-expanded={mobileOpen}
                         >
