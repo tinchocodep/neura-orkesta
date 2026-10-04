@@ -31,7 +31,7 @@ export default function ScrollHeader() {
 
     return (
         <nav
-            className={`fixed inset-x-0 top-0 z-50 border-b text-text-primary transition-colors duration-300 ${
+            className={`fixed inset-x-0 top-0 z-50 border-b text-ink transition-colors duration-300 ${
                 solido ? 'border-gray-100 bg-white/95 shadow-sm backdrop-blur-md' : 'border-transparent'
             }`}
         >

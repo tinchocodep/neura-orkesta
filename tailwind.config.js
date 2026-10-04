@@ -6,6 +6,11 @@ export default {
     ],
     theme: {
         extend: {
+            screens: {
+                // La tarjeta grande del video pide ancho Y alto: un celular acostado es ancho
+                // pero no tiene alto para ella.
+                'tarjeta': { raw: '(min-width: 768px) and (min-height: 600px)' },
+            },
             colors: {
                 // Paleta del deck comercial (sept. 2026). El azul del deck (#3B7BFF) está pensado
                 // para fondo oscuro: con texto blanco encima no llega al contraste AA, así que
@@ -16,11 +21,18 @@ export default {
                 'brand-blue-dark': '#2457C9',
                 'night': '#080F20',
                 'night-soft': '#142238',
+                'night-line': '#26334B',
                 'on-night': '#F4F7FF',
                 'on-night-soft': '#B1BED2',
                 'mist': '#F1F4F8',
+                'ink': '#112039',
+                'ink-soft': '#566880',
+                'line': '#D6E2F3',
                 'sync': '#ED9A70',
+                'sync-dark': '#B7663D',
                 'insight': '#F0B34D',
+                'insight-dark': '#A87817',
+                'ok': '#61DFB1',
                 // Light theme colors
                 'light-bg': '#FFFFFF',
                 'light-secondary': '#F8F9FA',

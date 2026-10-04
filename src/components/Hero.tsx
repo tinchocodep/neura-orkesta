@@ -32,7 +32,7 @@ function LogoAnimado() {
 
     return (
         <div
-            className="pointer-events-none relative mx-auto mt-16 aspect-square h-[38svh] shrink-0 lg:absolute lg:right-[5vw] lg:top-1/2 lg:mt-0 lg:h-[74svh] lg:-translate-y-1/2"
+            className="hero-logo pointer-events-none relative mx-auto mt-14 aspect-square shrink-0 lg:absolute lg:right-[5vw] lg:top-1/2 lg:mt-0 lg:-translate-y-1/2"
             aria-hidden="true"
             // El video trae un fondo casi blanco con ruido de compresión: el contraste lo lleva a
             // blanco puro y la máscara le borra el borde, así no se nota el recuadro sobre la página.
@@ -57,7 +57,7 @@ function LogoAnimado() {
 
 export default function Hero({ onVerVideo }: HeroProps) {
     return (
-        <section className="relative isolate flex min-h-svh flex-col overflow-hidden bg-white text-text-primary lg:flex-row lg:items-center">
+        <section className="hero-alto relative isolate flex flex-col overflow-hidden bg-white text-ink lg:flex-row lg:items-center">
             <LogoAnimado />
 
             <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-14 pt-2 md:px-12 lg:pb-16 lg:pt-24">
@@ -75,7 +75,7 @@ export default function Hero({ onVerVideo }: HeroProps) {
                     </h1>
 
                     <p
-                        className="hero-entra mt-6 max-w-md text-lg leading-relaxed text-text-secondary sm:text-xl"
+                        className="hero-entra mt-6 max-w-md text-lg leading-relaxed text-ink-soft sm:text-xl"
                         style={{ animationDelay: '90ms' }}
                     >
                         Unificá sistemas, automatizá procesos y convertí datos en mejores decisiones.
@@ -97,7 +97,7 @@ export default function Hero({ onVerVideo }: HeroProps) {
                         <button
                             type="button"
                             onClick={onVerVideo}
-                            className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-300 px-6 py-3.5 font-semibold text-text-primary transition-colors duration-200 hover:border-brand-blue hover:text-brand-blue-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+                            className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-300 px-6 py-3.5 font-semibold text-ink transition-colors duration-200 hover:border-brand-blue hover:text-brand-blue-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
                         >
                             <Play className="h-4 w-4 fill-current" aria-hidden="true" />
                             Ver el video · 1 min
@@ -123,11 +123,11 @@ export default function Hero({ onVerVideo }: HeroProps) {
                     </ul>
 
                     <p
-                        className="hero-entra mt-6 hidden text-base text-text-secondary sm:block"
+                        className="hero-entra mt-6 hidden text-base text-ink-soft sm:block"
                         style={{ animationDelay: '320ms' }}
                     >
                         Entendé lo que pasa.{' '}
-                        <strong className="font-semibold text-text-primary">Mirá para adelante.</strong>
+                        <strong className="font-semibold text-ink">Mirá para adelante.</strong>
                     </p>
                 </div>
             </div>

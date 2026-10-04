@@ -109,6 +109,92 @@ body {
   }
 }
 
+/* ── Secciones nuevas (deck sept. 2026) ──────────────────
+   Todas las secciones se arman con estas piezas para que la página se lea como una sola:
+   <section class="seccion seccion-oscura"><div class="contenedor">…</div></section>      */
+@layer components {
+  .seccion {
+    @apply relative px-6 py-20 md:px-12 md:py-28;
+  }
+
+  .seccion-blanca {
+    @apply bg-white text-ink;
+  }
+
+  .seccion-clara {
+    @apply bg-mist text-ink;
+  }
+
+  .seccion-oscura {
+    @apply bg-night text-on-night;
+  }
+
+  .contenedor {
+    @apply mx-auto w-full max-w-7xl;
+  }
+
+  .sobretitulo {
+    @apply mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-brand-blue-dark;
+  }
+
+  .seccion-oscura .sobretitulo {
+    @apply text-brand-blue-light;
+  }
+
+  .titulo-seccion {
+    @apply font-display text-4xl font-semibold leading-[1.03] tracking-[-0.035em] sm:text-5xl lg:text-[3.75rem];
+  }
+
+  .bajada {
+    @apply mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft sm:text-xl;
+  }
+
+  .seccion-oscura .bajada {
+    @apply text-on-night-soft;
+  }
+
+  .tarjeta {
+    @apply rounded-2xl border border-line bg-white p-6;
+  }
+
+  .seccion-oscura .tarjeta {
+    @apply border-night-line bg-night-soft;
+  }
+
+  .boton-primario {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-brand-blue px-6 py-3.5 font-semibold text-white transition-colors duration-200 hover:bg-brand-blue-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue;
+  }
+
+  .boton-secundario {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-gray-300 px-6 py-3.5 font-semibold text-ink transition-colors duration-200 hover:border-brand-blue hover:text-brand-blue-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue;
+  }
+
+  .seccion-oscura .boton-secundario {
+    @apply border-white/25 text-on-night hover:border-white/60 hover:bg-white/5 hover:text-on-night focus-visible:outline-brand-blue-light;
+  }
+}
+
+/* Aparición al entrar en pantalla (componente <Aparece>). Sin JavaScript o con
+   «reducir movimiento» el contenido queda visible y quieto. */
+.aparece {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aparece.visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aparece {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* ── Marquee Animations ──────────────────────────────── */
 @keyframes marquee-left {
   0% { transform: translateX(0); }
@@ -128,6 +214,27 @@ body {
   animation: marquee-right linear infinite;
 }
 /* ── Hero ────────────────────────────────────────────── */
+/* Altos con respaldo en vh: los navegadores de antes de 2022 no entienden svh y, sin
+   respaldo, el logo tomaba el tamaño propio de la imagen y se metía debajo del texto. */
+.hero-alto {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.hero-logo {
+  height: 30vh;
+  height: 30svh;
+}
+
+@media (min-width: 1024px) {
+  /* El tope por ancho evita que en una pantalla alta y angosta (tablet vertical)
+     la cabeza crezca hasta pisar el título. */
+  .hero-logo {
+    height: min(74vh, 54vw);
+    height: min(74svh, 54vw);
+  }
+}
+
 @keyframes hero-entra {
   from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: none; }
@@ -143,7 +250,7 @@ body {
 }
 
 /* Sólo en pantallas grandes: en el celular la burbuja aparece al bajar (ver VideoWidget). */
-@media (min-width: 768px) {
+@media (min-width: 768px) and (min-height: 600px) {
   .video-widget-entra {
     animation: video-widget-entra 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
   }

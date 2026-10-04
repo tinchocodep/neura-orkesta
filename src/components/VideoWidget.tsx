@@ -19,6 +19,12 @@ function Reproductor({ onCerrar }: { onCerrar: () => void }) {
         const dialogo = dialogoRef.current;
         if (!dialogo) return;
         // El scroll de la página vive en <html> (index.css le pone overflow-x), no en <body>.
+        if (typeof dialogo.showModal !== 'function') {
+            // Navegadores sin <dialog> (Safari anterior a 15.4): el video se abre aparte.
+            window.open('/videos/reel-neura.mp4', '_blank');
+            onCerrar();
+            return;
+        }
         const raiz = document.documentElement;
         const overflowPrevio = raiz.style.overflow;
         raiz.style.overflow = 'hidden';
@@ -27,7 +33,7 @@ function Reproductor({ onCerrar }: { onCerrar: () => void }) {
             raiz.style.overflow = overflowPrevio;
             dialogo.close();
         };
-    }, []);
+    }, [onCerrar]);
 
     return (
         <dialog
@@ -47,7 +53,7 @@ function Reproductor({ onCerrar }: { onCerrar: () => void }) {
                     autoPlay
                     playsInline
                     tabIndex={0}
-                    className="aspect-[9/16] w-[min(92vw,calc(86svh*9/16))] rounded-2xl bg-night shadow-[0_30px_120px_rgba(59,123,255,0.35)] ring-1 ring-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-blue-light"
+                    className="aspect-[9/16] w-[min(92vw,calc(78svh*9/16))] rounded-2xl sm:w-[min(92vw,calc(86svh*9/16))] bg-night shadow-[0_30px_120px_rgba(59,123,255,0.35)] ring-1 ring-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-blue-light"
                 />
                 <button
                     type="button"
@@ -70,7 +76,10 @@ export default function VideoWidget({ abierto, onAbrir, onCerrar }: VideoWidgetP
     // En el celular el hero ya trae su botón «Ver el video»: la burbuja aparece al bajar,
     // así no le queda encima. En pantallas grandes la tarjeta está siempre.
     useEffect(() => {
-        const medir = () => setVisible(window.innerWidth >= 768 || window.scrollY > window.innerHeight * 0.45);
+        const medir = () => {
+            const grande = window.innerWidth >= 768 && window.innerHeight >= 600;
+            setVisible(grande || window.scrollY > window.innerHeight * 0.45);
+        };
         medir();
         window.addEventListener('scroll', medir, { passive: true });
         window.addEventListener('resize', medir);
@@ -108,7 +117,7 @@ export default function VideoWidget({ abierto, onAbrir, onCerrar }: VideoWidgetP
         <>
             {!oculto && (
                 <div
-                    className={`video-widget-entra fixed bottom-5 right-5 z-40 transition-[opacity,visibility] duration-300 md:bottom-6 md:right-6 ${
+                    className={`video-widget-entra fixed bottom-5 right-5 z-40 transition-[opacity,visibility] duration-300 tarjeta:bottom-6 tarjeta:right-6 ${
                         visible ? '' : 'invisible opacity-0'
                     }`}
                 >
@@ -116,7 +125,7 @@ export default function VideoWidget({ abierto, onAbrir, onCerrar }: VideoWidgetP
                         type="button"
                         onClick={onAbrir}
                         aria-label="Video · 1 min. Neura te lo cuenta"
-                        className="group relative block h-[4.5rem] w-[4.5rem] overflow-hidden rounded-full bg-night shadow-[0_10px_40px_rgba(8,15,32,0.45)] ring-2 ring-brand-blue transition-transform duration-300 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-blue md:h-[15.5rem] md:w-[8.75rem] md:rounded-2xl md:ring-1 md:ring-white/25"
+                        className="group relative block h-[4.5rem] w-[4.5rem] overflow-hidden rounded-full bg-night shadow-[0_10px_40px_rgba(8,15,32,0.45)] ring-2 ring-brand-blue transition-transform duration-300 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-blue tarjeta:h-[15.5rem] tarjeta:w-[8.75rem] tarjeta:rounded-2xl tarjeta:ring-1 tarjeta:ring-white/25"
                     >
                         <img
                             src={POSTER}
@@ -124,22 +133,22 @@ export default function VideoWidget({ abierto, onAbrir, onCerrar }: VideoWidgetP
                             width="540"
                             height="960"
                             loading="lazy"
-                            className="absolute inset-0 h-full w-full object-cover object-[50%_33%] md:object-center"
+                            className="absolute inset-0 h-full w-full object-cover object-[50%_33%] tarjeta:object-center"
                         />
                         <video
                             ref={vistaPreviaRef}
-                            className="absolute inset-0 h-full w-full object-cover object-[50%_33%] md:object-center"
+                            className="absolute inset-0 h-full w-full object-cover object-[50%_33%] tarjeta:object-center"
                             muted
                             loop
                             playsInline
                             preload="none"
                             aria-hidden="true"
                         />
-                        <span className="absolute inset-0 bg-gradient-to-t from-night via-night/10 to-transparent md:via-transparent" />
-                        <span className="absolute left-1/2 top-1/2 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-night shadow-lg transition-transform duration-300 group-hover:scale-110 md:h-11 md:w-11">
-                            <Play className="h-3.5 w-3.5 translate-x-px fill-current md:h-4 md:w-4" aria-hidden="true" />
+                        <span className="absolute inset-0 bg-gradient-to-t from-night via-night/10 to-transparent tarjeta:via-transparent" />
+                        <span className="absolute left-1/2 top-1/2 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-night shadow-lg transition-transform duration-300 group-hover:scale-110 tarjeta:h-11 tarjeta:w-11">
+                            <Play className="h-3.5 w-3.5 translate-x-px fill-current tarjeta:h-4 tarjeta:w-4" aria-hidden="true" />
                         </span>
-                        <span className="absolute inset-x-0 bottom-0 hidden px-3 pb-3 text-left md:block">
+                        <span className="absolute inset-x-0 bottom-0 hidden px-3 pb-3 text-left tarjeta:block">
                             <span className="block text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-brand-blue-light">
                                 Video · 1 min
                             </span>
@@ -152,7 +161,7 @@ export default function VideoWidget({ abierto, onAbrir, onCerrar }: VideoWidgetP
                         type="button"
                         onClick={() => setOculto(true)}
                         aria-label="Ocultar el video"
-                        className="absolute -right-2 -top-2 hidden h-7 w-7 items-center justify-center rounded-full border border-white/20 bg-night text-white/80 shadow-md transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue md:flex"
+                        className="absolute -right-2 -top-2 hidden h-7 w-7 items-center justify-center rounded-full border border-white/20 bg-night text-white/80 shadow-md transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue tarjeta:flex"
                     >
                         <X className="h-3.5 w-3.5" aria-hidden="true" />
                     </button>
