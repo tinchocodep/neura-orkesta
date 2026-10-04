@@ -1,7 +1,7 @@
-import { motion, useScroll } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import logo from '../assets/logo.png';
+import { useEffect, useState } from 'react';
+import { Menu, MessageCircle, X } from 'lucide-react';
+import logo from '../assets/logo-header.png';
+import { URL_INGRESAR, WHATSAPP_REUNION } from './contacto';
 
 const navLinks = [
     { label: '¿Qué es Neura Orkesta?', href: '#vision' },
@@ -17,87 +17,96 @@ function scrollTo(id: string) {
 }
 
 export default function ScrollHeader() {
-    const { scrollY } = useScroll();
-    const [isVisible, setIsVisible] = useState(false);
+    const [sobreHero, setSobreHero] = useState(true);
     const [mobileOpen, setMobileOpen] = useState(false);
 
     useEffect(() => {
-        const unsubscribe = scrollY.on('change', (latest) => {
-            setIsVisible(latest > window.innerHeight * 0.8);
-        });
-        return () => unsubscribe();
-    }, [scrollY]);
+        const medir = () => setSobreHero(window.scrollY < 24);
+        medir();
+        window.addEventListener('scroll', medir, { passive: true });
+        return () => window.removeEventListener('scroll', medir);
+    }, []);
+
+    const solido = !sobreHero || mobileOpen;
 
     return (
-        <motion.nav
-            initial={{ y: -100 }}
-            animate={{ y: isVisible ? 0 : -100 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm"
+        <nav
+            className={`fixed inset-x-0 top-0 z-50 border-b text-text-primary transition-colors duration-300 ${
+                solido ? 'border-gray-100 bg-white/95 shadow-sm backdrop-blur-md' : 'border-transparent'
+            }`}
         >
-            <div className="max-w-7xl mx-auto px-6 md:px-12 py-4">
-                <div className="flex items-center justify-between">
-                    {/* Logo */}
+            <div className="mx-auto max-w-7xl px-6 py-4 md:px-12">
+                <div className="flex items-center justify-between gap-4">
                     <button
                         onClick={() => scrollTo('#inicio')}
-                        className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+                        className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
                     >
-                        <img src={logo} alt="NeuraOrkesta" width="36" height="36" className="h-9 w-auto" />
-                        <div>
-                            <p className="font-display font-bold text-brand-blue text-base leading-none">NEURAORKESTA</p>
-                            <p className="text-xs text-text-muted leading-none">Tu empresa, en tiempo real</p>
-                        </div>
+                        <img src={logo} alt="" width="36" height="36" className="h-9 w-auto" />
+                        <span className="font-display text-xl font-semibold tracking-tight">
+                            Neura Or<span className="text-brand-blue">k</span>esta
+                        </span>
                     </button>
 
-                    {/* Desktop Nav */}
-                    <div className="hidden md:flex items-center gap-1">
+                    <div className="hidden items-center gap-1 xl:flex">
                         {navLinks.map((link) => (
                             <button
                                 key={link.href}
                                 onClick={() => scrollTo(link.href)}
-                                className="px-4 py-2 text-sm font-medium text-text-secondary hover:text-brand-blue hover:bg-brand-blue/5 rounded-lg transition-all"
+                                className="rounded-lg px-3.5 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-brand-blue/5 hover:text-brand-blue-dark"
                             >
                                 {link.label}
                             </button>
                         ))}
                     </div>
 
-                    {/* CTA + Mobile toggle */}
-                    <div className="flex items-center gap-3">
-                        <button
-                            onClick={() => scrollTo('#contacto')}
-                            className="px-5 py-2 bg-brand-blue text-white font-semibold rounded-lg hover:bg-brand-blue-dark transition-all shadow-sm text-sm"
+                    <div className="flex items-center gap-2">
+                        <a
+                            href={URL_INGRESAR}
+                            className="hidden rounded-lg px-3.5 py-2 text-sm font-semibold text-text-primary transition-colors hover:bg-gray-100 sm:inline-flex"
                         >
-                            Contacto
-                        </button>
+                            Ingresar
+                        </a>
+                        <a
+                            href={WHATSAPP_REUNION}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Coordinemos una reunión por WhatsApp"
+                            className="inline-flex items-center gap-2 whitespace-nowrap rounded-lg bg-brand-blue p-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-blue-dark sm:px-5 sm:py-2.5"
+                        >
+                            <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                            <span className="hidden sm:inline">Coordinemos una reunión</span>
+                        </a>
                         <button
-                            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                            className="rounded-lg p-2 transition-colors hover:bg-gray-100 xl:hidden"
                             onClick={() => setMobileOpen(!mobileOpen)}
+                            aria-label={mobileOpen ? 'Cerrar el menú' : 'Abrir el menú'}
+                            aria-expanded={mobileOpen}
                         >
-                            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
                         </button>
                     </div>
                 </div>
 
-                {/* Mobile Menu */}
                 {mobileOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="md:hidden pt-4 pb-2 border-t border-gray-100 mt-4 flex flex-col gap-1"
-                    >
+                    <div className="mt-4 flex flex-col gap-1 border-t border-gray-100 pb-2 pt-4 xl:hidden">
                         {navLinks.map((link) => (
                             <button
                                 key={link.href}
                                 onClick={() => { scrollTo(link.href); setMobileOpen(false); }}
-                                className="text-left px-4 py-2.5 text-sm font-medium text-text-secondary hover:text-brand-blue hover:bg-brand-blue/5 rounded-lg transition-all"
+                                className="rounded-lg px-4 py-2.5 text-left text-sm font-medium text-text-secondary transition-colors hover:bg-brand-blue/5 hover:text-brand-blue-dark"
                             >
                                 {link.label}
                             </button>
                         ))}
-                    </motion.div>
+                        <a
+                            href={URL_INGRESAR}
+                            className="rounded-lg px-4 py-2.5 text-sm font-semibold text-text-primary transition-colors hover:bg-gray-100 sm:hidden"
+                        >
+                            Ingresar
+                        </a>
+                    </div>
                 )}
             </div>
-        </motion.nav>
+        </nav>
     );
 }

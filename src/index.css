@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --brand-blue: #4169E1;
-  --brand-blue-light: #6B8FFF;
-  --brand-blue-dark: #2952CC;
+  --brand-blue: #2B68E6;
+  --brand-blue-light: #91B9FF;
+  --brand-blue-dark: #2457C9;
 }
 
 * {
@@ -17,10 +17,13 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  /* Reserva el lugar de la barra desde el primer pintado: sin esto el hero se corre
+     unos píxeles cuando llegan las secciones de abajo y aparece el scroll. */
+  scrollbar-gutter: stable;
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
   background-color: #FFFFFF;
   color: #1A1A1A;
   overflow-x: hidden;
@@ -69,12 +72,12 @@ body {
     @apply transition-all duration-300;
     @apply transform hover:scale-105;
     background-color: var(--brand-blue);
-    box-shadow: 0 4px 20px rgba(65, 105, 225, 0.15);
+    box-shadow: 0 4px 20px rgba(43, 104, 230, 0.15);
   }
 
   .btn-primary:hover {
     background-color: var(--brand-blue-dark);
-    box-shadow: 0 8px 30px rgba(65, 105, 225, 0.2);
+    box-shadow: 0 8px 30px rgba(43, 104, 230, 0.2);
   }
 
   /* Card Styles */
@@ -90,8 +93,8 @@ body {
   }
 
   .card-hover:hover {
-    box-shadow: 0 4px 20px rgba(65, 105, 225, 0.15);
-    border-color: rgba(65, 105, 225, 0.2);
+    box-shadow: 0 4px 20px rgba(43, 104, 230, 0.15);
+    border-color: rgba(43, 104, 230, 0.2);
   }
 
   /* Section Spacing */
@@ -123,4 +126,34 @@ body {
 
 .marquee-right {
   animation: marquee-right linear infinite;
+}
+/* ── Hero ────────────────────────────────────────────── */
+@keyframes hero-entra {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes video-widget-entra {
+  from { opacity: 0; transform: translateY(12px) scale(0.94); }
+  to { opacity: 1; transform: none; }
+}
+
+.hero-entra {
+  animation: hero-entra 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Sólo en pantallas grandes: en el celular la burbuja aparece al bajar (ver VideoWidget). */
+@media (min-width: 768px) {
+  .video-widget-entra {
+    animation: video-widget-entra 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .hero-entra,
+  .video-widget-entra {
+    animation: none;
+  }
 }

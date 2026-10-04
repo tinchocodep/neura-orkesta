@@ -7,10 +7,20 @@ export default {
     theme: {
         extend: {
             colors: {
-                // Primary brand color from logo
-                'brand-blue': '#4169E1',
-                'brand-blue-light': '#6B8FFF',
-                'brand-blue-dark': '#2952CC',
+                // Paleta del deck comercial (sept. 2026). El azul del deck (#3B7BFF) está pensado
+                // para fondo oscuro: con texto blanco encima no llega al contraste AA, así que
+                // sobre claro se usa uno apenas más profundo y el del deck queda como «bright».
+                'brand-blue': '#2B68E6',
+                'brand-blue-bright': '#3B7BFF',
+                'brand-blue-light': '#91B9FF',
+                'brand-blue-dark': '#2457C9',
+                'night': '#080F20',
+                'night-soft': '#142238',
+                'on-night': '#F4F7FF',
+                'on-night-soft': '#B1BED2',
+                'mist': '#F1F4F8',
+                'sync': '#ED9A70',
+                'insight': '#F0B34D',
                 // Light theme colors
                 'light-bg': '#FFFFFF',
                 'light-secondary': '#F8F9FA',
@@ -20,12 +30,12 @@ export default {
                 'text-muted': '#718096',
             },
             fontFamily: {
-                'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-                'display': ['Poppins', 'Inter', 'system-ui', 'sans-serif'],
+                'sans': ['"IBM Plex Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+                'display': ['Archivo', '"IBM Plex Sans"', 'system-ui', 'sans-serif'],
             },
             boxShadow: {
-                'brand': '0 4px 20px rgba(65, 105, 225, 0.15)',
-                'brand-lg': '0 8px 30px rgba(65, 105, 225, 0.2)',
+                'brand': '0 4px 20px rgba(43, 104, 230, 0.15)',
+                'brand-lg': '0 8px 30px rgba(43, 104, 230, 0.2)',
                 'soft': '0 2px 10px rgba(0, 0, 0, 0.05)',
             },
             animation: {
