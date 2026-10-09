@@ -26,7 +26,7 @@ export default function Vision() {
                     <Aparece retraso={80} className="lg:pr-12">
                         <p className="bajada mt-0 xl:text-[1.375rem] xl:leading-[1.55]">
                             <span className="font-medium text-ink">
-                                Una plataforma de gestión con IA para pymes argentinas:
+                                Una plataforma de gestión con IA para pequeñas y medianas empresas:
                             </span>{' '}
                             un solo core que conecta la operación de cada rubro, como la obra, el viaje, el contrato,
                             el pedido o el turno, con lo que es igual para todos: comprobantes, caja, banco, cobros y
