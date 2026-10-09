@@ -56,14 +56,11 @@ export default function Vision() {
 
                         <Aparece retraso={120} className="border-t border-line pt-10 md:border-t-0 md:pl-12 md:pt-12">
                             <h3 className="font-display text-2xl font-semibold tracking-[-0.02em] sm:text-[1.75rem]">
-                                Hacia dónde vamos
+                                A dónde lleva Neura
                             </h3>
                             <p className="mt-4 max-w-xl text-lg leading-relaxed text-ink-soft">
-                                Un solo core para muchas pymes y muchos rubros. Neura construye una vez y reutiliza
-                                muchas, y cada cliente siente una solución propia.{' '}
-                                <span className="mt-3 block font-medium text-ink [text-wrap:balance]">
-                                    La meta: que una pyme cuente lo que le pasa y reciba su Neura armado.
-                                </span>
+                                A un producto con el que{' '}
+                                <span className="font-medium text-ink">tu empresa se autogestiona.</span>
                             </p>
                         </Aparece>
                     </div>
