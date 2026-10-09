@@ -1,7 +1,7 @@
 import Aparece from '../ui/Aparece';
 import { useEnPantalla } from '../ui/useEnPantalla';
 
-const palabras = ['Pymes', 'Software que se adapta', 'IA'];
+const palabras = ['Pequeñas y medianas empresas', 'Software que se adapta', 'IA'];
 
 const trazo = 'transition-transform ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none';
 
