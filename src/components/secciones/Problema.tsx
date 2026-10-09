@@ -274,7 +274,12 @@ export default function Problema() {
                     ref={ref}
                     className="mt-10 flex flex-col gap-4 text-lg text-on-night-soft sm:mt-12 lg:flex-row lg:items-center lg:gap-7 lg:text-[1.375rem]"
                 >
-                    <span>Neura las</span>{' '}
+                    <span className="flex items-baseline gap-3 lg:gap-4">
+                        <span className="font-display text-5xl font-semibold leading-none tracking-[-0.035em] text-on-night sm:text-6xl">
+                            Neura
+                        </span>
+                        <span>las</span>
+                    </span>{' '}
                     <span className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-1.5 sm:flex sm:flex-wrap sm:gap-3 lg:gap-4">
                         {pasos.map((paso, i) => {
                             const Icono = paso.icono;

@@ -380,10 +380,17 @@ export default function Solucion() {
                         <h2
                             id="solucion-titulo"
                             className="titulo-seccion"
-                            style={escena ? { fontSize: 'clamp(2.25rem, min(4.6vw, 7.4vh), 4.25rem)' } : undefined}
+                            style={escena ? { fontSize: 'clamp(3rem, min(6.2vw, 10vh), 5.75rem)' } : undefined}
                         >
-                            <span className="block">Tres piezas.</span> <span className="block">Una gestión conectada.</span>
+                            NeuraOrkesta
                         </h2>
+                        {/* Título y bajada juntos no pasan de 15vh: debajo va la cabeza, que ocupa 48vh. */}
+                        <p
+                            className={`font-display font-medium tracking-[-0.02em] text-ink-soft ${escena ? 'mt-[0.6vh]' : 'mt-3 text-xl sm:text-2xl'}`}
+                            style={escena ? { fontSize: 'clamp(1.125rem, min(2vw, 3.2vh), 1.75rem)' } : undefined}
+                        >
+                            Tres piezas. Una gestión conectada.
+                        </p>
                         {/* Mientras el motor 3D carga (y en la versión quieta) la cabeza es este SVG. */}
                         {!(escena && motorListo) && (
                             <PiezasSvg
