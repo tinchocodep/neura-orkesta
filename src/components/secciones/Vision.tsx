@@ -43,12 +43,14 @@ export default function Vision() {
 
                         <Aparece className="py-10 md:pb-0 md:pr-12 md:pt-12">
                             <h3 className="font-display text-2xl font-semibold tracking-[-0.02em] sm:text-[1.75rem]">
-                                Por qué existimos
+                                Por qué Neura
                             </h3>
                             <p className="mt-4 max-w-xl text-lg leading-relaxed text-ink-soft">
-                                Las pymes todavía tienen procesos poco digitalizados. Existimos para automatizar lo
-                                ordinario, con software que se adapta a la empresa y con la IA como una nueva forma de
-                                construirlo e implementarlo.
+                                Las pequeñas y medianas empresas todavía tienen procesos poco digitalizados. Neura
+                                existe para{' '}
+                                <span className="font-medium text-ink">
+                                    digitalizarlos, conectarlos y automatizarlos.
+                                </span>
                             </p>
                         </Aparece>
 
