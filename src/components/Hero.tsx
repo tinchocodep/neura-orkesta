@@ -110,7 +110,7 @@ export default function Hero({ onVerVideo }: HeroProps) {
                     <ul
                         className="hero-entra mt-8 flex flex-wrap gap-1.5 sm:gap-2.5"
                         style={{ animationDelay: '250ms' }}
-                        aria-label="Las tres piezas de Neura Orkesta"
+                        aria-label="Los tres módulos de Neura Orkesta"
                     >
                         {piezas.map((pieza) => (
                             <li key={pieza.nombre}>

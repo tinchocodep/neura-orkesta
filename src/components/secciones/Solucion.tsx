@@ -389,7 +389,7 @@ export default function Solucion() {
                             className={`font-display font-medium tracking-[-0.02em] text-ink-soft ${escena ? 'mt-[0.6vh]' : 'mt-3 text-xl sm:text-2xl'}`}
                             style={escena ? { fontSize: 'clamp(1.125rem, min(2vw, 3.2vh), 1.75rem)' } : undefined}
                         >
-                            Tres piezas. Una gestión conectada.
+                            Tres módulos. Una gestión conectada.
                         </p>
                         {/* Mientras el motor 3D carga (y en la versión quieta) la cabeza es este SVG. */}
                         {!(escena && motorListo) && (
@@ -430,7 +430,7 @@ export default function Solucion() {
                             className="mx-auto max-w-[22em] font-display text-2xl font-semibold leading-[1.15] tracking-[-0.03em] sm:text-3xl"
                             style={escena ? { fontSize: 'clamp(1.375rem, min(2.4vw, 4.2vh), 2.125rem)' } : undefined}
                         >
-                            Las tres piezas rinden más juntas, pero podés arrancar por una.
+                            Los tres módulos rinden más juntos, pero podés arrancar por uno.
                         </p>
                         <a href={WHATSAPP_REUNION} target="_blank" rel="noopener noreferrer" className="boton-primario mt-6">
                             <MessageCircle className="h-5 w-5" aria-hidden="true" />
@@ -441,7 +441,7 @@ export default function Solucion() {
                     {escena && (
                         <nav
                             data-riel
-                            aria-label="Las tres piezas"
+                            aria-label="Los tres módulos"
                             className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-1.5 rounded-full border border-line bg-white/85 p-1.5 opacity-0 backdrop-blur transition-opacity duration-300"
                         >
                             {PIEZAS_CONTENIDO.map((pieza) => (

@@ -7,7 +7,7 @@ import { irA } from './navegacion';
 const navLinks = [
     { label: 'Qué es', href: '#vision' },
     { label: 'El problema', href: '#problema' },
-    { label: 'Tres piezas', href: '#solucion' },
+    { label: 'Tres módulos', href: '#solucion' },
     { label: 'Clientes', href: '#clientes' },
     { label: 'Implementación', href: '#implementacion' },
     { label: 'Neuralite', href: '#neuralite' },
