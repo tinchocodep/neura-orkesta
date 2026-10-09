@@ -427,10 +427,11 @@ export default function Solucion() {
                         className={escena ? 'absolute inset-x-0 bottom-[6vh] px-6 text-center opacity-0' : 'text-center'}
                     >
                         <p
-                            className="mx-auto max-w-[22em] font-display text-2xl font-semibold leading-[1.15] tracking-[-0.03em] sm:text-3xl"
-                            style={escena ? { fontSize: 'clamp(1.375rem, min(2.4vw, 4.2vh), 2.125rem)' } : undefined}
+                            className="mx-auto font-display text-3xl font-semibold leading-[1.05] tracking-[-0.035em] [text-wrap:balance] sm:text-4xl lg:text-5xl"
+                            style={escena ? { fontSize: 'clamp(1.75rem, min(3.6vw, 6.2vh), 3.25rem)' } : undefined}
                         >
-                            Los tres módulos rinden más juntos, pero podés arrancar por uno.
+                            <span className="sm:block">Tres módulos trabajando juntos</span>{' '}
+                            <span className="text-brand-blue sm:block">para evolucionar tu empresa.</span>
                         </p>
                         <a href={WHATSAPP_REUNION} target="_blank" rel="noopener noreferrer" className="boton-primario mt-6">
                             <MessageCircle className="h-5 w-5" aria-hidden="true" />

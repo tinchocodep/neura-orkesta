@@ -88,7 +88,7 @@ export const PIEZAS_CONTENIDO: readonly ContenidoPieza[] = [
         forma: 'cupula',
         nombre: 'NeuraInsight',
         titulo: 'Entiende.',
-        texto: 'Te muestro el resultado, por obra o por local. Si me preguntás, te respondo con los datos de tu empresa, para que decidas mejor.',
+        texto: 'Te muestro cómo está tu empresa, para que decidas mejor.',
         lado: 'der',
         color: COLORES.cupula,
         encuadre: { cx: 1200, cy: 820, zoom: 0.95, ax: 0.36, ay: 0.34 },
