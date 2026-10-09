@@ -28,9 +28,7 @@ export default function Vision() {
                             <span className="font-medium text-ink">
                                 Una plataforma de gestión con IA para pequeñas y medianas empresas:
                             </span>{' '}
-                            un solo core que conecta la operación de cada rubro, como la obra, el viaje, el contrato,
-                            el pedido o el turno, con lo que es igual para todos: comprobantes, caja, banco, cobros y
-                            pagos, y la gente.
+                            un solo core que conecta la operación de tu empresa.
                         </p>
                     </Aparece>
 
