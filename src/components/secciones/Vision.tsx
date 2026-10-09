@@ -1,8 +1,6 @@
 import Aparece from '../ui/Aparece';
 import { useEnPantalla } from '../ui/useEnPantalla';
 
-const palabras = ['Pequeñas y medianas empresas', 'Software que se adapta', 'IA'];
-
 const trazo = 'transition-transform ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none';
 
 export default function Vision() {
@@ -22,37 +20,14 @@ export default function Vision() {
                     </h2>
                 </Aparece>
 
-                <div className="mt-10 grid gap-10 lg:mt-14 lg:grid-cols-2 lg:gap-0">
-                    <Aparece retraso={80} className="lg:pr-12">
-                        <p className="bajada mt-0 xl:text-[1.375rem] xl:leading-[1.55]">
-                            <span className="font-medium text-ink">
-                                Una plataforma de gestión con IA para pequeñas y medianas empresas:
-                            </span>{' '}
-                            un solo core que conecta la operación de tu empresa.
-                        </p>
-                    </Aparece>
-
-                    <Aparece retraso={160} className="lg:pl-12">
-                        <ul aria-label="En tres palabras" className="border-t border-line">
-                            {palabras.map((palabra, i) => (
-                                <li
-                                    key={palabra}
-                                    className="flex items-baseline gap-5 border-b border-line py-4 last:border-b-0 lg:last:border-b"
-                                >
-                                    <span
-                                        className="text-xs font-medium tabular-nums tracking-[0.2em] text-brand-blue-dark"
-                                        aria-hidden="true"
-                                    >
-                                        0{i + 1}
-                                    </span>
-                                    <span className="font-display text-2xl font-semibold tracking-[-0.02em]">
-                                        {palabra}
-                                    </span>
-                                </li>
-                            ))}
-                        </ul>
-                    </Aparece>
-                </div>
+                <Aparece retraso={80} className="mt-10 max-w-3xl lg:mt-14">
+                    <p className="bajada mt-0 xl:text-[1.375rem] xl:leading-[1.55]">
+                        <span className="font-medium text-ink">
+                            Una plataforma de gestión con IA para pequeñas y medianas empresas:
+                        </span>{' '}
+                        un solo core que conecta la operación de tu empresa.
+                    </p>
+                </Aparece>
 
                 <div ref={ref} className="mt-8 lg:mt-20">
                     <span
