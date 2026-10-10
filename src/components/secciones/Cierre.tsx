@@ -6,8 +6,8 @@ import { useEnPantalla } from '../ui/useEnPantalla';
 const enlaces = [
     { nombre: 'WhatsApp', href: 'https://wa.me/5492622567533', externo: true },
     { nombre: 'Instagram', href: 'https://www.instagram.com/neuraorkesta', externo: true },
-    { nombre: 'LinkedIn', href: 'https://www.linkedin.com/company/neuracall', externo: true },
-    { nombre: 'Mail', href: 'mailto:neuracallbot@gmail.com', externo: false },
+    { nombre: 'LinkedIn', href: 'https://www.linkedin.com/company/neuraorkesta/', externo: true },
+    { nombre: 'Mail', href: 'mailto:martincabrera@neuraorkesta.com', externo: false },
 ];
 
 // El render trae su propio fondo, un piso con reflejos y una bruma clara en una esquina. La
