@@ -6,12 +6,12 @@ import { useEnPantalla } from '../ui/useEnPantalla';
 const CLIENTES = 10;
 
 const rubros: { nombre: string; unidad: string; Icono: LucideIcon }[] = [
-    { nombre: 'Una constructora', unidad: 'Gestiona sus obras', Icono: HardHat },
-    { nombre: 'Un transporte de cargas', unidad: 'Gestiona sus viajes', Icono: Truck },
-    { nombre: 'Una empresa de combustibles', unidad: 'Gestiona sus viajes', Icono: Fuel },
-    { nombre: 'Una administradora de propiedades', unidad: 'Gestiona sus contratos', Icono: Building2 },
-    { nombre: 'Una empresa gastronómica', unidad: 'Gestiona sus turnos', Icono: Utensils },
-    { nombre: 'Una empresa de señalética e impresión 3D', unidad: 'Gestiona sus órdenes de trabajo', Icono: Printer },
+    { nombre: 'Constructoras', unidad: 'La obra', Icono: HardHat },
+    { nombre: 'Transporte de cargas', unidad: 'El viaje', Icono: Truck },
+    { nombre: 'Transporte de combustibles', unidad: 'El viaje', Icono: Fuel },
+    { nombre: 'Administración de propiedades', unidad: 'El contrato', Icono: Building2 },
+    { nombre: 'Gastronomía', unidad: 'El turno', Icono: Utensils },
+    { nombre: 'Señalética e impresión 3D', unidad: 'La orden de trabajo', Icono: Printer },
 ];
 
 const operaciones = ['La obra', 'El viaje', 'El contrato', 'El turno', 'La orden'];
