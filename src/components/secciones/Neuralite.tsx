@@ -9,7 +9,7 @@ interface Datos {
     nombre: string;
     mail: string;
     empresa: string;
-    rubro: string;
+    actividad: string;
     proceso: string;
 }
 
@@ -23,29 +23,19 @@ const ENDPOINT = (import.meta.env.VITE_NEURALITE_ENDPOINT as string | undefined)
 // El número vive en contacto.ts: se toma de ahí para no tenerlo escrito en dos lugares.
 const WHATSAPP_BASE = WHATSAPP_REUNION.split('?')[0];
 
-const RUBROS = [
-    'Constructora',
-    'Logística',
-    'Combustibles',
-    'Propiedades',
-    'Gastronomía',
-    'Señalética e impresión 3D',
-    'Otro',
-];
-
 const FORMA_DE_MAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const ESPERA_MAXIMA = 15000;
 // La barra de arriba de la página es fija: lo que cae en esa franja está en pantalla pero tapado.
 const FRANJA_DE_LA_BARRA = 80;
 
-const DATOS_VACIOS: Datos = { nombre: '', mail: '', empresa: '', rubro: '', proceso: '' };
+const DATOS_VACIOS: Datos = { nombre: '', mail: '', empresa: '', actividad: '', proceso: '' };
 
 function limpiar(datos: Datos): Datos {
     return {
         nombre: datos.nombre.trim(),
         mail: datos.mail.trim(),
         empresa: datos.empresa.trim(),
-        rubro: datos.rubro,
+        actividad: datos.actividad.trim(),
         proceso: datos.proceso.trim(),
     };
 }
@@ -61,7 +51,7 @@ function validar(datos: Datos): Errores {
 function enlaceWhatsApp(datos: Datos) {
     let texto = `Hola! Quiero la demo de Neuralite. Soy ${datos.nombre} (${datos.mail})`;
     if (datos.empresa) texto += ` de ${datos.empresa}`;
-    if (datos.rubro) texto += `, rubro ${datos.rubro}`;
+    if (datos.actividad) texto += `, nos dedicamos a ${datos.actividad}`;
     texto += '.';
     if (datos.proceso) texto += ` Proceso: ${datos.proceso}`;
     return `${WHATSAPP_BASE}?text=${encodeURIComponent(texto)}`;
@@ -75,7 +65,7 @@ function arranque(): { estado: Estado; datos: Datos; errores: Errores } {
         nombre: 'Laura',
         mail: 'laura@ejemplo.com',
         empresa: 'Ejemplo SRL',
-        rubro: 'Logística',
+        actividad: 'Transporte de cargas',
         proceso: '',
     };
     if (demo === 'errores') {
@@ -346,33 +336,21 @@ export default function Neuralite() {
                                     />
                                 </div>
 
-                                <fieldset className="mt-5 min-w-0">
-                                    <legend className={claseEtiqueta}>
-                                        Rubro
+                                <div className="mt-5">
+                                    <label htmlFor="neuralite-actividad" className={claseEtiqueta}>
+                                        ¿A qué se dedica tu empresa?
                                         <Opcional />
-                                    </legend>
-                                    <div className="mt-2.5 flex flex-wrap gap-2">
-                                        {RUBROS.map((rubro) => (
-                                            <label key={rubro} className="relative cursor-pointer">
-                                                <input
-                                                    type="radio"
-                                                    name="rubro"
-                                                    value={rubro}
-                                                    checked={datos.rubro === rubro}
-                                                    onChange={() => cambiar('rubro', rubro)}
-                                                    // Es opcional: tocar de nuevo el elegido lo suelta.
-                                                    onClick={() => {
-                                                        if (datos.rubro === rubro) cambiar('rubro', '');
-                                                    }}
-                                                    className="peer sr-only"
-                                                />
-                                                <span className="inline-flex min-h-[2.5rem] items-center rounded-full border border-ink-soft/75 px-4 text-sm font-medium text-ink transition-colors duration-200 hover:border-brand-blue peer-checked:border-brand-blue peer-checked:bg-brand-blue peer-checked:text-white peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand-blue">
-                                                    {rubro}
-                                                </span>
-                                            </label>
-                                        ))}
-                                    </div>
-                                </fieldset>
+                                    </label>
+                                    <input
+                                        id="neuralite-actividad"
+                                        name="actividad"
+                                        type="text"
+                                        maxLength={120}
+                                        value={datos.actividad}
+                                        onChange={(e) => cambiar('actividad', e.target.value)}
+                                        className={`mt-2 h-12 ${claseCampo} ${claseCampoBien}`}
+                                    />
+                                </div>
 
                                 <div className="mt-5">
                                     <label htmlFor="neuralite-proceso" className={claseEtiqueta}>

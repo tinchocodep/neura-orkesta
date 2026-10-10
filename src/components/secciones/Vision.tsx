@@ -56,11 +56,12 @@ export default function Vision() {
 
                         <Aparece retraso={120} className="border-t border-line pt-10 md:border-t-0 md:pl-12 md:pt-12">
                             <h3 className="font-display text-2xl font-semibold tracking-[-0.02em] sm:text-[1.75rem]">
-                                A dónde lleva Neura
+                                A dónde vamos
                             </h3>
                             <p className="mt-4 max-w-xl text-lg leading-relaxed text-ink-soft">
-                                A un producto con el que{' '}
-                                <span className="font-medium text-ink">tu empresa se autogestiona.</span>
+                                A que Neura sea el producto con el que{' '}
+                                <span className="font-medium text-ink">tu empresa se gestiona sola:</span> lo
+                                ordinario corre solo y vos te ocupás de lo extraordinario.
                             </p>
                         </Aparece>
                     </div>

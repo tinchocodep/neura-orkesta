@@ -1,10 +1,9 @@
 import { MessageCircle } from 'lucide-react';
-import { URL_INGRESAR, WHATSAPP_REUNION } from '../contacto';
+import { WHATSAPP_REUNION } from '../contacto';
 import Aparece from '../ui/Aparece';
 import { useEnPantalla } from '../ui/useEnPantalla';
 
 const enlaces = [
-    { nombre: 'Ingresar', href: URL_INGRESAR, externo: false },
     { nombre: 'WhatsApp', href: 'https://wa.me/5492622567533', externo: true },
     { nombre: 'Instagram', href: 'https://www.instagram.com/neuraorkesta', externo: true },
     { nombre: 'LinkedIn', href: 'https://www.linkedin.com/company/neuracall', externo: true },
@@ -67,7 +66,7 @@ function Pie() {
                     </ul>
                 </nav>
 
-                <p className="text-sm text-on-night-soft">© 2026 Neuracall S.A.</p>
+                <p className="text-sm text-on-night-soft">© 2026 Neura Orkesta S.A.</p>
             </div>
         </footer>
     );

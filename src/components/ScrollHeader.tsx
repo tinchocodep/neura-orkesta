@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Menu, MessageCircle, X } from 'lucide-react';
 import logo from '../assets/logo-header.png';
-import { URL_INGRESAR, WHATSAPP_REUNION } from './contacto';
+import { WHATSAPP_REUNION } from './contacto';
 import { irA } from './navegacion';
 
 const navLinks = [
@@ -63,12 +63,6 @@ export default function ScrollHeader() {
 
                     <div className="flex items-center gap-2">
                         <a
-                            href={URL_INGRESAR}
-                            className="hidden rounded-lg px-3.5 py-2 text-sm font-semibold text-text-primary transition-colors hover:bg-gray-100 sm:inline-flex"
-                        >
-                            Ingresar
-                        </a>
-                        <a
                             href={WHATSAPP_REUNION}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -100,12 +94,6 @@ export default function ScrollHeader() {
                                 {link.label}
                             </button>
                         ))}
-                        <a
-                            href={URL_INGRESAR}
-                            className="rounded-lg px-4 py-2.5 text-sm font-semibold text-text-primary transition-colors hover:bg-gray-100 sm:hidden"
-                        >
-                            Ingresar
-                        </a>
                     </div>
                 )}
             </div>
