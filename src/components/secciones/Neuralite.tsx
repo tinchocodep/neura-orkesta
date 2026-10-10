@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ArrowRight, Check, CircleAlert, MessageCircle, RotateCw } from 'lucide-react';
 import Aparece from '../ui/Aparece';
-import { WHATSAPP_REUNION } from '../contacto';
+import { BASE_CLAVE_PUBLICA, BASE_URL, WHATSAPP_REUNION } from '../contacto';
 
 type Estado = 'formulario' | 'enviando' | 'fallo' | 'enviado' | 'whatsapp';
 
@@ -18,7 +18,8 @@ interface Errores {
     mail?: string;
 }
 
-const ENDPOINT = (import.meta.env.VITE_NEURALITE_ENDPOINT as string | undefined) || '';
+// Cada contacto queda en la tabla web_contactos de la base de Neura.
+const ENDPOINT = `${BASE_URL}/rest/v1/rpc/registrar_contacto_web`;
 
 // El número vive en contacto.ts: se toma de ahí para no tenerlo escrito en dos lugares.
 const WHATSAPP_BASE = WHATSAPP_REUNION.split('?')[0];
@@ -109,6 +110,7 @@ export default function Neuralite() {
     const nombreRef = useRef<HTMLInputElement>(null);
     const mailRef = useRef<HTMLInputElement>(null);
     const botonRef = useRef<HTMLButtonElement>(null);
+    const trampaRef = useRef<HTMLInputElement>(null);
     const resultadoRef = useRef<HTMLHeadingElement>(null);
     const moverFoco = useRef(false);
 
@@ -158,9 +160,9 @@ export default function Neuralite() {
         setDatos(limpios);
         moverFoco.current = true;
 
-        if (!ENDPOINT) {
-            window.open(enlaceWhatsApp(limpios), '_blank', 'noopener,noreferrer');
-            setEstado('whatsapp');
+        // Campo escondido que una persona no ve ni completa: si viene lleno es un robot, y no se guarda.
+        if (trampaRef.current?.value) {
+            setEstado('enviado');
             return;
         }
 
@@ -171,8 +173,19 @@ export default function Neuralite() {
         try {
             const respuesta = await fetch(ENDPOINT, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...limpios, origen: 'web-neuralite' }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    apikey: BASE_CLAVE_PUBLICA,
+                    Authorization: `Bearer ${BASE_CLAVE_PUBLICA}`,
+                },
+                body: JSON.stringify({
+                    p_nombre: limpios.nombre,
+                    p_mail: limpios.mail,
+                    p_empresa: limpios.empresa,
+                    p_actividad: limpios.actividad,
+                    p_proceso: limpios.proceso,
+                    p_origen: 'web-neuralite',
+                }),
                 signal: corte.signal,
             });
             llego = respuesta.ok;
@@ -318,6 +331,16 @@ export default function Neuralite() {
                                         )}
                                     </div>
                                 </div>
+
+                                <input
+                                    ref={trampaRef}
+                                    type="text"
+                                    name="sitio_web"
+                                    tabIndex={-1}
+                                    autoComplete="off"
+                                    aria-hidden="true"
+                                    className="hidden"
+                                />
 
                                 <div className="mt-5">
                                     <label htmlFor="neuralite-empresa" className={claseEtiqueta}>
