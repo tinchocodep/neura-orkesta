@@ -1,13 +1,13 @@
-import { MessageCircle } from 'lucide-react';
+import { Instagram, Linkedin, Mail, MessageCircle, type LucideIcon } from 'lucide-react';
 import { WHATSAPP_REUNION } from '../contacto';
 import Aparece from '../ui/Aparece';
 import { useEnPantalla } from '../ui/useEnPantalla';
 
-const enlaces = [
-    { nombre: 'WhatsApp', href: 'https://wa.me/5492622567533', externo: true },
-    { nombre: 'Instagram', href: 'https://www.instagram.com/neuraorkesta', externo: true },
-    { nombre: 'LinkedIn', href: 'https://www.linkedin.com/company/neuraorkesta/', externo: true },
-    { nombre: 'Mail', href: 'mailto:martincabrera@neuraorkesta.com', externo: false },
+const enlaces: { nombre: string; href: string; externo: boolean; Icono: LucideIcon }[] = [
+    { nombre: 'WhatsApp', href: 'https://wa.me/5492622567533', externo: true, Icono: MessageCircle },
+    { nombre: 'Instagram', href: 'https://www.instagram.com/neuraorkesta', externo: true, Icono: Instagram },
+    { nombre: 'LinkedIn', href: 'https://www.linkedin.com/company/neuraorkesta/', externo: true, Icono: Linkedin },
+    { nombre: 'Mail', href: 'mailto:martincabrera@neuraorkesta.com', externo: false, Icono: Mail },
 ];
 
 // El render trae su propio fondo, un piso con reflejos y una bruma clara en una esquina. La
@@ -50,16 +50,22 @@ function Pie() {
                 </p>
 
                 <nav aria-label="Contacto y redes">
-                    <ul className="-mx-2 grid grid-cols-3 gap-x-3 text-sm font-medium sm:flex sm:flex-wrap">
-                        {enlaces.map((enlace) => (
-                            <li key={enlace.nombre}>
+                    {/* En el celular, dos por fila y del mismo ancho: sueltos quedaban tres arriba y uno solo abajo. */}
+                    <ul className="grid grid-cols-2 gap-2.5 text-sm font-medium sm:flex sm:flex-wrap">
+                        {enlaces.map(({ nombre, href, externo, Icono }) => (
+                            <li key={nombre}>
                                 <a
-                                    href={enlace.href}
-                                    target={enlace.externo ? '_blank' : undefined}
-                                    rel={enlace.externo ? 'noopener noreferrer' : undefined}
-                                    className="inline-flex min-h-11 items-center rounded-lg px-2 text-on-night-soft transition-colors duration-200 hover:text-on-night focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue-light"
+                                    href={href}
+                                    target={externo ? '_blank' : undefined}
+                                    rel={externo ? 'noopener noreferrer' : undefined}
+                                    className="flex min-h-12 items-center gap-3 rounded-xl border border-night-line bg-night-soft px-4 text-on-night transition-colors duration-200 hover:border-white/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue-light sm:min-h-11 sm:rounded-full"
                                 >
-                                    {enlace.nombre}
+                                    <Icono
+                                        className="h-[1.125rem] w-[1.125rem] shrink-0 text-brand-blue-light"
+                                        strokeWidth={1.75}
+                                        aria-hidden="true"
+                                    />
+                                    {nombre}
                                 </a>
                             </li>
                         ))}
