@@ -112,10 +112,12 @@ export default function Clientes() {
     const { ref: refRanura, indice, elegir } = useRanura(operaciones.length);
 
     return (
+        // Con «hidden» solo, la sección es una zona con scroll escondido (los anillos se salen por la derecha)
+        // y al tocar un botón el navegador la corría de costado. «clip» recorta sin armar esa zona.
         <section
             id="clientes"
             aria-labelledby="clientes-titulo"
-            className="seccion seccion-oscura isolate overflow-hidden"
+            className="seccion seccion-oscura isolate overflow-hidden overflow-clip"
         >
             <div className="contenedor relative">
                 <img
@@ -185,20 +187,17 @@ export default function Clientes() {
                             <span className="block">Lo demás es igual.</span>
                         </h3>
 
-                        {/* Dos placas: arriba una sola operación encendida por vez (es lo que cambia), y se puede
-                            elegir tocándola; abajo las cinco siempre encendidas (es lo que es igual). La línea baja
-                            desde la que está elegida. */}
-                        <div className="grid gap-y-2 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-center sm:gap-x-6 sm:gap-y-[1.375rem] xl:col-span-7">
-                            <p className="text-sm text-on-night-soft">Cambia</p>
+                        {/* Dos placas: arriba se elige una operación (es lo que cambia); abajo las cinco piezas
+                            comunes (es lo que es igual). De la operación elegida baja una línea que se reparte a las
+                            cinco: cualquiera sea la operación, usa todo lo de abajo. */}
+                        <div className="sm:grid sm:grid-cols-[auto_minmax(0,1fr)] sm:items-center sm:gap-x-6 xl:col-span-7">
+                            <p className="mb-2 text-sm text-on-night-soft sm:mb-0">Cambia</p>
                             <ul
                                 ref={refRanura}
                                 className="grid grid-cols-6 gap-1 rounded-xl border border-brand-blue-bright/45 bg-brand-blue/10 p-1 sm:grid-cols-5"
                             >
                                 {operaciones.map((operacion, i) => (
-                                    <li
-                                        key={operacion}
-                                        className={`relative sm:col-span-1 ${i < 3 ? 'col-span-2' : 'col-span-3'}`}
-                                    >
+                                    <li key={operacion} className={`sm:col-span-1 ${i < 3 ? 'col-span-2' : 'col-span-3'}`}>
                                         <button
                                             type="button"
                                             aria-pressed={i === indice}
@@ -211,19 +210,36 @@ export default function Clientes() {
                                         >
                                             {operacion}
                                         </button>
-                                        <span
-                                            aria-hidden="true"
-                                            className={`pointer-events-none absolute left-1/2 top-full hidden h-[calc(1.375rem+5px)] w-px -translate-x-1/2 bg-brand-blue-bright transition-opacity duration-300 after:absolute after:-bottom-[3px] after:left-1/2 after:h-[5px] after:w-[5px] after:-translate-x-1/2 after:rounded-full after:bg-brand-blue-bright motion-reduce:transition-none sm:block ${
-                                                i === indice ? 'opacity-100' : 'opacity-0'
-                                            }`}
-                                        />
                                     </li>
                                 ))}
                             </ul>
 
-                            <p className="mt-5 text-sm text-on-night-soft sm:mt-0">Es igual</p>
+                            {/* Celular: las placas van partidas en tres y dos, así que la línea baja recta por el
+                                costado y el rótulo la acompaña. */}
+                            <p className="flex items-center gap-3 pl-6 text-sm text-on-night-soft sm:hidden">
+                                <span aria-hidden="true" className="block h-8 w-px bg-brand-blue-bright" />
+                                Es igual
+                            </p>
+
+                            <span aria-hidden="true" className="hidden sm:block" />
+                            <div aria-hidden="true" className="relative hidden h-10 sm:block">
+                                <span
+                                    className="absolute -top-[5px] h-[calc(50%+5px)] w-px -translate-x-1/2 bg-brand-blue-bright transition-[left] duration-300 ease-out motion-reduce:transition-none"
+                                    style={{ left: `${(indice + 0.5) * 20}%` }}
+                                />
+                                <span className="absolute left-[10%] right-[10%] top-1/2 h-px bg-brand-blue-bright" />
+                                {loDemas.map(({ nombre }, i) => (
+                                    <span
+                                        key={nombre}
+                                        className="absolute bottom-0 top-1/2 w-px -translate-x-1/2 bg-brand-blue-bright after:absolute after:-bottom-[3px] after:left-1/2 after:h-[5px] after:w-[5px] after:-translate-x-1/2 after:rounded-full after:bg-brand-blue-bright"
+                                        style={{ left: `${(i + 0.5) * 20}%` }}
+                                    />
+                                ))}
+                            </div>
+
+                            <p className="hidden text-sm text-on-night-soft sm:block">Es igual</p>
                             {/* En el celular las dos placas se parten en tres y dos: con cinco en fila no entran. */}
-                            <ul className="grid grid-cols-6 gap-px overflow-hidden rounded-xl border border-night-line bg-night-line sm:grid-cols-5">
+                            <ul className="grid grid-cols-6 gap-px overflow-hidden rounded-xl border border-brand-blue-bright/60 bg-night-line sm:grid-cols-5">
                                 {loDemas.map(({ nombre, Icono }, i) => (
                                     <li
                                         key={nombre}
