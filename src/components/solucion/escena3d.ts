@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 import { ALTO_LOGO, ANCHO_LOGO, BISEL, CENTROS, NOMBRES, TAPAS, leerPuntos, type NombrePieza } from './cabeza';
-import { ANCHO_SOLISTA, CABEZA, PIEZAS, TINTE, limitar, mezcla, suave } from './guion';
+import { ANCHO_AL_COSTADO, APAGAR, CABEZA, PIEZAS, TINTE, limitar, mezcla, suave } from './guion';
 
 export interface Motor {
     /** Vuelve a medir el contenedor (al cambiar el tamaño de la ventana). */
@@ -23,6 +23,13 @@ const TINTAS: Record<NombrePieza | 'base', string> = {
     onda: '#2462F5',
     cupula: '#EBA233',
 };
+// Las piezas que no están en turno: un gris azulado que sobre el blanco se sigue leyendo como logo.
+const APAGADA = '#CBD4E4';
+// Cuánto se adelanta la pieza en turno: más despiece en su dirección, hacia la cámara y de tamaño.
+const SALTO = 0.16;
+const ADELANTE = 0.32;
+const CRECE = 0.05;
+const ANCHO_CABEZA = (ANCHO_LOGO / ALTO_LOGO) * 3;
 
 const DISTANCIA = 11;
 const CAMPO = 26;
@@ -99,6 +106,7 @@ export function crearMotor(contenedor: HTMLElement, alPerderContexto: () => void
             .slice(0, -1);
 
     const azulBase = new THREE.Color(TINTAS.base);
+    const gris = new THREE.Color(APAGADA);
     const piezas = {} as Record<NombrePieza, Pieza>;
     for (const nombre of NOMBRES) {
         const [cx, cy] = CENTROS[nombre];
@@ -174,10 +182,8 @@ export function crearMotor(contenedor: HTMLElement, alPerderContexto: () => void
 
     const euler = new THREE.Euler();
     const giroCabeza = new THREE.Quaternion();
-    const giroSolista = new THREE.Quaternion();
     const lugarCabeza = new THREE.Vector3();
-    const lugarArmada = new THREE.Vector3();
-    const lugarSolista = new THREE.Vector3();
+    const lugarPieza = new THREE.Vector3();
     const proyectado = new THREE.Vector3();
 
     const lugar = (fx: number, fy: number, z: number, salida: THREE.Vector3) =>
@@ -192,8 +198,12 @@ export function crearMotor(contenedor: HTMLElement, alPerderContexto: () => void
         const cabeza = CABEZA(p);
         lugar(cabeza.fx, cabeza.fy, cabeza.z, lugarCabeza);
         giro(cabeza.rx, cabeza.ry, cabeza.rz, giroCabeza);
-        const escalaCabeza = cabeza.s * ajusteCabeza;
+        // Al costado comparte la pantalla con el texto: en ventanas angostas se achica para no pisarlo.
+        const alCostado = limitar(Math.abs(cabeza.fx) / 0.5);
+        const tope = (tangente * DISTANCIA * aspecto * ANCHO_AL_COSTADO) / ANCHO_CABEZA;
+        const escalaCabeza = Math.min(cabeza.s * ajusteCabeza, mezcla(cabeza.s * ajusteCabeza, tope, alCostado));
         const tinte = TINTE(p);
+        const apagar = APAGAR(p);
 
         // El piso acompaña a la cabeza armada: abajo al principio y más arriba en el remate, así
         // la sombra no se mete debajo del texto del cierre.
@@ -201,29 +211,21 @@ export function crearMotor(contenedor: HTMLElement, alPerderContexto: () => void
         const pisoFinal = final.fy * tangente * DISTANCIA - 1.5 * final.s * ajusteCabeza;
         piso.position.y = mezcla(pisoInicio, pisoFinal, suave(limitar((p - 0.84) / 0.08))) - 0.16;
 
-        const mitad = tangente * DISTANCIA * aspecto * ANCHO_SOLISTA;
         for (const nombre of NOMBRES) {
             const pieza = piezas[nombre];
-            const guion = PIEZAS[nombre];
-            // Armada: su lugar en la cabeza, más lo que se abre en el despiece.
-            lugarArmada
+            const realce = PIEZAS[nombre].realce(p);
+            // Su lugar en la cabeza, más lo que se abre en el despiece; la que está en turno se adelanta.
+            lugarPieza
                 .copy(pieza.abre)
-                .multiplyScalar(cabeza.sep)
-                .add(pieza.reposo)
-                .multiplyScalar(escalaCabeza)
-                .applyQuaternion(giroCabeza)
-                .add(lugarCabeza);
-            // Solista: viaja a su borde y gira.
-            const pose = guion.pose(p);
-            const solista = guion.solista(p);
-            const escalaSolista = Math.min(pose.s, mitad / (pieza.ancho * 1.12));
-            lugar(pose.fx, pose.fy, pose.z, lugarSolista);
-            giro(pose.rx, pose.ry, pose.rz, giroSolista);
+                .multiplyScalar(cabeza.sep + realce * SALTO)
+                .add(pieza.reposo);
+            lugarPieza.z += realce * ADELANTE;
+            lugarPieza.multiplyScalar(escalaCabeza).applyQuaternion(giroCabeza).add(lugarCabeza);
 
-            pieza.grupo.position.lerpVectors(lugarArmada, lugarSolista, solista);
-            pieza.grupo.quaternion.slerpQuaternions(giroCabeza, giroSolista, solista);
-            pieza.grupo.scale.setScalar(mezcla(escalaCabeza, escalaSolista, solista));
-            pieza.material.color.lerpColors(azulBase, pieza.color, tinte);
+            pieza.grupo.position.copy(lugarPieza);
+            pieza.grupo.quaternion.copy(giroCabeza);
+            pieza.grupo.scale.setScalar(escalaCabeza * (1 + realce * CRECE));
+            pieza.material.color.lerpColors(azulBase, pieza.color, tinte).lerp(gris, apagar * (1 - realce));
         }
         render.render(mundo, camara);
     }

@@ -55,15 +55,18 @@ export function pistaPose(claves: readonly Clave<Pose>[]) {
     });
 }
 
-// Al fondo de todo: allá la niebla blanca se come la cabeza mientras las piezas vuelan solas.
-const LEJOS = -17;
-
+// En cada tramo la cabeza entera se corre al lado contrario al del texto y lo mira; apenas abierta
+// (sep 0.1) para que se lean las tres partes sin que deje de ser el logo.
 const clavesCabeza: readonly Clave<PoseCabeza>[] = [
     [0.0, { fx: 0, fy: -0.23, z: 0, rx: 4, ry: -26, rz: 0, s: 0.84, sep: 0 }],
     [0.12, { fx: 0, fy: -0.13, z: 0, rx: 4, ry: 8, rz: 0, s: 0.88, sep: 0 }],
     [0.24, { fx: 0, fy: -0.05, z: -0.8, rx: 9, ry: -36, rz: 0, s: 0.92, sep: 1 }],
-    [0.32, { fx: 0, fy: 0.1, z: LEJOS, rx: 9, ry: -70, rz: 0, s: 0.92, sep: 1 }],
-    [0.81, { fx: 0, fy: 0.1, z: LEJOS, rx: 9, ry: 60, rz: 0, s: 0.92, sep: 1 }],
+    [0.32, { fx: -0.54, fy: 0.02, z: 0, rx: 6, ry: 30, rz: 0, s: 1.04, sep: 0.1 }],
+    [0.41, { fx: -0.54, fy: 0.02, z: 0, rx: 6, ry: 10, rz: 0, s: 1.04, sep: 0.1 }],
+    [0.5, { fx: 0.5, fy: 0.02, z: 0, rx: 6, ry: -30, rz: 0, s: 1.04, sep: 0.1 }],
+    [0.61, { fx: 0.5, fy: 0.02, z: 0, rx: 6, ry: -10, rz: 0, s: 1.04, sep: 0.1 }],
+    [0.7, { fx: -0.54, fy: 0.02, z: 0, rx: 6, ry: 30, rz: 0, s: 1.04, sep: 0.1 }],
+    [0.81, { fx: -0.54, fy: 0.02, z: 0, rx: 6, ry: 10, rz: 0, s: 1.04, sep: 0.1 }],
     [0.91, { fx: 0, fy: 0.17, z: 0, rx: 4, ry: -24, rz: 0, s: 0.78, sep: 0 }],
     [1.0, { fx: 0, fy: 0.17, z: 0, rx: 4, ry: -10, rz: 0, s: 0.78, sep: 0 }],
 ];
@@ -79,65 +82,53 @@ export const TINTE = pistaNumero([
     [0.195, 1],
 ]);
 
+/** Mientras se recorren los tres módulos, las piezas que no están en turno se apagan a gris. */
+export const APAGAR = pistaNumero([
+    [0.26, 0],
+    [0.32, 1],
+    [0.81, 1],
+    [0.88, 0],
+]);
+
 interface GuionPieza {
     /** Hacia dónde se corre la pieza en el despiece, en unidades de la cabeza. */
     abre: readonly [number, number, number];
-    /** Cuánto es «solista»: 0 = va con la cabeza, 1 = vuela sola a su borde. */
-    solista: (p: number) => number;
-    pose: (p: number) => Pose;
+    /** Cuánto resalta: 0 = una parte más del logo, 1 = es su turno (su color, adelantada y un poco más grande). */
+    realce: (p: number) => number;
 }
 
-// Cada pieza viaja al borde contrario al de su texto y gira mostrando otra cara.
 export const PIEZAS: Record<NombrePieza, GuionPieza> = {
     perfil: {
         abre: [-0.3, -0.22, 0.9],
-        solista: pistaNumero([
-            [0.24, 0],
+        realce: pistaNumero([
+            [0.26, 0],
             [0.32, 1],
             [0.41, 1],
-            [0.49, 0],
-        ]),
-        pose: pistaPose([
-            [0.24, { fx: -0.2, fy: -0.05, z: 0.6, rx: 6, ry: -62, rz: 0, s: 1.1 }],
-            [0.32, { fx: -0.58, fy: -0.04, z: 1.2, rx: 5, ry: -36, rz: -3, s: 1.4 }],
-            [0.41, { fx: -0.58, fy: -0.04, z: 1.2, rx: 5, ry: 18, rz: -3, s: 1.4 }],
-            [0.49, { fx: -0.25, fy: 0.02, z: 0.6, rx: 8, ry: 52, rz: 0, s: 1.1 }],
+            [0.47, 0],
         ]),
     },
     onda: {
         abre: [0.04, 0.02, 0],
-        solista: pistaNumero([
-            [0.42, 0],
+        realce: pistaNumero([
+            [0.44, 0],
             [0.5, 1],
             [0.61, 1],
-            [0.69, 0],
-        ]),
-        pose: pistaPose([
-            [0.42, { fx: 0.2, fy: 0, z: 0.6, rx: 6, ry: 62, rz: 0, s: 1.3 }],
-            [0.5, { fx: 0.48, fy: 0.03, z: 1.2, rx: 5, ry: 36, rz: 2, s: 1.75 }],
-            [0.61, { fx: 0.48, fy: 0.03, z: 1.2, rx: 5, ry: -18, rz: 2, s: 1.75 }],
-            [0.69, { fx: 0.25, fy: 0.02, z: 0.6, rx: 8, ry: -52, rz: 0, s: 1.3 }],
+            [0.67, 0],
         ]),
     },
     cupula: {
         abre: [0.26, 0.26, -0.9],
-        solista: pistaNumero([
-            [0.62, 0],
+        realce: pistaNumero([
+            [0.64, 0],
             [0.7, 1],
             [0.81, 1],
             [0.88, 0],
         ]),
-        pose: pistaPose([
-            [0.62, { fx: -0.2, fy: 0.05, z: 0.6, rx: 48, ry: -30, rz: 0, s: 1.05 }],
-            [0.7, { fx: -0.58, fy: -0.05, z: 1.2, rx: 62, ry: -16, rz: 0, s: 1.32 }],
-            [0.81, { fx: -0.58, fy: -0.02, z: 1.2, rx: 10, ry: 14, rz: 0, s: 1.32 }],
-            [0.88, { fx: -0.2, fy: 0.05, z: 0.6, rx: 6, ry: -30, rz: 0, s: 1.0 }],
-        ]),
     },
 };
 
-/** La pieza sola nunca ocupa más que esta fracción de media pantalla: el resto es del texto. */
-export const ANCHO_SOLISTA = 0.62;
+/** Corrida al costado, la cabeza nunca ocupa más que esta fracción de media pantalla: el resto es del texto. */
+export const ANCHO_AL_COSTADO = 0.78;
 
 export type IdBloque = 'intro' | 'rotulos' | 'sync' | 'core' | 'insight' | 'remate';
 

@@ -67,13 +67,21 @@ interface PiezasSvgProps {
     className?: string;
     /** Un solo color para todas las piezas, en vez del propio de cada una. */
     color?: string;
+    /** La pieza en turno: va con su color y las demás, apagadas. */
+    resaltar?: NombrePieza;
 }
 
-function PiezasSvg({ formas, className, color }: PiezasSvgProps) {
+const APAGADA = '#CBD4E4';
+
+function PiezasSvg({ formas, className, color, resaltar }: PiezasSvgProps) {
     return (
         <svg viewBox={cajaDe(formas)} aria-hidden="true" className={className}>
             {formas.map((forma) => (
-                <path key={forma} d={CONTORNOS[forma]} fill={color ?? COLORES[forma]} />
+                <path
+                    key={forma}
+                    d={CONTORNOS[forma]}
+                    fill={resaltar && forma !== resaltar ? APAGADA : (color ?? COLORES[forma])}
+                />
             ))}
         </svg>
     );
@@ -108,7 +116,7 @@ function Bloque({ pieza, escena, onAmpliar }: BloqueProps) {
             style={escena ? { ...lugar, top: ALTO_HEADER } : undefined}
         >
             <div className={!escena && pieza.lado === 'izq' ? 'lg:order-2' : ''}>
-                {!escena && <PiezasSvg formas={[pieza.forma]} className="mb-6 h-20 w-auto lg:h-24" />}
+                {!escena && <PiezasSvg formas={NOMBRES} resaltar={pieza.forma} className="mb-6 h-28 w-auto lg:h-32" />}
                 <p className="flex items-center gap-2.5 text-[0.8125rem] font-semibold uppercase leading-none tracking-[0.2em] text-ink">
                     <Punto color={pieza.color} />
                     {pieza.nombre}
