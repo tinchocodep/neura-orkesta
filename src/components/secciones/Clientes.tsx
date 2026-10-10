@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
     ArrowLeftRight,
     Building2,
@@ -65,6 +65,7 @@ const PASO_RANURA = 900;
 function useRanura(total: number) {
     const ref = useRef<HTMLUListElement>(null);
     const [indice, setIndice] = useState(0);
+    const tocada = useRef(false);
 
     // Da una sola vuelta y queda fija en la primera. Si sale de pantalla a mitad de camino
     // el reloj se corta y la vuelta se termina al volver.
@@ -77,6 +78,11 @@ function useRanura(total: number) {
             window.clearInterval(reloj);
             if (!entrada.isIntersecting) return;
             reloj = window.setInterval(() => {
+                if (tocada.current) {
+                    window.clearInterval(reloj);
+                    observador.disconnect();
+                    return;
+                }
                 pasos += 1;
                 setIndice(pasos % total);
                 if (pasos < total) return;
@@ -91,13 +97,19 @@ function useRanura(total: number) {
         };
     }, [total]);
 
-    return { ref, indice };
+    // Si la persona elige una, la vuelta sola se corta y queda la que eligió.
+    const elegir = useCallback((i: number) => {
+        tocada.current = true;
+        setIndice(i);
+    }, []);
+
+    return { ref, indice, elegir };
 }
 
 export default function Clientes() {
     const { ref: refCifra, enPantalla } = useEnPantalla<HTMLParagraphElement>();
     const cuenta = useCuenta(CLIENTES, enPantalla);
-    const { ref: refRanura, indice } = useRanura(operaciones.length);
+    const { ref: refRanura, indice, elegir } = useRanura(operaciones.length);
 
     return (
         <section
@@ -173,8 +185,9 @@ export default function Clientes() {
                             <span className="block">Lo demás es igual.</span>
                         </h3>
 
-                        {/* Dos placas: arriba una sola operación encendida por vez (es lo que cambia); abajo las
-                            cinco siempre encendidas (es lo que es igual). La línea baja desde la que está en turno. */}
+                        {/* Dos placas: arriba una sola operación encendida por vez (es lo que cambia), y se puede
+                            elegir tocándola; abajo las cinco siempre encendidas (es lo que es igual). La línea baja
+                            desde la que está elegida. */}
                         <div className="grid gap-y-2 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-center sm:gap-x-6 sm:gap-y-[1.375rem] xl:col-span-7">
                             <p className="text-sm text-on-night-soft">Cambia</p>
                             <ul
@@ -184,14 +197,23 @@ export default function Clientes() {
                                 {operaciones.map((operacion, i) => (
                                     <li
                                         key={operacion}
-                                        className={`relative whitespace-nowrap rounded-lg px-2 py-2.5 text-center text-sm font-medium transition-colors duration-500 motion-reduce:transition-none sm:col-span-1 sm:text-[0.9375rem] ${
-                                            i < 3 ? 'col-span-2' : 'col-span-3'
-                                        } ${i === indice ? 'bg-brand-blue text-white' : 'text-on-night-soft'}`}
+                                        className={`relative sm:col-span-1 ${i < 3 ? 'col-span-2' : 'col-span-3'}`}
                                     >
-                                        {operacion}
+                                        <button
+                                            type="button"
+                                            aria-pressed={i === indice}
+                                            onClick={() => elegir(i)}
+                                            className={`min-h-11 w-full whitespace-nowrap rounded-lg px-2 text-center text-sm font-medium transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue-light motion-reduce:transition-none sm:text-[0.9375rem] ${
+                                                i === indice
+                                                    ? 'bg-brand-blue text-white'
+                                                    : 'text-on-night-soft hover:bg-white/[0.06] hover:text-on-night'
+                                            }`}
+                                        >
+                                            {operacion}
+                                        </button>
                                         <span
                                             aria-hidden="true"
-                                            className={`absolute left-1/2 top-full hidden h-[calc(1.375rem+5px)] w-px -translate-x-1/2 bg-brand-blue-bright transition-opacity duration-500 after:absolute after:-bottom-[3px] after:left-1/2 after:h-[5px] after:w-[5px] after:-translate-x-1/2 after:rounded-full after:bg-brand-blue-bright motion-reduce:transition-none sm:block ${
+                                            className={`pointer-events-none absolute left-1/2 top-full hidden h-[calc(1.375rem+5px)] w-px -translate-x-1/2 bg-brand-blue-bright transition-opacity duration-300 after:absolute after:-bottom-[3px] after:left-1/2 after:h-[5px] after:w-[5px] after:-translate-x-1/2 after:rounded-full after:bg-brand-blue-bright motion-reduce:transition-none sm:block ${
                                                 i === indice ? 'opacity-100' : 'opacity-0'
                                             }`}
                                         />
