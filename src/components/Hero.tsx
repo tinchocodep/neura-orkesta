@@ -1,116 +1,141 @@
-import { motion } from 'framer-motion';
-import heroCore from '../assets/hero-core.png';
+import { useEffect, useRef } from 'react';
+import { MessageCircle, Play } from 'lucide-react';
+import { WHATSAPP_REUNION } from './contacto';
+import { irA } from './navegacion';
 
-export default function Hero() {
+interface HeroProps {
+    onVerVideo: () => void;
+}
+
+const piezas = [
+    { nombre: 'NeuraSync', punto: 'bg-sync' },
+    { nombre: 'NeuraCore', punto: 'bg-brand-blue' },
+    { nombre: 'NeuraInsight', punto: 'bg-insight' },
+];
+
+function LogoAnimado() {
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    // El video del logo entra después del primer pintado; hasta ahí se ve el póster.
+    useEffect(() => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const conexion = (navigator as { connection?: { saveData?: boolean } }).connection;
+        if (conexion?.saveData) return;
+
+        const id = window.setTimeout(() => {
+            const el = videoRef.current;
+            if (!el) return;
+            el.src = '/videos/logo-neura.mp4';
+            el.play().catch(() => {});
+        }, 300);
+        return () => window.clearTimeout(id);
+    }, []);
+
     return (
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-blue-50/30 to-white">
-            {/* Subtle Background Pattern */}
-            <div className="absolute inset-0 opacity-5">
-                <div className="absolute inset-0" style={{
-                    backgroundImage: `radial-gradient(circle, rgba(65, 105, 225, 0.3) 1px, transparent 1px)`,
-                    backgroundSize: '40px 40px'
-                }}></div>
-            </div>
+        <div
+            className="hero-logo pointer-events-none relative mx-auto mt-14 aspect-square shrink-0 lg:absolute lg:right-[5vw] lg:top-1/2 lg:mt-0 lg:-translate-y-1/2"
+            aria-hidden="true"
+            // El video trae un fondo casi blanco con ruido de compresión: el contraste lo lleva a
+            // blanco puro y la máscara le borra el borde, así no se nota el recuadro sobre la página.
+            style={{
+                maskImage: 'radial-gradient(closest-side, black 78%, transparent 100%)',
+                filter: 'contrast(1.1) brightness(1.03)',
+            }}
+        >
+            <img src="/hero/logo-neura.webp" alt="" width="720" height="720" fetchPriority="high" className="h-full w-full" />
+            <video
+                ref={videoRef}
+                className="absolute inset-0 h-full w-full opacity-0 transition-opacity duration-500"
+                muted
+                loop
+                playsInline
+                preload="none"
+                onPlaying={(e) => { e.currentTarget.style.opacity = '1'; }}
+            />
+        </div>
+    );
+}
 
-            <div className="relative z-10 max-w-7xl mx-auto section-padding">
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                    {/* Left: Text Content */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="space-y-8"
+export default function Hero({ onVerVideo }: HeroProps) {
+    return (
+        <section className="hero-alto relative isolate flex flex-col overflow-hidden bg-white text-ink lg:flex-row lg:items-center">
+            <LogoAnimado />
+
+            {/* El relleno va afuera del tope de ancho, igual que en las secciones: si no, el hero arranca 48 px más adentro. */}
+            <div className="relative z-10 w-full px-6 pb-14 pt-2 md:px-12 lg:pb-16 lg:pt-24">
+                <div className="mx-auto max-w-7xl">
+                <div className="max-w-[38rem]">
+                    <p className="hero-entra mb-5 text-[0.7rem] font-semibold uppercase tracking-[0.34em] text-brand-blue-dark sm:text-xs">
+                        Conectá. Automatizá. Decidí.
+                    </p>
+
+                    <h1 className="font-display text-[2.9rem] font-semibold leading-[0.98] tracking-[-0.04em] sm:text-6xl lg:text-[clamp(3.75rem,5.7vw,5.25rem)]">
+                        Tu pyme,
+                        <br />
+                        en tiempo real
+                        <br />
+                        <span className="text-brand-blue">con IA.</span>
+                    </h1>
+
+                    <p
+                        className="hero-entra mt-6 max-w-md text-lg leading-relaxed text-ink-soft sm:text-xl"
+                        style={{ animationDelay: '90ms' }}
                     >
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1, duration: 0.8 }}
-                            className="inline-block"
-                        >
-                            <span className="text-brand-blue font-semibold text-lg">NEURAORKESTA</span>
-                        </motion.div>
+                        Unificá sistemas, automatizá procesos y convertí datos en mejores decisiones.
+                    </p>
 
-                        <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2, duration: 0.8 }}
-                            className="text-5xl md:text-7xl font-display font-bold leading-tight text-text-primary"
-                        >
-                            Tu empresa,
-                            <br />
-                            <span className="gradient-text">operando en</span>
-                            <br />
-                            tiempo real.
-                        </motion.h1>
-
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4, duration: 0.8 }}
-                            className="text-xl md:text-2xl text-text-secondary leading-relaxed"
-                        >
-                            No somos un software más. Somos el <span className="text-brand-blue font-semibold">motor de operaciones</span> que elimina el trabajo manual.
-                            <br />
-                            <span className="font-semibold text-text-primary">Empezá con lo básico, escalá al control total.</span>
-                        </motion.p>
-
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.6, duration: 0.8 }}
-                            className="flex gap-4"
-                        >
-                            <button className="btn-primary text-lg">
-                                Aceptá el Desafío 24hs
-                            </button>
-                        </motion.div>
-                    </motion.div>
-
-                    {/* Right: 3D Core Chip Visual */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.3, duration: 1 }}
-                        className="relative"
+                    <div
+                        className="hero-entra mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
+                        style={{ animationDelay: '170ms' }}
                     >
-                        <motion.div
-                            animate={{
-                                y: [0, -20, 0],
-                            }}
-                            transition={{
-                                duration: 6,
-                                repeat: Infinity,
-                                ease: "easeInOut"
-                            }}
-                            className="relative"
+                        <a
+                            href={WHATSAPP_REUNION}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-blue px-6 py-3.5 font-semibold text-white transition-colors duration-200 hover:bg-brand-blue-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
                         >
-                            <img
-                                src={heroCore}
-                                alt="Neuracall Core"
-                                width="600"
-                                height="600"
-                                className="w-full h-auto drop-shadow-2xl"
-                            />
-                        </motion.div>
-                    </motion.div>
+                            <MessageCircle className="h-5 w-5" aria-hidden="true" />
+                            Coordinemos una reunión
+                        </a>
+                        <button
+                            type="button"
+                            onClick={onVerVideo}
+                            className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-300 px-6 py-3.5 font-semibold text-ink transition-colors duration-200 hover:border-brand-blue hover:text-brand-blue-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+                        >
+                            <Play className="h-4 w-4 fill-current" aria-hidden="true" />
+                            Ver el video · 1 min
+                        </button>
+                    </div>
+
+                    <ul
+                        className="hero-entra mt-8 flex flex-wrap gap-1.5 sm:gap-2.5"
+                        style={{ animationDelay: '250ms' }}
+                        aria-label="Los tres módulos de Neura Orkesta"
+                    >
+                        {piezas.map((pieza) => (
+                            <li key={pieza.nombre}>
+                                <a
+                                    href="#solucion"
+                                    onClick={(e) => { e.preventDefault(); irA('#solucion'); }}
+                                    className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-2 py-1.5 text-[0.8rem] sm:gap-2 font-medium text-text-secondary transition-colors duration-200 hover:border-brand-blue/50 hover:text-text-primary sm:px-4 sm:text-sm"
+                                >
+                                    <span className={`h-1.5 w-1.5 rounded-full ${pieza.punto}`} aria-hidden="true" />
+                                    {pieza.nombre}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+
+                    <p
+                        className="hero-entra mt-6 hidden text-base text-ink-soft sm:block [@media(max-height:720px)]:!hidden"
+                        style={{ animationDelay: '320ms' }}
+                    >
+                        Entendé lo que pasa.{' '}
+                        <strong className="font-semibold text-ink">Mirá para adelante.</strong>
+                    </p>
+                </div>
                 </div>
             </div>
-
-            {/* Scroll Indicator */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.2 }}
-                className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-            >
-                <motion.div
-                    animate={{ y: [0, 10, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="w-6 h-10 border-2 border-brand-blue rounded-full flex justify-center pt-2"
-                >
-                    <div className="w-1 h-2 bg-brand-blue rounded-full"></div>
-                </motion.div>
-            </motion.div>
         </section>
     );
 }

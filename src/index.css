@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --brand-blue: #4169E1;
-  --brand-blue-light: #6B8FFF;
-  --brand-blue-dark: #2952CC;
+  --brand-blue: #2B68E6;
+  --brand-blue-light: #91B9FF;
+  --brand-blue-dark: #2457C9;
 }
 
 * {
@@ -14,16 +14,34 @@
   box-sizing: border-box;
 }
 
+/* El header fijo mide 69 px en el celular y 73 desde sm: sin este margen tapa el comienzo de la
+   sección a la que se salta, y con uno de más asoma una raya de la sección anterior. */
+section[id] {
+  scroll-margin-top: 68px;
+}
+
+@media (min-width: 640px) {
+  section[id] {
+    scroll-margin-top: 72px;
+  }
+}
+
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  /* Reserva el lugar de la barra desde el primer pintado: sin esto el hero se corre
+     unos píxeles cuando llegan las secciones de abajo y aparece el scroll. */
+  scrollbar-gutter: stable;
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
   background-color: #FFFFFF;
   color: #1A1A1A;
+  /* clip y no hidden: hidden convierte a body en contenedor de scroll y deja sin efecto
+     todo position: sticky de adentro (la escena de la solución queda fija con sticky). */
   overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -53,74 +71,146 @@ body {
   background: var(--brand-blue-dark);
 }
 
+/* ── Secciones nuevas (deck sept. 2026) ──────────────────
+   Todas las secciones se arman con estas piezas para que la página se lea como una sola:
+   <section class="seccion seccion-oscura"><div class="contenedor">…</div></section>      */
 @layer components {
-
-  /* Gradient Text */
-  .gradient-text {
-    background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-light));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .seccion {
+    @apply relative px-6 py-20 md:px-12 md:py-28;
   }
 
-  /* Button Styles */
-  .btn-primary {
-    @apply px-8 py-4 text-white font-semibold rounded-lg;
-    @apply transition-all duration-300;
-    @apply transform hover:scale-105;
-    background-color: var(--brand-blue);
-    box-shadow: 0 4px 20px rgba(65, 105, 225, 0.15);
+  .seccion-blanca {
+    @apply bg-white text-ink;
   }
 
-  .btn-primary:hover {
-    background-color: var(--brand-blue-dark);
-    box-shadow: 0 8px 30px rgba(65, 105, 225, 0.2);
+  .seccion-clara {
+    @apply bg-mist text-ink;
   }
 
-  /* Card Styles */
-  .card {
-    @apply bg-white rounded-2xl;
-    @apply border border-gray-100;
-    @apply transition-all duration-300;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  .seccion-oscura {
+    @apply bg-night text-on-night;
   }
 
-  .card-hover {
-    @apply hover:transform hover:scale-105;
+  .contenedor {
+    @apply mx-auto w-full max-w-7xl;
   }
 
-  .card-hover:hover {
-    box-shadow: 0 4px 20px rgba(65, 105, 225, 0.15);
-    border-color: rgba(65, 105, 225, 0.2);
+  .sobretitulo {
+    @apply mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-brand-blue-dark;
   }
 
-  /* Section Spacing */
-  .section-padding {
-    @apply py-20 px-6 md:px-12 lg:px-24;
+  .seccion-oscura .sobretitulo {
+    @apply text-brand-blue-light;
   }
 
-  /* Accent Line */
-  .accent-line {
-    @apply h-1 w-20 rounded-full;
-    background: linear-gradient(to right, var(--brand-blue), var(--brand-blue-light));
+  /* text-5xl trae su propio interlineado y pisaba el de arriba: se repite en cada corte. */
+  .titulo-seccion {
+    @apply font-display text-4xl font-semibold leading-[1.03] tracking-[-0.035em] sm:text-5xl sm:leading-[1.03] lg:text-[3.75rem] lg:leading-[1.03];
+  }
+
+  .bajada {
+    @apply mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft sm:text-xl;
+  }
+
+  .seccion-oscura .bajada {
+    @apply text-on-night-soft;
+  }
+
+  .tarjeta {
+    @apply rounded-2xl border border-line bg-white p-6;
+  }
+
+  .seccion-oscura .tarjeta {
+    @apply border-night-line bg-night-soft;
+  }
+
+  .boton-primario {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-brand-blue px-6 py-3.5 font-semibold text-white transition-colors duration-200 hover:bg-brand-blue-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue;
+  }
+
+  .boton-secundario {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-gray-300 px-6 py-3.5 font-semibold text-ink transition-colors duration-200 hover:border-brand-blue hover:text-brand-blue-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue;
+  }
+
+  .seccion-oscura .boton-primario {
+    @apply focus-visible:outline-brand-blue-light;
+  }
+
+  .seccion-oscura .boton-secundario {
+    @apply border-white/25 text-on-night hover:border-white/60 hover:bg-white/5 hover:text-on-night focus-visible:outline-brand-blue-light;
   }
 }
 
-/* ── Marquee Animations ──────────────────────────────── */
-@keyframes marquee-left {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+/* Aparición al entrar en pantalla (componente <Aparece>). El estado oculto sólo vale
+   si index.html alcanzó a poner la clase «js» en <html>: sin JavaScript, o con
+   «reducir movimiento», el contenido queda visible y quieto. */
+.js .aparece {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes marquee-right {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
+.js .aparece.visible {
+  opacity: 1;
+  transform: none;
 }
 
-.marquee-left {
-  animation: marquee-left linear infinite;
+@media (prefers-reduced-motion: reduce) {
+  .js .aparece {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
-.marquee-right {
-  animation: marquee-right linear infinite;
+/* ── Hero ────────────────────────────────────────────── */
+/* Altos con respaldo en vh: los navegadores de antes de 2022 no entienden svh y, sin
+   respaldo, el logo tomaba el tamaño propio de la imagen y se metía debajo del texto. */
+.hero-alto {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.hero-logo {
+  height: 30vh;
+  height: 30svh;
+}
+
+@media (min-width: 1024px) {
+  /* El tope por ancho evita que en una pantalla alta y angosta (tablet vertical)
+     la cabeza crezca hasta pisar el título. */
+  .hero-logo {
+    height: min(74vh, 54vw);
+    height: min(74svh, 54vw);
+  }
+}
+
+@keyframes hero-entra {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes video-widget-entra {
+  from { opacity: 0; transform: translateY(12px) scale(0.94); }
+  to { opacity: 1; transform: none; }
+}
+
+.hero-entra {
+  animation: hero-entra 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Sólo en pantallas grandes: en el celular la burbuja aparece al bajar (ver VideoWidget). */
+@media (min-width: 768px) and (min-height: 600px) {
+  .video-widget-entra {
+    animation: video-widget-entra 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .hero-entra,
+  .video-widget-entra {
+    animation: none;
+  }
 }

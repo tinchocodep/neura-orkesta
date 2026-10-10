@@ -1,57 +1,46 @@
 import './index.css';
-import { lazy, Suspense } from 'react';
-import HeroVideo from './components/HeroVideo';
+import { lazy, Suspense, useCallback, useState } from 'react';
+import Hero from './components/Hero';
+import ScrollHeader from './components/ScrollHeader';
 
 // Lazy load everything below the fold for faster LCP
-const ScrollHeader = lazy(() => import('./components/ScrollHeader'));
-const NeuralBackground = lazy(() => import('./components/NeuralBackground'));
-const VisionSection = lazy(() => import('./components/VisionSection'));
-const ProblemSection = lazy(() => import('./components/ProblemSection'));
-const SolutionSection = lazy(() => import('./components/SolutionSection'));
-const ProductsSection = lazy(() => import('./components/ProductsSection'));
-const FichasSection = lazy(() => import('./components/FichasSection'));
-const ValuesSection = lazy(() => import('./components/ValuesSection'));
-const FinalCTA = lazy(() => import('./components/FinalCTA'));
-const Footer = lazy(() => import('./components/Footer'));
+const VideoWidget = lazy(() => import('./components/VideoWidget'));
+const Vision = lazy(() => import('./components/secciones/Vision'));
+const Problema = lazy(() => import('./components/secciones/Problema'));
+const Solucion = lazy(() => import('./components/secciones/Solucion'));
+const SietePasos = lazy(() => import('./components/secciones/SietePasos'));
+const Clientes = lazy(() => import('./components/secciones/Clientes'));
+const Implementacion = lazy(() => import('./components/secciones/Implementacion'));
+const Neuralite = lazy(() => import('./components/secciones/Neuralite'));
+const Cierre = lazy(() => import('./components/secciones/Cierre'));
 
 function App() {
+  const [videoAbierto, setVideoAbierto] = useState(false);
+  const abrirVideo = useCallback(() => setVideoAbierto(true), []);
+  const cerrarVideo = useCallback(() => setVideoAbierto(false), []);
+
   return (
-    <div className="min-h-screen bg-white relative">
-      {/* Hero loads immediately for fast LCP */}
-      <div className="relative z-10">
-        <div id="inicio"><HeroVideo /></div>
-      </div>
+    <div className="min-h-screen bg-white">
+      <ScrollHeader />
 
-      {/* Everything below the fold is lazy loaded */}
+      <main>
+        {/* Hero loads immediately for fast LCP */}
+        <div id="inicio"><Hero onVerVideo={abrirVideo} /></div>
+
+        {/* Un Suspense por sección: si una tarda, las demás igual aparecen. */}
+        <Suspense fallback={null}><Vision /></Suspense>
+        <Suspense fallback={null}><Problema /></Suspense>
+        <Suspense fallback={null}><Solucion /></Suspense>
+        <Suspense fallback={null}><SietePasos /></Suspense>
+        <Suspense fallback={null}><Clientes /></Suspense>
+        <Suspense fallback={null}><Implementacion /></Suspense>
+        <Suspense fallback={null}><Neuralite /></Suspense>
+      </main>
+
+      <Suspense fallback={null}><Cierre /></Suspense>
+
       <Suspense fallback={null}>
-        <ScrollHeader />
-        <NeuralBackground />
-
-        <div className="relative z-10">
-          {/* 1. VISIÓN */}
-          <div id="vision"><VisionSection /></div>
-
-          {/* 2. EL DOLOR */}
-          <div id="problema"><ProblemSection /></div>
-
-          {/* 3. LOS PRODUCTOS */}
-          <div id="productos"><ProductsSection /></div>
-
-          {/* 4. LA SOLUCIÓN */}
-          <div id="solucion"><SolutionSection /></div>
-
-          {/* 5. SISTEMA DE FICHAS */}
-          <div id="fichas"><FichasSection /></div>
-
-          {/* 6. EL ABORDAJE */}
-          <div id="abordaje"><ValuesSection /></div>
-
-          {/* Final CTA */}
-          <FinalCTA />
-
-          {/* Footer */}
-          <Footer />
-        </div>
+        <VideoWidget abierto={videoAbierto} onAbrir={abrirVideo} onCerrar={cerrarVideo} />
       </Suspense>
     </div>
   );
