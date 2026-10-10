@@ -1,5 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import { Building2, Fuel, HardHat, Printer, Truck, Utensils, type LucideIcon } from 'lucide-react';
+import {
+    ArrowLeftRight,
+    Building2,
+    FileText,
+    Fuel,
+    HardHat,
+    Landmark,
+    Printer,
+    Truck,
+    Users,
+    Utensils,
+    Wallet,
+    type LucideIcon,
+} from 'lucide-react';
 import Aparece from '../ui/Aparece';
 import { useEnPantalla } from '../ui/useEnPantalla';
 
@@ -15,7 +28,13 @@ const rubros: { nombre: string; unidad: string; Icono: LucideIcon }[] = [
 ];
 
 const operaciones = ['La obra', 'El viaje', 'El contrato', 'El turno', 'La orden'];
-const loDemas = ['Comprobantes', 'Caja', 'Banco', 'Cobros y pagos', 'Gente'];
+const loDemas: { nombre: string; Icono: LucideIcon }[] = [
+    { nombre: 'Comprobantes', Icono: FileText },
+    { nombre: 'Caja', Icono: Wallet },
+    { nombre: 'Banco', Icono: Landmark },
+    { nombre: 'Cobros y pagos', Icono: ArrowLeftRight },
+    { nombre: 'Gente', Icono: Users },
+];
 
 // El render trae fondo negro y un destello en la esquina: la elipse deja sólo los anillos
 // y llega a cero antes de los cuatro bordes, así no se ve el rectángulo.
@@ -79,7 +98,6 @@ export default function Clientes() {
     const { ref: refCifra, enPantalla } = useEnPantalla<HTMLParagraphElement>();
     const cuenta = useCuenta(CLIENTES, enPantalla);
     const { ref: refRanura, indice } = useRanura(operaciones.length);
-    const anterior = (indice + operaciones.length - 1) % operaciones.length;
 
     return (
         <section
@@ -155,37 +173,44 @@ export default function Clientes() {
                             <span className="block">Lo demás es igual.</span>
                         </h3>
 
-                        <div className="xl:col-span-7">
+                        {/* Dos placas: arriba una sola operación encendida por vez (es lo que cambia); abajo las
+                            cinco siempre encendidas (es lo que es igual). La línea baja desde la que está en turno. */}
+                        <div className="grid gap-y-2 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-center sm:gap-x-6 sm:gap-y-[1.375rem] xl:col-span-7">
+                            <p className="text-sm text-on-night-soft">Cambia</p>
                             <ul
                                 ref={refRanura}
-                                className="mx-auto grid w-fit overflow-hidden rounded-t-2xl border border-b-0 border-brand-blue-bright/60 bg-brand-blue/15 px-10 py-5 text-center font-display text-3xl font-semibold tracking-[-0.03em] text-brand-blue-light sm:px-14 sm:py-6 sm:text-[2.75rem] sm:leading-none"
+                                className="grid grid-cols-6 gap-1 rounded-xl border border-brand-blue-bright/45 bg-brand-blue/10 p-1 sm:grid-cols-5"
                             >
                                 {operaciones.map((operacion, i) => (
                                     <li
                                         key={operacion}
-                                        className={`col-start-1 row-start-1 whitespace-nowrap transition-[opacity,transform] duration-500 ease-out ${
-                                            i === indice
-                                                ? ''
-                                                : i === anterior
-                                                  ? '-translate-y-full opacity-0'
-                                                  : 'translate-y-full opacity-0'
-                                        }`}
+                                        className={`relative whitespace-nowrap rounded-lg px-2 py-2.5 text-center text-sm font-medium transition-colors duration-500 motion-reduce:transition-none sm:col-span-1 sm:text-[0.9375rem] ${
+                                            i < 3 ? 'col-span-2' : 'col-span-3'
+                                        } ${i === indice ? 'bg-brand-blue text-white' : 'text-on-night-soft'}`}
                                     >
                                         {operacion}
+                                        <span
+                                            aria-hidden="true"
+                                            className={`absolute left-1/2 top-full hidden h-[calc(1.375rem+5px)] w-px -translate-x-1/2 bg-brand-blue-bright transition-opacity duration-500 after:absolute after:-bottom-[3px] after:left-1/2 after:h-[5px] after:w-[5px] after:-translate-x-1/2 after:rounded-full after:bg-brand-blue-bright motion-reduce:transition-none sm:block ${
+                                                i === indice ? 'opacity-100' : 'opacity-0'
+                                            }`}
+                                        />
                                     </li>
                                 ))}
                             </ul>
-                            {/* En el celular la barra se parte siempre en tres y dos; con flex-wrap, según
-                                el ancho, quedaba un chip solo en la última fila. */}
-                            <ul className="grid grid-cols-[repeat(6,auto)] gap-2 rounded-2xl border border-night-line bg-night-soft p-3 sm:flex sm:gap-3 sm:p-4">
-                                {loDemas.map((pieza, i) => (
+
+                            <p className="mt-5 text-sm text-on-night-soft sm:mt-0">Es igual</p>
+                            {/* En el celular las dos placas se parten en tres y dos: con cinco en fila no entran. */}
+                            <ul className="grid grid-cols-6 gap-px overflow-hidden rounded-xl border border-night-line bg-night-line sm:grid-cols-5">
+                                {loDemas.map(({ nombre, Icono }, i) => (
                                     <li
-                                        key={pieza}
-                                        className={`whitespace-nowrap rounded-full border border-night-line bg-night px-3 py-2 text-center text-[0.8125rem] font-medium text-on-night sm:grow sm:px-4 sm:text-sm md:text-base ${
+                                        key={nombre}
+                                        className={`flex flex-col items-center gap-2.5 bg-night-soft px-2 py-4 text-center text-[0.8125rem] font-medium leading-tight text-on-night sm:col-span-1 sm:py-5 sm:text-sm ${
                                             i < 3 ? 'col-span-2' : 'col-span-3'
                                         }`}
                                     >
-                                        {pieza}
+                                        <Icono className="h-5 w-5 text-brand-blue-light" strokeWidth={1.75} aria-hidden="true" />
+                                        <span className="text-balance">{nombre}</span>
                                     </li>
                                 ))}
                             </ul>
