@@ -117,7 +117,7 @@ export default function Clientes() {
                     </p>
                     <p className="mt-4 text-2xl text-on-night sm:text-3xl lg:mt-6">ya usan Neura.</p>
                     <p id="clientes-rubros" className="mt-5 text-lg text-on-night-soft sm:text-xl">
-                        Un solo core para <strong className="font-semibold text-on-night">empresas muy distintas.</strong>{' '}
+                        Un solo core para <strong className="font-semibold text-on-night">distintas empresas.</strong>{' '}
                         Hoy, entre otras:
                     </p>
                 </Aparece>
