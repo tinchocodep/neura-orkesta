@@ -25,7 +25,7 @@ export default function Vision() {
                         <span className="font-medium text-ink">
                             Una plataforma de gestión con IA para pequeñas y medianas empresas:
                         </span>{' '}
-                        un solo core que conecta la operación de tu empresa.
+                        toda la operación de tu empresa, conectada.
                     </p>
                 </Aparece>
 

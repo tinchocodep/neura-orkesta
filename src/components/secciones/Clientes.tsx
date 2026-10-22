@@ -5,13 +5,13 @@ import { useEnPantalla } from '../ui/useEnPantalla';
 
 const CLIENTES = 10;
 
-const rubros: { nombre: string; unidad: string; Icono: LucideIcon }[] = [
-    { nombre: 'Constructoras', unidad: 'La obra', Icono: HardHat },
-    { nombre: 'Transporte de cargas', unidad: 'El viaje', Icono: Truck },
-    { nombre: 'Transporte de combustibles', unidad: 'El viaje', Icono: Fuel },
-    { nombre: 'Administración de propiedades', unidad: 'El contrato', Icono: Building2 },
-    { nombre: 'Gastronomía', unidad: 'El turno', Icono: Utensils },
-    { nombre: 'Señalética e impresión 3D', unidad: 'La orden de trabajo', Icono: Printer },
+const rubros: { nombre: string; Icono: LucideIcon }[] = [
+    { nombre: 'Constructoras', Icono: HardHat },
+    { nombre: 'Transporte de cargas', Icono: Truck },
+    { nombre: 'Transporte de combustibles', Icono: Fuel },
+    { nombre: 'Administración de propiedades', Icono: Building2 },
+    { nombre: 'Gastronomía', Icono: Utensils },
+    { nombre: 'Señalética e impresión 3D', Icono: Printer },
 ];
 
 // El render trae fondo negro y un destello en la esquina: la elipse deja sólo los anillos
@@ -87,7 +87,7 @@ export default function Clientes() {
                     aria-labelledby="clientes-rubros"
                     className="mt-10 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:mt-14 lg:grid-cols-3"
                 >
-                    {rubros.map(({ nombre, unidad, Icono }, i) => (
+                    {rubros.map(({ nombre, Icono }, i) => (
                         <li key={nombre}>
                             <Aparece
                                 retraso={i * 70}
@@ -98,12 +98,9 @@ export default function Clientes() {
                                     strokeWidth={1.5}
                                     aria-hidden="true"
                                 />
-                                <div>
-                                    <p className="text-balance font-display text-lg font-medium leading-snug tracking-[-0.01em] sm:text-xl">
-                                        {nombre}
-                                    </p>
-                                    <p className="mt-0.5 text-sm text-on-night-soft sm:text-base">{unidad}</p>
-                                </div>
+                                <p className="text-balance font-display text-lg font-medium leading-snug tracking-[-0.01em] sm:text-xl">
+                                    {nombre}
+                                </p>
                             </Aparece>
                         </li>
                     ))}
