@@ -140,7 +140,7 @@ export default function Cierre() {
                                 Coordinemos una reunión
                             </a>
                             <a href="#neuralite" className="boton-secundario">
-                                Pedir la demo
+                                Dejanos tu contacto
                             </a>
                         </Aparece>
                     </div>

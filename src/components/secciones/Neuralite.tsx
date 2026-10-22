@@ -50,7 +50,7 @@ function validar(datos: Datos): Errores {
 }
 
 function enlaceWhatsApp(datos: Datos) {
-    let texto = `Hola! Quiero la demo de Neuralite. Soy ${datos.nombre} (${datos.mail})`;
+    let texto = `Hola! Quiero coordinar una reunión para conocer Neura. Soy ${datos.nombre} (${datos.mail})`;
     if (datos.empresa) texto += ` de ${datos.empresa}`;
     if (datos.actividad) texto += `, nos dedicamos a ${datos.actividad}`;
     texto += '.';
@@ -216,10 +216,10 @@ export default function Neuralite() {
                         className="titulo-seccion [text-wrap:balance] lg:text-[clamp(2.5rem,3.9vw,3.5rem)]"
                     >
                         <span className="block lg:whitespace-nowrap">Dejanos tu contacto</span>{' '}
-                        <span className="block text-brand-blue lg:whitespace-nowrap">y te mandamos una demo.</span>
+                        <span className="block text-brand-blue lg:whitespace-nowrap">y coordinamos una reunión.</span>
                     </h2>
                     <p className="bajada max-w-md">
-                        Completás tus datos y te llega al mail una demo de Neura para que la mires a tu ritmo.
+                        Completás tus datos y te escribimos para contarte la solución.
                     </p>
                 </Aparece>
 
@@ -253,7 +253,7 @@ export default function Neuralite() {
                                         <p className="mt-3 break-words text-lg leading-relaxed text-ink-soft [text-wrap:balance]">
                                             Te escribimos a{' '}
                                             <strong className="font-semibold text-ink">{datos.mail}</strong>{' '}
-                                            con la demo.
+                                            para coordinar la reunión.
                                         </p>
                                     ) : (
                                         <p className="mt-3 text-lg leading-relaxed text-ink-soft">
@@ -414,12 +414,12 @@ export default function Neuralite() {
                                         disabled={enviando}
                                         className="boton-primario w-full disabled:cursor-not-allowed disabled:bg-ink-soft disabled:hover:bg-ink-soft"
                                     >
-                                        {enviando ? 'Enviando…' : estado === 'fallo' ? 'Probar de nuevo' : 'Quiero la demo'}
+                                        {enviando ? 'Enviando…' : estado === 'fallo' ? 'Probar de nuevo' : 'Quiero una reunión'}
                                         {estado === 'formulario' && <ArrowRight className="h-5 w-5" aria-hidden="true" />}
                                         {estado === 'fallo' && <RotateCw className="h-[1.125rem] w-[1.125rem]" aria-hidden="true" />}
                                     </button>
                                     <p className="mt-3 text-sm text-ink-soft">
-                                        Usamos tus datos solo para enviarte la demo y contactarte.
+                                        Usamos tus datos solo para contactarte.
                                     </p>
                                 </div>
                             </form>

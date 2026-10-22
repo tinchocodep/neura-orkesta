@@ -1,18 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import {
-    ArrowLeftRight,
-    Building2,
-    FileText,
-    Fuel,
-    HardHat,
-    Landmark,
-    Printer,
-    Truck,
-    Users,
-    Utensils,
-    Wallet,
-    type LucideIcon,
-} from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Building2, Fuel, HardHat, Printer, Truck, Utensils, type LucideIcon } from 'lucide-react';
 import Aparece from '../ui/Aparece';
 import { useEnPantalla } from '../ui/useEnPantalla';
 
@@ -25,15 +12,6 @@ const rubros: { nombre: string; unidad: string; Icono: LucideIcon }[] = [
     { nombre: 'Administración de propiedades', unidad: 'El contrato', Icono: Building2 },
     { nombre: 'Gastronomía', unidad: 'El turno', Icono: Utensils },
     { nombre: 'Señalética e impresión 3D', unidad: 'La orden de trabajo', Icono: Printer },
-];
-
-const operaciones = ['La obra', 'El viaje', 'El contrato', 'El turno', 'La orden'];
-const loDemas: { nombre: string; Icono: LucideIcon }[] = [
-    { nombre: 'Comprobantes', Icono: FileText },
-    { nombre: 'Caja', Icono: Wallet },
-    { nombre: 'Banco', Icono: Landmark },
-    { nombre: 'Cobros y pagos', Icono: ArrowLeftRight },
-    { nombre: 'Gente', Icono: Users },
 ];
 
 // El render trae fondo negro y un destello en la esquina: la elipse deja sólo los anillos
@@ -58,62 +36,13 @@ function useCuenta(hasta: number, activa: boolean) {
     return valor;
 }
 
-// Sin un control de pausa, lo que se mueve solo no puede pasar de cinco segundos (WCAG 2.2.2):
-// cinco cambios de 900 ms más los 500 ms de la última transición.
-const PASO_RANURA = 900;
-
-function useRanura(total: number) {
-    const ref = useRef<HTMLUListElement>(null);
-    const [indice, setIndice] = useState(0);
-    const tocada = useRef(false);
-
-    // Da una sola vuelta y queda fija en la primera. Si sale de pantalla a mitad de camino
-    // el reloj se corta y la vuelta se termina al volver.
-    useEffect(() => {
-        const el = ref.current;
-        if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        let reloj = 0;
-        let pasos = 0;
-        const observador = new IntersectionObserver(([entrada]) => {
-            window.clearInterval(reloj);
-            if (!entrada.isIntersecting) return;
-            reloj = window.setInterval(() => {
-                if (tocada.current) {
-                    window.clearInterval(reloj);
-                    observador.disconnect();
-                    return;
-                }
-                pasos += 1;
-                setIndice(pasos % total);
-                if (pasos < total) return;
-                window.clearInterval(reloj);
-                observador.disconnect();
-            }, PASO_RANURA);
-        });
-        observador.observe(el);
-        return () => {
-            window.clearInterval(reloj);
-            observador.disconnect();
-        };
-    }, [total]);
-
-    // Si la persona elige una, la vuelta sola se corta y queda la que eligió.
-    const elegir = useCallback((i: number) => {
-        tocada.current = true;
-        setIndice(i);
-    }, []);
-
-    return { ref, indice, elegir };
-}
-
 export default function Clientes() {
     const { ref: refCifra, enPantalla } = useEnPantalla<HTMLParagraphElement>();
     const cuenta = useCuenta(CLIENTES, enPantalla);
-    const { ref: refRanura, indice, elegir } = useRanura(operaciones.length);
 
     return (
         // Con «hidden» solo, la sección es una zona con scroll escondido (los anillos se salen por la derecha)
-        // y al tocar un botón el navegador la corría de costado. «clip» recorta sin armar esa zona.
+        // y el navegador la podía correr de costado. «clip» recorta sin armar esa zona.
         <section
             id="clientes"
             aria-labelledby="clientes-titulo"
@@ -149,8 +78,8 @@ export default function Clientes() {
                     </p>
                     <p className="mt-4 text-2xl text-on-night sm:text-3xl lg:mt-6">ya usan Neura.</p>
                     <p id="clientes-rubros" className="mt-5 text-lg text-on-night-soft sm:text-xl">
-                        Un solo core para <strong className="font-semibold text-on-night">distintas empresas.</strong>{' '}
-                        Hoy, entre otras:
+                        Empresas de <strong className="font-semibold text-on-night">diferentes industrias</strong>{' '}
+                        optimizan su gestión con Neura.
                     </p>
                 </Aparece>
 
@@ -179,82 +108,6 @@ export default function Clientes() {
                         </li>
                     ))}
                 </ul>
-
-                <div className="mt-16 border-t border-night-line pt-14 lg:mt-24 lg:pt-20">
-                    <Aparece className="grid gap-10 xl:grid-cols-12 xl:items-center xl:gap-12">
-                        <h3 className="font-display text-[1.75rem] font-semibold leading-[1.1] tracking-[-0.03em] sm:text-4xl xl:col-span-5">
-                            <span className="block text-brand-blue-light">Cambia la operación.</span>
-                            <span className="block">Lo demás es igual.</span>
-                        </h3>
-
-                        {/* Dos placas: arriba se elige una operación (es lo que cambia); abajo las cinco piezas
-                            comunes (es lo que es igual). De la operación elegida baja una línea que se reparte a las
-                            cinco: cualquiera sea la operación, usa todo lo de abajo. */}
-                        <div className="sm:grid sm:grid-cols-[auto_minmax(0,1fr)] sm:items-center sm:gap-x-6 xl:col-span-7">
-                            <p className="mb-2 text-sm text-on-night-soft sm:mb-0">Cambia</p>
-                            <ul
-                                ref={refRanura}
-                                className="grid grid-cols-6 gap-1 rounded-xl border border-brand-blue-bright/45 bg-brand-blue/10 p-1 sm:grid-cols-5"
-                            >
-                                {operaciones.map((operacion, i) => (
-                                    <li key={operacion} className={`sm:col-span-1 ${i < 3 ? 'col-span-2' : 'col-span-3'}`}>
-                                        <button
-                                            type="button"
-                                            aria-pressed={i === indice}
-                                            onClick={() => elegir(i)}
-                                            className={`min-h-11 w-full whitespace-nowrap rounded-lg px-2 text-center text-sm font-medium transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue-light motion-reduce:transition-none sm:text-[0.9375rem] ${
-                                                i === indice
-                                                    ? 'bg-brand-blue text-white'
-                                                    : 'text-on-night-soft hover:bg-white/[0.06] hover:text-on-night'
-                                            }`}
-                                        >
-                                            {operacion}
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul>
-
-                            {/* Celular: las placas van partidas en tres y dos, así que la línea baja recta por el
-                                costado y el rótulo la acompaña. */}
-                            <p className="flex items-center gap-3 pl-6 text-sm text-on-night-soft sm:hidden">
-                                <span aria-hidden="true" className="block h-8 w-px bg-brand-blue-bright" />
-                                Es igual
-                            </p>
-
-                            <span aria-hidden="true" className="hidden sm:block" />
-                            <div aria-hidden="true" className="relative hidden h-10 sm:block">
-                                <span
-                                    className="absolute -top-[5px] h-[calc(50%+5px)] w-px -translate-x-1/2 bg-brand-blue-bright transition-[left] duration-300 ease-out motion-reduce:transition-none"
-                                    style={{ left: `${(indice + 0.5) * 20}%` }}
-                                />
-                                <span className="absolute left-[10%] right-[10%] top-1/2 h-px bg-brand-blue-bright" />
-                                {loDemas.map(({ nombre }, i) => (
-                                    <span
-                                        key={nombre}
-                                        className="absolute bottom-0 top-1/2 w-px -translate-x-1/2 bg-brand-blue-bright after:absolute after:-bottom-[3px] after:left-1/2 after:h-[5px] after:w-[5px] after:-translate-x-1/2 after:rounded-full after:bg-brand-blue-bright"
-                                        style={{ left: `${(i + 0.5) * 20}%` }}
-                                    />
-                                ))}
-                            </div>
-
-                            <p className="hidden text-sm text-on-night-soft sm:block">Es igual</p>
-                            {/* En el celular las dos placas se parten en tres y dos: con cinco en fila no entran. */}
-                            <ul className="grid grid-cols-6 gap-px overflow-hidden rounded-xl border border-brand-blue-bright/60 bg-night-line sm:grid-cols-5">
-                                {loDemas.map(({ nombre, Icono }, i) => (
-                                    <li
-                                        key={nombre}
-                                        className={`flex flex-col items-center gap-2.5 bg-night-soft px-2 py-4 text-center text-[0.8125rem] font-medium leading-tight text-on-night sm:col-span-1 sm:py-5 sm:text-sm ${
-                                            i < 3 ? 'col-span-2' : 'col-span-3'
-                                        }`}
-                                    >
-                                        <Icono className="h-5 w-5 text-brand-blue-light" strokeWidth={1.75} aria-hidden="true" />
-                                        <span className="text-balance">{nombre}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </Aparece>
-                </div>
             </div>
         </section>
     );
