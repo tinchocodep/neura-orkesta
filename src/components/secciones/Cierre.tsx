@@ -72,7 +72,15 @@ function Pie() {
                     </ul>
                 </nav>
 
-                <p className="text-sm text-on-night-soft">© 2026 Neura Orkesta S.A.</p>
+                <p className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-on-night-soft">
+                    <span>© 2026 Neura Orkesta S.A.</span>
+                    <a
+                        href="/privacidad"
+                        className="underline-offset-4 transition-colors duration-200 hover:text-on-night hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue-light"
+                    >
+                        Política de privacidad
+                    </a>
+                </p>
             </div>
         </footer>
     );
